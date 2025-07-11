@@ -14,7 +14,7 @@ export default function SEOHelmet({
   description,
   keywords,
   image = 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop',
-  url = 'https://sujaldhungana.com'
+  url = 'https://sujal.datasparta.com'
 }: SEOHelmetProps) {
   return (
     <Helmet>

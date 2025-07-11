@@ -1,3 +1,1 @@
-# personal-website
-
-[Edit in StackBlitz next generation editor ⚡️](https://stackblitz.com/~/github.com/GitSujal/personal-website)
+# Visit my Personal Website at [Personal Website](https://sujal.datasparta.com) for more information.
