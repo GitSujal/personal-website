@@ -1,140 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { LineChart, Users, Target, ArrowUpRight, Calendar, MapPin, TrendingUp, Award, BookOpen, Building2 } from 'lucide-react';
+import { Target, ArrowUpRight, Calendar, Award } from 'lucide-react';
 import { Button, Card, CardBody, Chip } from '@nextui-org/react';
 import SEOHelmet from '../components/SEOHelmet';
-
-const ventures = [
-  {
-    title: "Data Profession Academy",
-    tagline: "Empowering the Next Generation of Data Analysts",
-    description: "A comprehensive training academy focused on bridging the gap between academic knowledge and industry-ready skills. We don't just teach tools - we build complete data professionals.",
-    image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2940&auto=format&fit=crop",
-    founded: "August 2023",
-    status: "Active",
-    impact: {
-      studentsTrained: "20+",
-      jobPlacementRate: "85%",
-      avgTimeToJob: "3 months",
-      industryPartners: "5+"
-    },
-    features: [
-      {
-        title: "Comprehensive 12-Week Curriculum",
-        description: "From Python fundamentals to advanced analytics and storytelling"
-      },
-      {
-        title: "Hands-on Project Portfolio",
-        description: "Real-world projects that demonstrate industry-ready skills"
-      },
-      {
-        title: "Career Support & Mentorship",
-        description: "Resume building, interview prep, and ongoing career guidance"
-      },
-      {
-        title: "Industry-Relevant Training",
-        description: "Curriculum designed with input from hiring managers and industry leaders"
-      },
-      {
-        title: "Soft Skills Development",
-        description: "Communication, problem-solving, and data storytelling capabilities"
-      },
-      {
-        title: "Job Placement Assistance",
-        description: "Direct connections with hiring partners and job referral network"
-      }
-    ],
-    technologies: ["Python", "SQL", "Power BI", "Excel", "Statistics", "Data Storytelling"],
-    achievements: [
-      "85% job placement rate within 3 months of graduation",
-      "Students placed at major companies including mining, finance, and tech sectors",
-      "Developed partnerships with 5+ industry employers",
-      "Created Australia's most practical data analyst curriculum",
-      "Built a community of 100+ data professionals"
-    ],
-    link: "https://dataprofessionacademy.com/",
-    icon: BookOpen,
-    color: "bg-blue-500/10 text-blue-500"
-  },
-  {
-    title: "Data Sparta Pty Ltd",
-    tagline: "Democratizing Advanced Analytics for SMBs",
-    description: "Making enterprise-grade data analytics accessible and affordable for small and medium businesses. We believe every business deserves data-driven insights, not just the Fortune 500.",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop",
-    founded: "2024",
-    status: "In Development",
-    impact: {
-      targetMarket: "SMB Sector",
-      costReduction: "70%",
-      implementationTime: "Days not Months",
-      scalability: "Cloud-Native"
-    },
-    features: [
-      {
-        title: "Warehouse-Agnostic Platform",
-        description: "Bring your own warehouse - works with Redshift, Snowflake, BigQuery, and more"
-      },
-      {
-        title: "AI-Powered Data Integration",
-        description: "Automated data source discovery and intelligent schema mapping"
-      },
-      {
-        title: "Self-Service Analytics",
-        description: "Empower business users with intuitive, no-code analytics tools"
-      },
-      {
-        title: "Real-Time Insights",
-        description: "Live dashboards and automated alerting for critical business metrics"
-      },
-      {
-        title: "Affordable Pricing Model",
-        description: "Subscription-based pricing that scales with your business growth"
-      },
-      {
-        title: "Enterprise-Grade Security",
-        description: "Bank-level security with role-based access and data governance"
-      }
-    ],
-    technologies: ["AWS", "Apache Iceberg", "ClickHouse", "Python", "React", "AI/ML", "Kubernetes"],
-    achievements: [
-      "Architected world's first warehouse-agnostic agentic data platform",
-      "Reduced typical implementation costs by 70% compared to traditional solutions",
-      "Built scalable architecture handling enterprise workloads",
-      "Developed AI agents for automated data pipeline management",
-      "Created innovative pricing model accessible to SMBs"
-    ],
-    link: "#",
-    icon: LineChart,
-    color: "bg-green-500/10 text-green-500"
-  }
-];
-
-const ventureStats = [
-  {
-    icon: Users,
-    label: "Students Trained",
-    value: "20+",
-    description: "Across Data Profession Academy"
-  },
-  {
-    icon: TrendingUp,
-    label: "Job Placement Rate",
-    value: "85%",
-    description: "Within 3 months of graduation"
-  },
-  {
-    icon: Building2,
-    label: "Active Ventures",
-    value: "2",
-    description: "Education & Analytics platforms"
-  },
-  {
-    icon: Award,
-    label: "Industry Impact",
-    value: "High",
-    description: "Recognized innovation in data education"
-  }
-];
+import { ventures, ventureStats } from '../data/ventures';
 
 export default function VenturesPage() {
   return (
@@ -165,20 +34,23 @@ export default function VenturesPage() {
             
             {/* Venture Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
-              {ventureStats.map((stat, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-                  className="bg-white/10 backdrop-blur-sm rounded-lg p-4"
-                >
-                  <stat.icon className="mx-auto mb-2" size={32} />
-                  <div className="text-2xl font-bold">{stat.value}</div>
-                  <div className="text-sm font-medium">{stat.label}</div>
-                  <div className="text-xs opacity-80">{stat.description}</div>
-                </motion.div>
-              ))}
+              {ventureStats.map((stat, index) => {
+                const IconComponent = stat.icon;
+                return (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
+                    className="bg-white/10 backdrop-blur-sm rounded-lg p-4"
+                  >
+                    <IconComponent className="mx-auto mb-2" size={32} />
+                    <div className="text-2xl font-bold">{stat.value}</div>
+                    <div className="text-sm font-medium">{stat.label}</div>
+                    <div className="text-xs opacity-80">{stat.description}</div>
+                  </motion.div>
+                );
+              })}
             </div>
           </motion.div>
         </div>
@@ -209,138 +81,141 @@ export default function VenturesPage() {
       <section className="py-16 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4">
           <div className="space-y-16">
-            {ventures.map((venture, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                <Card className="bg-white dark:bg-gray-800 shadow-xl">
-                  <CardBody className="p-0">
-                    <div className={`grid grid-cols-1 lg:grid-cols-2 gap-0 ${index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''}`}>
-                      {/* Image Section */}
-                      <div className={`relative ${index % 2 === 1 ? 'lg:col-start-2' : ''}`}>
-                        <div className="aspect-video lg:aspect-square relative overflow-hidden">
-                          <img
-                            src={venture.image}
-                            alt={venture.title}
-                            className="object-cover w-full h-full"
-                          />
-                          <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                            <venture.icon className="text-white" size={64} />
-                          </div>
-                          <div className="absolute top-4 left-4">
-                            <Chip
-                              className={venture.color}
-                              variant="flat"
-                              startContent={<Calendar size={14} />}
-                            >
-                              Founded {venture.founded}
-                            </Chip>
-                          </div>
-                          <div className="absolute top-4 right-4">
-                            <Chip
-                              className={venture.status === 'Active' ? 'bg-green-500/10 text-green-500' : 'bg-orange-500/10 text-orange-500'}
-                              variant="flat"
-                            >
-                              {venture.status}
-                            </Chip>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Content Section */}
-                      <div className={`p-8 lg:p-12 ${index % 2 === 1 ? 'lg:col-start-1' : ''}`}>
-                        <div className="flex items-center gap-3 mb-4">
-                          <venture.icon className={venture.color.split(' ')[1]} size={32} />
-                          <div>
-                            <h2 className="text-3xl font-bold">{venture.title}</h2>
-                            <p className="text-lg text-gray-600 dark:text-gray-300">{venture.tagline}</p>
-                          </div>
-                        </div>
-
-                        <p className="text-gray-700 dark:text-gray-300 mb-6 text-lg leading-relaxed">
-                          {venture.description}
-                        </p>
-
-                        {/* Impact Metrics */}
-                        <div className="grid grid-cols-2 gap-4 mb-6">
-                          {Object.entries(venture.impact).map(([key, value], impactIndex) => (
-                            <div key={impactIndex} className="text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                              <div className="text-xl font-bold text-[#3ec1d3] dark:text-[#2a8591]">{value}</div>
-                              <div className="text-sm text-gray-600 dark:text-gray-400 capitalize">
-                                {key.replace(/([A-Z])/g, ' $1').trim()}
-                              </div>
+            {ventures.map((venture, index) => {
+              const IconComponent = venture.icon;
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                >
+                  <Card className="bg-white dark:bg-gray-800 shadow-xl">
+                    <CardBody className="p-0">
+                      <div className={`grid grid-cols-1 lg:grid-cols-2 gap-0 ${index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''}`}>
+                        {/* Image Section */}
+                        <div className={`relative ${index % 2 === 1 ? 'lg:col-start-2' : ''}`}>
+                          <div className="aspect-video lg:aspect-square relative overflow-hidden">
+                            <img
+                              src={venture.image}
+                              alt={venture.title}
+                              className="object-cover w-full h-full"
+                            />
+                            <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                              <IconComponent className="text-white" size={64} />
                             </div>
-                          ))}
-                        </div>
-
-                        {/* Technologies */}
-                        <div className="mb-6">
-                          <h4 className="font-semibold mb-3">Technologies & Skills</h4>
-                          <div className="flex flex-wrap gap-2">
-                            {venture.technologies.map((tech, techIndex) => (
+                            <div className="absolute top-4 left-4">
                               <Chip
-                                key={techIndex}
-                                size="sm"
                                 className={venture.color}
                                 variant="flat"
+                                startContent={<Calendar size={14} />}
                               >
-                                {tech}
+                                Founded {venture.founded}
                               </Chip>
-                            ))}
+                            </div>
+                            <div className="absolute top-4 right-4">
+                              <Chip
+                                className={venture.status === 'Active' ? 'bg-green-500/10 text-green-500' : 'bg-orange-500/10 text-orange-500'}
+                                variant="flat"
+                              >
+                                {venture.status}
+                              </Chip>
+                            </div>
                           </div>
                         </div>
 
-                        {/* Key Features */}
-                        <div className="mb-6">
-                          <h4 className="font-semibold mb-3">Key Features & Offerings</h4>
-                          <div className="space-y-3">
-                            {venture.features.slice(0, 3).map((feature, featureIndex) => (
-                              <div key={featureIndex} className="flex items-start gap-3">
-                                <Target className={venture.color.split(' ')[1]} size={20} className="mt-0.5 shrink-0" />
-                                <div>
-                                  <h5 className="font-medium">{feature.title}</h5>
-                                  <p className="text-sm text-gray-600 dark:text-gray-400">{feature.description}</p>
+                        {/* Content Section */}
+                        <div className={`p-8 lg:p-12 ${index % 2 === 1 ? 'lg:col-start-1' : ''}`}>
+                          <div className="flex items-center gap-3 mb-4">
+                            <IconComponent className={venture.color.split(' ')[1]} size={32} />
+                            <div>
+                              <h2 className="text-3xl font-bold">{venture.title}</h2>
+                              <p className="text-lg text-gray-600 dark:text-gray-300">{venture.tagline}</p>
+                            </div>
+                          </div>
+
+                          <p className="text-gray-700 dark:text-gray-300 mb-6 text-lg leading-relaxed">
+                            {venture.description}
+                          </p>
+
+                          {/* Impact Metrics */}
+                          <div className="grid grid-cols-2 gap-4 mb-6">
+                            {Object.entries(venture.impact).map(([key, value], impactIndex) => (
+                              <div key={impactIndex} className="text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                                <div className="text-xl font-bold text-[#3ec1d3] dark:text-[#2a8591]">{value}</div>
+                                <div className="text-sm text-gray-600 dark:text-gray-400 capitalize">
+                                  {key.replace(/([A-Z])/g, ' $1').trim()}
                                 </div>
                               </div>
                             ))}
                           </div>
-                        </div>
 
-                        {/* Key Achievements */}
-                        <div className="mb-8">
-                          <h4 className="font-semibold mb-3">Key Achievements</h4>
-                          <ul className="space-y-2">
-                            {venture.achievements.slice(0, 3).map((achievement, achievementIndex) => (
-                              <li key={achievementIndex} className="flex items-start gap-2">
-                                <Award className={venture.color.split(' ')[1]} size={16} className="mt-1 shrink-0" />
-                                <span className="text-sm">{achievement}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
+                          {/* Technologies */}
+                          <div className="mb-6">
+                            <h4 className="font-semibold mb-3">Technologies & Skills</h4>
+                            <div className="flex flex-wrap gap-2">
+                              {venture.technologies.map((tech, techIndex) => (
+                                <Chip
+                                  key={techIndex}
+                                  size="sm"
+                                  className={venture.color}
+                                  variant="flat"
+                                >
+                                  {tech}
+                                </Chip>
+                              ))}
+                            </div>
+                          </div>
 
-                        {/* CTA Button */}
-                        <Button
-                          as="a"
-                          href={venture.link}
-                          target={venture.link !== '#' ? "_blank" : undefined}
-                          rel={venture.link !== '#' ? "noopener noreferrer" : undefined}
-                          className={`w-full ${venture.color.includes('blue') ? 'bg-blue-500 hover:bg-blue-600' : 'bg-green-500 hover:bg-green-600'} text-white transition-colors`}
-                          endContent={venture.link !== '#' ? <ArrowUpRight size={20} /> : undefined}
-                          isDisabled={venture.link === '#'}
-                        >
-                          {venture.link !== '#' ? 'Visit Website' : 'Coming Soon'}
-                        </Button>
+                          {/* Key Features */}
+                          <div className="mb-6">
+                            <h4 className="font-semibold mb-3">Key Features & Offerings</h4>
+                            <div className="space-y-3">
+                              {venture.features.slice(0, 3).map((feature, featureIndex) => (
+                                <div key={featureIndex} className="flex items-start gap-3">
+                                  <Target className={`${venture.color.split(' ')[1]} mt-0.5 shrink-0`} size={20} />
+                                  <div>
+                                    <h5 className="font-medium">{feature.title}</h5>
+                                    <p className="text-sm text-gray-600 dark:text-gray-400">{feature.description}</p>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Key Achievements */}
+                          <div className="mb-8">
+                            <h4 className="font-semibold mb-3">Key Achievements</h4>
+                            <ul className="space-y-2">
+                              {venture.achievements.slice(0, 3).map((achievement, achievementIndex) => (
+                                <li key={achievementIndex} className="flex items-start gap-2">
+                                  <Award className={`${venture.color.split(' ')[1]} mt-1 shrink-0`} size={16} />
+                                  <span className="text-sm">{achievement}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+
+                          {/* CTA Button */}
+                          <Button
+                            as="a"
+                            href={venture.link}
+                            target={venture.link !== '#' ? "_blank" : undefined}
+                            rel={venture.link !== '#' ? "noopener noreferrer" : undefined}
+                            className={`w-full ${venture.color.includes('blue') ? 'bg-blue-500 hover:bg-blue-600' : 'bg-green-500 hover:bg-green-600'} text-white transition-colors`}
+                            endContent={venture.link !== '#' ? <ArrowUpRight size={20} /> : undefined}
+                            isDisabled={venture.link === '#'}
+                          >
+                            {venture.link !== '#' ? 'Visit Website' : 'Coming Soon'}
+                          </Button>
+                        </div>
                       </div>
-                    </div>
-                  </CardBody>
-                </Card>
-              </motion.div>
-            ))}
+                    </CardBody>
+                  </Card>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>

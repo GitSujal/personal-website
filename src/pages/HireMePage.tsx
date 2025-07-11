@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import { Award, Download, Calendar } from 'lucide-react';
 import { Button } from '@nextui-org/react';
@@ -9,6 +8,7 @@ import InteractiveTimeline from '../components/InteractiveTimeline';
 import CertificationBadges from '../components/CertificationBadges';
 import SkillsShowcase from '../components/SkillsShowcase';
 import SpeakingSection from '../components/SpeakingSection';
+import { hirePageContent } from '../data/profileContent';
 
 export default function HireMePage() {
   return (
@@ -23,28 +23,28 @@ export default function HireMePage() {
             className="text-center"
           >
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Let's Work Together
+              {hirePageContent.hero.title}
             </h1>
             <p className="text-xl mb-8 max-w-2xl mx-auto">
-              Seasoned Data Engineer with a passion for building robust, scalable data platforms that stand the test of time. Specialising in exploring the crucial balance between developer velocity and enterprise-grade reliability. Deeply committed to "Everything as Code" and DevOps principles to build self-service tooling, standardised pipelines, and efficient orchestration systems that empower teams while embedding critical data governance, security controls, and maintainability.
+              {hirePageContent.hero.description}
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button
                 as="a"
-                href="/public/Sujal_Dhungana_Resume.pdf"
+                href={hirePageContent.hero.buttons.download.href}
                 download
                 className="bg-white text-[#3ec1d3] dark:text-[#2a8591] hover:bg-gray-100 transition-colors inline-flex items-center gap-2"
               >
                 <Download size={20} />
-                Download Resume
+                {hirePageContent.hero.buttons.download.text}
               </Button>
               <Button
                 as="a"
-                href="#contact"
+                href={hirePageContent.hero.buttons.schedule.href}
                 className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-[#3ec1d3] dark:hover:text-[#2a8591] transition-colors inline-flex items-center gap-2"
               >
                 <Calendar size={20} />
-                Schedule Consultation
+                {hirePageContent.hero.buttons.schedule.text}
               </Button>
             </div>
           </motion.div>
@@ -54,7 +54,7 @@ export default function HireMePage() {
       {/* Skills Section */}
       <section className="py-16 bg-white dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12">Technical Expertise</h2>
+          <h2 className="text-3xl font-bold mb-12">{hirePageContent.sections.skills.title}</h2>
           <SkillsShowcase />
         </div>
       </section>
@@ -64,7 +64,7 @@ export default function HireMePage() {
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="text-3xl font-bold mb-12 flex items-center gap-2">
             <Calendar className="text-[#3ec1d3] dark:text-[#2a8591]" />
-            Career Journey
+            {hirePageContent.sections.timeline.title}
           </h2>
           <InteractiveTimeline />
         </div>
@@ -75,7 +75,7 @@ export default function HireMePage() {
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="text-3xl font-bold mb-12 flex items-center gap-2">
             <Award className="text-[#3ec1d3] dark:text-[#2a8591]" />
-            Professional Certifications
+            {hirePageContent.sections.certifications.title}
           </h2>
           <CertificationBadges />
         </div>

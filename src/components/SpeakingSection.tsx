@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardHeader, CardBody, Image, Chip } from "@nextui-org/react";
-import { Mic, MapPin, Calendar, Users, ExternalLink, Play, FileText } from 'lucide-react';
+import { Mic, MapPin, Calendar, Users, Play, FileText } from 'lucide-react';
 import { speakingEngagements, type SpeakingEngagement } from '../data/speakingEngagements';
 
 const getEventTypeColor = (type: SpeakingEngagement['eventType']) => {

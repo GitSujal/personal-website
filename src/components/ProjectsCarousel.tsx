@@ -3,30 +3,10 @@ import { Image } from '@nextui-org/react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import { FolderGit2 } from 'lucide-react';
+import { projects } from '../data/projects';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-
-const projects = [
-  {
-    title: "MLOps Pipeline for Horse Auctioneer",
-    image: "https://images.unsplash.com/photo-1599689019338-50deb475f380?q=80&w=2940&auto=format&fit=crop",
-    description: "Automated end-to-end MLOps pipeline for generating item recommendations",
-    tech: "AWS SageMaker, Step Functions, Lambda"
-  },
-  {
-    title: "Data Ingestion Platform",
-    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2944&auto=format&fit=crop",
-    description: "Standardized data ingestion platform reducing development effort by 60%",
-    tech: "AWS Glue, S3, Apache Iceberg"
-  },
-  {
-    title: "Real-time Analytics Pipeline",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2940&auto=format&fit=crop",
-    description: "High-frequency ingestion pipeline for IoT data with near real-time analytics",
-    tech: "AWS Lambda, SQS, DynamoDB, Redshift"
-  }
-];
 
 export default function ProjectsCarousel() {
   return (
