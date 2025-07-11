@@ -8,6 +8,7 @@ import ContactSection from '../components/ContactSection';
 import InteractiveTimeline from '../components/InteractiveTimeline';
 import CertificationBadges from '../components/CertificationBadges';
 import SkillsShowcase from '../components/SkillsShowcase';
+import SpeakingSection from '../components/SpeakingSection';
 
 export default function HireMePage() {
   return (
@@ -79,6 +80,9 @@ export default function HireMePage() {
           <CertificationBadges />
         </div>
       </section>
+
+      {/* Speaking Engagements Section */}
+      <SpeakingSection />
 
       {/* Projects Section */}
       <ProjectsSection />
