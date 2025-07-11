@@ -25,13 +25,12 @@ export default function HireMePage() {
               Let's Work Together
             </h1>
             <p className="text-xl mb-8 max-w-2xl mx-auto">
-              With expertise in Data Engineering, MLOps, and DataOps, I help businesses build scalable data solutions that drive growth.
               Seasoned Data Engineer with a passion for building robust, scalable data platforms that stand the test of time. Specialising in exploring the crucial balance between developer velocity and enterprise-grade reliability. Deeply committed to "Everything as Code" and DevOps principles to build self-service tooling, standardised pipelines, and efficient orchestration systems that empower teams while embedding critical data governance, security controls, and maintainability.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button
                 as="a"
-                href="/Sujal_Dhungana_Resume.pdf"
+                href="/public/Sujal_Dhungana_Resume.pdf"
                 download
                 className="bg-white text-[#3ec1d3] dark:text-[#2a8591] hover:bg-gray-100 transition-colors inline-flex items-center gap-2"
               >

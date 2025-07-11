@@ -5,6 +5,23 @@ import { Card, CardBody, Chip } from '@nextui-org/react';
 
 const certifications = [
   {
+    title: "AWS Certified Solutions Architect",
+    issuer: "Amazon Web Services",
+    date: "2024",
+    icon: Database,
+    description: "Demonstrates expertise in designing distributed systems and applications on the AWS platform, including compute, networking, storage, and database AWS services.",
+    skills: [
+      "AWS Architecture",
+      "Cloud Security",
+      "Cost Optimization",
+      "High Availability",
+      "Disaster Recovery",
+      "Performance Optimization"
+    ],
+    color: "bg-[#FF9900]/10 text-[#FF9900]",
+    link: "https://aws.amazon.com/certification/certified-solutions-architect-associate/"
+  },
+  {
     title: "Azure Data Engineer Associate",
     issuer: "Microsoft",
     date: "2024",

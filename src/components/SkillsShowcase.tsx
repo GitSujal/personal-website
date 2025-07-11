@@ -7,46 +7,62 @@ const skillCategories = [
   {
     title: "Programming Languages",
     icon: Code,
-    skills: ["Python", "SQL", "PySpark", "R", "C", "C++", "JavaScript"],
+    skills: ["Python", "SQL", "PySpark", "R", "C", "C++", "JavaScript", "Bash"],
     color: "bg-blue-500/10 text-blue-500"
   },
   {
-    title: "Cloud Services",
+    title: "Platforms & Data Orchestration",
     icon: Database,
     skills: [
-      "AWS Glue",
-      "SageMaker",
-      "Redshift",
-      "Athena",
-      "Step Functions",
-      "DynamoDB",
-      "SQS",
-      "Lambda",
-      "S3",
-      "ClickHouse",
-      "Azure"
+      "AWS (EKS, ECS, Lambda, Step Functions)",
+      "Kubernetes",
+      "ArgoCD",
+      "Helm",
+      "Ansible"
     ],
     color: "bg-purple-500/10 text-purple-500"
   },
   {
-    title: "DataOps & IaC",
+    title: "Data Processing & Warehousing",
     icon: Cog,
     skills: [
-      "Terraform",
-      "CloudFormation",
-      "CDK",
-      "Azure DevOps",
-      "AWS CodeCommit",
-      "CodeBuild",
-      "CodePipeline"
+      "Python",
+      "SQL",
+      "AWS Glue",
+      "DBT",
+      "ClickHouse",
+      "Apache Iceberg",
+      "AWS MSK (Managed Kafka)",
+      "AWS OpenSearch",
+      "DynamoDB",
+      "AWS RDS"
     ],
     color: "bg-green-500/10 text-green-500"
   },
   {
-    title: "Visualization Tools",
+    title: "GitOps & Infrastructure as Code",
     icon: LineChart,
-    skills: ["Power BI", "QuickSight", "Spotfire"],
+    skills: [
+      "CloudFormation",
+      "CDK",
+      "Terraform",
+      "CI/CD",
+      "Azure DevOps",
+      "GitLab",
+      "Artifactory"
+    ],
     color: "bg-orange-500/10 text-orange-500"
+  },
+  {
+    title: "Monitoring & Visualization",
+    icon: LineChart,
+    skills: [
+      "Prometheus",
+      "Grafana",
+      "Power BI",
+      "QuickSight"
+    ],
+    color: "bg-red-500/10 text-red-500"
   }
 ];
 
