@@ -13,43 +13,67 @@ export interface TimelineEvent {
 
 export const timelineEvents: TimelineEvent[] = [
   {
-    year: "Oct 2024 - Present",
+    year: "Sep 2025 - Present",
+    title: "Senior Data Engineer",
+    company: "Western Power",
+    location: "Perth, WA",
+    description: [
+      "Engineered large-scale data architecture for massive volumes of network telemetry, demographic, and meteorological datasets",
+      "Designed and maintained 1000+ interdependent dbt models for data transformation and ML feature engineering",
+      "Championed Everything-as-Code culture replacing manual UI development with Databricks Asset Bundles and dbt",
+      "Enabled automated, seamless deployment of pipelines across multiple environments",
+      "Built internal developer tooling and helper scripts automating enterprise data governance",
+      "Authored comprehensive Data Engineering Starter Guide providing codebase for best practices",
+      "Led technical onboarding and team mentorship, scaling data engineering function from 1 to 3 engineers",
+      "Instilled culture of pragmatic excellence, code quality, and end-to-end ownership"
+    ],
+    icon: Server,
+    type: "work",
+    tags: ["dbt", "Databricks", "Data Governance", "CI/CD", "Team Leadership", "Data Architecture"]
+  },
+  {
+    year: "Oct 2024 - Aug 2025",
     title: "Resident Platform Engineer (Contractor)",
     company: "Telstra",
     location: "Perth, WA",
     description: [
-      "Optimised data pipelines ingesting over 1TB/hr of log data to Clickhouse and Opensearch",
-      "Separated IO-bound and CPU-bound operations with parallelization to utilise idle CPU cores",
-      "Implemented event-based scaling of Kubernetes resources",
-      "Achieved 50% reduction in compute cost, saving over $600,000 per annum without compromising latency",
-      "Designed and built suite of internal toolings and RESTful APIs for K8s application provisioning",
-      "Reduced data pipeline creation time from days to hours through automation",
-      "Ensured platform uptime exceeds SLA through rigorous change management and incident response"
+      "Architected and operated event-driven data ingestion platform (AWS MSK/Kafka) processing 1TB/hour of security telemetry",
+      "Engineered near-real-time pipelines using Vector for denoising and transforming logs before Clickhouse and OpenSearch",
+      "Minimized source-to-sink latency while processing massive data volumes",
+      "Reduced compute costs by 50% (saving $600,000+ annually) through decoupling I/O and CPU operations",
+      "Optimized Kafka components and implemented event-based scaling for Kubernetes resources",
+      "Secured end-to-end architecture with strict VPC isolation, TLS encryption, SASL/SCRAM authentication, and OAuth2",
+      "Built internal Python tooling and RESTful APIs for Kubernetes application provisioning and management",
+      "Reduced secure data pipeline creation time from days to hours through automation",
+      "Maintained platform uptime above SLA through rigorous change management and automated rolling updates",
+      "Led on-call incident response with deep-dive root cause analysis and SOP documentation"
     ],
     icon: Server,
     type: "work",
-    tags: ["Kubernetes", "ClickHouse", "OpenSearch", "Cost Optimization", "Platform Engineering", "APIs"]
+    tags: ["AWS MSK", "Kafka", "Vector", "ClickHouse", "OpenSearch", "Kubernetes", "Security", "Cost Optimization"]
   },
   {
-    year: "Apr 2024 - Present",
+    year: "Apr 2024 - Sep 2025",
     title: "Principal Data Engineer",
     company: "Data Vanguards Pty Ltd",
     location: "Perth, WA",
     description: [
-      "Technical Lead: Architected world's first Warehouse agnostic (Bring your own warehouse) agentic Data Platform",
-      "Empowered AI agents with comprehensive, governed access to pipeline metadata and data models",
-      "Established data provenance and enabled secure, context-aware analytical reports",
-      "Developed fully automated end-to-end MLOPs pipeline for item recommendations (horse auctioneer)",
-      "Built lightweight high-frequency ingestion pipeline for IoT data with near real-time analytics",
-      "Used native AWS APIs, Lambda, SQS, DynamoDB, Glue Catalogue and Redshift",
-      "Designed Data Ingestion Platform with Medallion layers following modern data architecture",
-      "Reduced new data source onboarding time by 60% through standardized pipelines",
-      "Redesigned ingestion pipeline enhancing reliability while reducing operational costs by 90%",
-      "Achieved annual savings of over $30K in cloud expenses"
+      "Architected warehouse-agnostic Data Platform (Redshift, Athena, Snowflake) as Technical Lead",
+      "Built OAuth2-secured APIs integrated with pipeline metadata for context-aware AI agents",
+      "Enabled secure analytical reporting with seamless warehouse flexibility",
+      "Developed high-frequency serverless data ingestion pipeline for IoT telemetry using Lambda, SQS, DynamoDB, Redshift",
+      "Enabled near real-time analytics with least-privilege IAM security and structured logging",
+      "Standardized data ingestion with Medallion architecture reducing onboarding time by 60%",
+      "Built reusable, modular pipelines significantly lowering platform maintenance overhead",
+      "Redesigned legacy AWS pipeline resolving performance bottlenecks and reducing costs by 90%",
+      "Achieved $30,000+ annual savings through comprehensive optimization",
+      "Established end-to-end observability using Prometheus, Grafana, and custom CloudWatch metrics",
+      "Engineered fully automated MLOps pipeline for training, deploying, and operating ML models",
+      "Delivered real-time item recommendations for large-scale national auction platform"
     ],
     icon: Code,
     type: "work",
-    tags: ["MLOps", "Data Architecture", "AI Agents", "AWS", "Cost Optimization", "Real-time Analytics"]
+    tags: ["Data Architecture", "AWS", "Serverless", "MLOps", "OAuth2", "Medallion", "Cost Optimization", "AI Agents"]
   },
   {
     year: "Aug 2023 - Present",

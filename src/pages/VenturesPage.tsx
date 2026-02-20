@@ -3,20 +3,30 @@ import { motion } from 'framer-motion';
 import { Target, ArrowUpRight, Calendar, Award } from 'lucide-react';
 import { Button, Card, CardBody, Chip } from '@nextui-org/react';
 import SEOHelmet from '../components/SEOHelmet';
+import AchievementCard from '../components/cards/AchievementCard';
 import { ventures, ventureStats } from '../data/ventures';
+import { THEME } from '../config/theme';
 
 export default function VenturesPage() {
   return (
-    <div className="pt-16">
+    <div>
       <SEOHelmet
         title="My Ventures - Sujal Dhungana | Data Education & Analytics Innovation"
         description="Explore Sujal Dhungana's entrepreneurial ventures: Data Profession Academy empowering data analysts and Data Sparta democratizing analytics for SMBs."
         keywords="Data Profession Academy, Data Sparta, Data Education, Analytics Platform, SMB Analytics, Data Training, Entrepreneurship"
         url="https://sujaldhungana.com/ventures"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "name": "My Ventures - Sujal Dhungana",
+          "description": "Entrepreneurial ventures by Sujal Dhungana in data education and analytics.",
+          "url": "https://sujaldhungana.com/ventures",
+          "isPartOf": { "@type": "WebSite", "url": "https://sujaldhungana.com" }
+        }}
       />
 
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-b from-[#3ec1d3] to-[#2596be] dark:from-[#2a8591] dark:to-[#1a6b85] text-white">
+      <section className={`py-20 ${THEME.gradients.hero} text-white`}>
         <div className="max-w-7xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -34,30 +44,28 @@ export default function VenturesPage() {
             
             {/* Venture Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
-              {ventureStats.map((stat, index) => {
-                const IconComponent = stat.icon;
-                return (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-                    className="bg-white/10 backdrop-blur-sm rounded-lg p-4"
-                  >
-                    <IconComponent className="mx-auto mb-2" size={32} />
-                    <div className="text-2xl font-bold">{stat.value}</div>
-                    <div className="text-sm font-medium">{stat.label}</div>
-                    <div className="text-xs opacity-80">{stat.description}</div>
-                  </motion.div>
-                );
-              })}
+              {ventureStats.map((stat, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
+                >
+                  <AchievementCard
+                    icon={stat.icon}
+                    value={stat.value}
+                    label={stat.label}
+                    description={stat.description}
+                  />
+                </motion.div>
+              ))}
             </div>
           </motion.div>
         </div>
       </section>
 
       {/* Mission Statement */}
-      <section className="py-16 bg-white dark:bg-gray-800">
+      <section className={THEME.backgrounds.section}>
         <div className="max-w-7xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -78,7 +86,7 @@ export default function VenturesPage() {
       </section>
 
       {/* Ventures Section */}
-      <section className="py-16 bg-gray-50 dark:bg-gray-900">
+      <section className={THEME.backgrounds.sectionAlt}>
         <div className="max-w-7xl mx-auto px-4">
           <div className="space-y-16">
             {ventures.map((venture, index) => {
@@ -101,6 +109,7 @@ export default function VenturesPage() {
                               src={venture.image}
                               alt={venture.title}
                               className="object-cover w-full h-full"
+                              loading="lazy"
                             />
                             <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
                               <IconComponent className="text-white" size={64} />
@@ -143,7 +152,7 @@ export default function VenturesPage() {
                           <div className="grid grid-cols-2 gap-4 mb-6">
                             {Object.entries(venture.impact).map(([key, value], impactIndex) => (
                               <div key={impactIndex} className="text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                                <div className="text-xl font-bold text-[#3ec1d3] dark:text-[#2a8591]">{value}</div>
+                                <div className={`text-xl font-bold ${THEME.colors.primary.lightClass} ${THEME.colors.primary.darkClass}`}>{value}</div>
                                 <div className="text-sm text-gray-600 dark:text-gray-400 capitalize">
                                   {key.replace(/([A-Z])/g, ' $1').trim()}
                                 </div>
@@ -203,7 +212,7 @@ export default function VenturesPage() {
                             href={venture.link}
                             target={venture.link !== '#' ? "_blank" : undefined}
                             rel={venture.link !== '#' ? "noopener noreferrer" : undefined}
-                            className={`w-full ${venture.color.includes('blue') ? 'bg-blue-500 hover:bg-blue-600' : 'bg-green-500 hover:bg-green-600'} text-white transition-colors`}
+                            className={`w-full ${venture.color.includes('blue') ? 'bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700' : 'bg-green-500 hover:bg-green-600 dark:bg-green-600 dark:hover:bg-green-700'} text-white transition-colors`}
                             endContent={venture.link !== '#' ? <ArrowUpRight size={20} /> : undefined}
                             isDisabled={venture.link === '#'}
                           >
@@ -221,7 +230,7 @@ export default function VenturesPage() {
       </section>
 
       {/* Future Vision */}
-      <section className="py-16 bg-white dark:bg-gray-800">
+      <section className={THEME.backgrounds.section}>
         <div className="max-w-7xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -241,7 +250,7 @@ export default function VenturesPage() {
               <Button
                 as="a"
                 href="/hire-me#contact"
-                className="bg-[#3ec1d3] dark:bg-[#2a8591] text-white hover:bg-[#2596be] dark:hover:bg-[#1a6b85] transition-colors"
+                className={THEME.components.button.primary}
               >
                 Partner With Me
               </Button>
@@ -250,7 +259,7 @@ export default function VenturesPage() {
                 href="https://dataprofessionacademy.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="border-2 border-[#3ec1d3] dark:border-[#2a8591] text-[#3ec1d3] dark:text-[#2a8591] hover:bg-[#3ec1d3] dark:hover:bg-[#2a8591] hover:text-white transition-colors"
+                className={THEME.components.button.secondary}
                 endContent={<ArrowUpRight size={20} />}
               >
                 Explore Data Profession Academy

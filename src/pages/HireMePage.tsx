@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Award, Download, Calendar } from 'lucide-react';
 import { Button } from '@nextui-org/react';
+import SEOHelmet from '../components/SEOHelmet';
 import ProjectsSection from '../components/ProjectsSection';
 import BlogSection from '../components/BlogSection';
 import ContactSection from '../components/ContactSection';
@@ -9,12 +10,34 @@ import CertificationBadges from '../components/CertificationBadges';
 import SkillsShowcase from '../components/SkillsShowcase';
 import SpeakingSection from '../components/SpeakingSection';
 import { hirePageContent } from '../data/profileContent';
+import { skillCategories, getSkillsByCategory } from '../data/skills';
+import { certifications } from '../data/certifications';
+import { THEME } from '../config/theme';
 
 export default function HireMePage() {
   return (
-    <div className="pt-16">
+    <div>
+      <SEOHelmet
+        title="Hire Sujal Dhungana - Data Engineer & DataOps Expert | Resume & Skills"
+        description="Hire Sujal Dhungana, a skilled Data Engineer with expertise in DataOps, MLOps, cloud data platforms, and scalable pipeline architecture. View resume, skills, and certifications."
+        keywords="Hire Data Engineer, DataOps Consultant, MLOps Expert, Data Pipeline Architect, Cloud Data Engineer, Sujal Dhungana Resume"
+        url="https://sujaldhungana.com/hire-me"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "ProfilePage",
+          "name": "Hire Sujal Dhungana",
+          "description": "Professional profile and resume of Sujal Dhungana, Data Engineer.",
+          "url": "https://sujaldhungana.com/hire-me",
+          "mainEntity": {
+            "@type": "Person",
+            "name": "Sujal Dhungana",
+            "jobTitle": "Data Engineer",
+            "url": "https://sujaldhungana.com"
+          }
+        }}
+      />
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-b from-[#3ec1d3] to-[#2596be] dark:from-[#2a8591] dark:to-[#1a6b85] text-white">
+      <section className={`py-20 ${THEME.gradients.hero} text-white`}>
         <div className="max-w-7xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -33,7 +56,8 @@ export default function HireMePage() {
                 as="a"
                 href={hirePageContent.hero.buttons.download.href}
                 download
-                className="bg-white text-[#3ec1d3] dark:text-[#2a8591] hover:bg-gray-100 transition-colors inline-flex items-center gap-2"
+                className="bg-white hover:bg-gray-100 transition-colors inline-flex items-center gap-2"
+                style={{color: THEME.colors.primary.light}}
               >
                 <Download size={20} />
                 {hirePageContent.hero.buttons.download.text}
@@ -41,7 +65,7 @@ export default function HireMePage() {
               <Button
                 as="a"
                 href={hirePageContent.hero.buttons.schedule.href}
-                className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-[#3ec1d3] dark:hover:text-[#2a8591] transition-colors inline-flex items-center gap-2"
+                className="bg-transparent border-2 border-white text-white hover:bg-white transition-colors inline-flex items-center gap-2"
               >
                 <Calendar size={20} />
                 {hirePageContent.hero.buttons.schedule.text}
@@ -52,18 +76,18 @@ export default function HireMePage() {
       </section>
 
       {/* Skills Section */}
-      <section className="py-16 bg-white dark:bg-gray-800">
+      <section className={THEME.backgrounds.section}>
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="text-3xl font-bold mb-12">{hirePageContent.sections.skills.title}</h2>
-          <SkillsShowcase />
+          <SkillsShowcase skillCategories={skillCategories} getSkillsByCategory={getSkillsByCategory} />
         </div>
       </section>
 
       {/* Career Timeline Section */}
-      <section className="py-16 bg-gray-50 dark:bg-gray-900">
+      <section className={THEME.backgrounds.sectionAlt}>
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="text-3xl font-bold mb-12 flex items-center gap-2">
-            <Calendar className="text-[#3ec1d3] dark:text-[#2a8591]" />
+            <Calendar className={THEME.components.icon.primary} />
             {hirePageContent.sections.timeline.title}
           </h2>
           <InteractiveTimeline />
@@ -71,13 +95,13 @@ export default function HireMePage() {
       </section>
 
       {/* Certifications Section */}
-      <section className="py-16 bg-white dark:bg-gray-800">
+      <section className={THEME.backgrounds.section}>
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="text-3xl font-bold mb-12 flex items-center gap-2">
-            <Award className="text-[#3ec1d3] dark:text-[#2a8591]" />
+            <Award className={THEME.components.icon.primary} />
             {hirePageContent.sections.certifications.title}
           </h2>
-          <CertificationBadges />
+          <CertificationBadges certifications={certifications} />
         </div>
       </section>
 

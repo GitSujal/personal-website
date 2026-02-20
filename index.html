@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <!-- Primary Meta Tags -->
@@ -33,7 +33,15 @@
         "@type": "Person",
         "name": "Sujal Dhungana",
         "jobTitle": "Data Engineer",
+        "description": "Data Engineer specializing in DataOps, MLOps, and building scalable data pipelines. Founder of Data Profession Academy and Data Sparta.",
         "url": "https://sujaldhungana.com",
+        "knowsAbout": ["Data Engineering", "DataOps", "MLOps", "Cloud Data Platforms", "ETL Pipelines", "Analytics", "Python", "SQL", "Azure", "AWS"],
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Perth",
+          "addressRegion": "WA",
+          "addressCountry": "AU"
+        },
         "sameAs": [
           "https://www.linkedin.com/in/dhunganasujal/",
           "https://dataprofessionacademy.com"
@@ -45,7 +53,61 @@
         "alumniOf": {
           "@type": "CollegeOrUniversity",
           "name": "Curtin University"
+        },
+        "founder": [
+          {
+            "@type": "Organization",
+            "name": "Data Profession Academy",
+            "url": "https://dataprofessionacademy.com"
+          },
+          {
+            "@type": "Organization",
+            "name": "Data Sparta"
+          }
+        ]
+      }
+    </script>
+
+    <!-- WebSite Schema -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Sujal Dhungana",
+        "url": "https://sujaldhungana.com",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://sujaldhungana.com/?q={search_term_string}",
+          "query-input": "required name=search_term_string"
         }
+      }
+    </script>
+
+    <!-- BreadcrumbList Schema -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://sujaldhungana.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Hire Me",
+            "item": "https://sujaldhungana.com/hire-me"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Ventures",
+            "item": "https://sujaldhungana.com/ventures"
+          }
+        ]
       }
     </script>
 
@@ -53,6 +115,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://sujaldhungana.com/" />
+
     <!-- Robots meta tag -->
     <meta name="robots" content="index, follow" />
   </head>

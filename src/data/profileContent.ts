@@ -37,9 +37,9 @@ export interface ProfileContent {
 
 export const profileContent: ProfileContent = {
   name: "Sujal Dhungana",
-  highlight: "Principal Data Engineer | Platform Engineering | Data Instructor",
-  summaryShort: "Seasoned Data Engineer with a passion for building robust, scalable data platforms that stand the test of time. Specializing in the crucial balance between developer velocity and enterprise-grade reliability.",
-  summaryLong: "Seasoned Data Engineer with a passion for building robust, scalable data platforms that stand the test of time. Specialising in exploring the crucial balance between developer velocity and enterprise-grade reliability. Deeply committed to \"Everything as Code\" and DevOps principles to build self-service tooling, standardised pipelines, and efficient orchestration systems that empower teams while embedding critical data governance, security controls, and maintainability.",
+  highlight: "Senior Data Engineer | Data Infrastructure & Platform Engineering | Data Educator",
+  summaryShort: "Senior Data Engineer specializing in designing, building, and automating robust, petabyte-scale distributed data systems. Deeply committed to \"Keep it simple\", \"Everything as Code\", and \"Own what you build\" principles.",
+  summaryLong: "Senior Data Engineer with deep expertise in designing, building, and automating robust, petabyte-scale distributed data systems. Specialising in writing production-quality software to manage the lifecycle of core data services like Kafka, OpenSearch, and Kubernetes. Deeply committed to \"Keep it simple\", \"Everything as Code\", and \"Own what you build\" principles, empowering teams to deliver secure, scalable, and maintainable pipelines that have real-world impact.",
   heroButtons: {
     primary: {
       text: "View Full Profile",
@@ -56,8 +56,8 @@ export const profileContent: ProfileContent = {
       description: "Deep expertise across the modern data stack, from infrastructure to machine learning"
     },
     currentRoles: {
-      title: "Currently Making Impact At",
-      description: "Driving innovation across multiple organizations"
+      title: "Recent Experience",
+      description: "Recent roles driving innovation across multiple organizations"
     },
     timeline: {
       title: "Career Journey Highlights",

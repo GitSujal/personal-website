@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="20 110 460 280">
+  <defs>
+    <linearGradient id="logoGrad" gradientUnits="userSpaceOnUse" x1="40" y1="100" x2="460" y2="400">
+      <stop offset="0%" stop-color="#7EF0FF" />
+      <stop offset="50%" stop-color="#3EC1D3" />
+      <stop offset="100%" stop-color="#23818D" />
+    </linearGradient>
+  </defs>
+
+  <!-- Letter S -->
+  <path d="M 220 150
+           L 100 150
+           A 40 40 0 0 0 60 190
+           L 60 210
+           A 40 40 0 0 0 100 250
+           L 180 250
+           A 40 40 0 0 1 220 290
+           L 220 310
+           A 40 40 0 0 1 180 350
+           L 60 350"
+        fill="none"
+        stroke="url(#logoGrad)"
+        stroke-width="40"
+        stroke-linecap="round"
+        stroke-linejoin="round" />
+
+  <!-- Letter D -->
+  <path d="M 280 150
+           L 340 150
+           A 100 100 0 0 1 440 250
+           A 100 100 0 0 1 340 350
+           L 280 350
+           Z"
+        fill="none"
+        stroke="url(#logoGrad)"
+        stroke-width="40"
+        stroke-linecap="round"
+        stroke-linejoin="round" />
+</svg>

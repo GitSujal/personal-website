@@ -2,39 +2,11 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardBody, Chip } from '@nextui-org/react';
 import { timelineEvents } from '../data/timelineEvents';
+import { getTimelineTypeColor, getTimelineTypeIcon } from '../utils/colorMappings';
+import { THEME } from '../config/theme';
 
 export default function InteractiveTimeline() {
   const [selectedEvent, setSelectedEvent] = React.useState<number | null>(null);
-
-  const getTypeColor = (type: string) => {
-    switch (type) {
-      case 'work':
-        return 'bg-[#3ec1d3]/10 text-[#3ec1d3]';
-      case 'venture':
-        return 'bg-green-500/10 text-green-500';
-      case 'education':
-        return 'bg-purple-500/10 text-purple-500';
-      case 'volunteer':
-        return 'bg-orange-500/10 text-orange-500';
-      default:
-        return 'bg-gray-500/10 text-gray-500';
-    }
-  };
-
-  const getTypeIcon = (type: string) => {
-    switch (type) {
-      case 'work':
-        return '💼';
-      case 'venture':
-        return '🚀';
-      case 'education':
-        return '🎓';
-      case 'volunteer':
-        return '🤝';
-      default:
-        return '📋';
-    }
-  };
 
   return (
     <div className="relative">
@@ -56,15 +28,15 @@ export default function InteractiveTimeline() {
                 isPressable
                 onPress={() => setSelectedEvent(selectedEvent === index ? null : index)}
                 className={`transition-all duration-300 hover:shadow-lg ${
-                  selectedEvent === index ? 'scale-105 border-2 border-[#3ec1d3]' : 'hover:scale-102'
+                  selectedEvent === index ? `scale-105 border-2 ${THEME.colors.primary.lightBorder} ${THEME.colors.primary.darkBorder}` : 'hover:scale-102'
                 }`}
               >
                 <CardBody className="p-6">
                   <div className="flex items-center gap-2 mb-3">
-                    <event.icon className="text-[#3ec1d3] dark:text-[#2a8591]" size={24} />
+                    <event.icon className={`${THEME.components.icon.primary} dark:text-[#2a8591]`} size={24} />
                     <div className="flex items-center gap-2">
-                      <span className="text-sm font-bold text-[#3ec1d3] dark:text-[#2a8591]">{event.year}</span>
-                      <span className="text-xs">{getTypeIcon(event.type)}</span>
+                      <span className={`text-sm font-bold ${THEME.colors.primary.lightClass} ${THEME.colors.primary.darkClass}`}>{event.year}</span>
+                      <span className="text-xs">{getTimelineTypeIcon(event.type)}</span>
                     </div>
                   </div>
                   <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">{event.title}</h3>
@@ -77,7 +49,7 @@ export default function InteractiveTimeline() {
                       <Chip
                         key={tagIndex}
                         size="sm"
-                        className={getTypeColor(event.type)}
+                        className={getTimelineTypeColor(event.type)}
                         variant="flat"
                       >
                         {tag}

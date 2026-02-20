@@ -1,191 +1,120 @@
 # Sujal Dhungana
+Perth, Australia | 
+[sujal@dataprofessionacademy.com](mailto:sujal@dataprofessionacademy.com) 
+ | 0410677503 
+| [in/dhunganasujal](https://www.linkedin.com/in/dhunganasujal) 
+| [sujal.datasparta.com](https://sujal.datasparta.com)
 
-```
-Perth,Australia sujal@dataprofessionacademy.com 0410677503 in/dhunganasujal sujal-dhungana.netlify.app/hire-me
-```
-## SUMMARY
+# SUMMARY
 
-Seasoned Data Engineer with a passion for building robust, scalable data platforms that stand the test of time. Specialising in exploring the
-crucial balance between developer velocity and enterprise-grade reliability. Deeply committed to "Everything as Code" and DevOps principles
-to build self-service tooling, standardised pipelines, and efficient orchestration systems that empower teams while embedding critical data
-governance, security controls, and maintainability.
+Senior Data Engineer with deep expertise in designing, building, and automating robust, petabyte-scale distributed data systems. Specialising in writing production-quality software to manage the lifecycle of core data services like Kafka, OpenSearch, and Kubernetes. Deeply committed to "Keep it simple", "Everything as Code", and "Own what you build" principles, empowering teams to deliver secure, scalable, and maintainable pipelines that have a real-world impact.
 
-## SKILLS
+# SKILLS
 
-Languages: Python, SQL, PySpark, R, C, C++, JavaScript, Bash
+- Key Skills: Data Engineering, DataOps, Data Infrastructure Management, Data Warehousing, Data Modelling, Event-Driven Architecture, Distributed Systems
 
-Platforms & Data Orchestration: AWS (EKS, ECS, Lambda, Step Functions), Kubernetes, ArgoCD, Helm, Ansible
+- Languages: Python, SQL, PySpark, R, C, C++, Bash, JavaScript
 
-Data Processing & Warehousing: Python, SQL, AWS Glue, DBT, ClickHouse, Apache Iceberg, AWS MSK(Managed Kafka), AWS Opensearch,
-DynamoDB, AWS RDS
+- Platforms & Data Orchestration: Amazon Web Services (EKS, ECS, Lambda, Step Functions), Databricks, Kubernetes, ArgoCD, Helm, Ansible
 
-GitOps & Infrastructure as Code: Cloudformation, CDK, Terraform, CI/CD, Azure DevOps, Gitlab, Artifactory
+- Data Processing & Warehousing: Python, SQL, AWS Glue, DBT, ClickHouse, Snowflake, Apache Iceberg, AWS MSK(Managed Kafka), AWS Opensearch, DynamoDB, AWS RDS
 
-Monitoring & Visualisation Tools: Prometheus, Grafana, PowerBI, Quicksight
+- GitOps & Infrastructure as Code: Cloudformation, CDK, Terraform, Databricks Asset Bundle, CI/CD, Azure DevOps, Gitlab, Artifactory
 
-## EXPERIENCE
+- Monitoring & Visualisation Tools: Prometheus, Grafana, PowerBI, Quicksight, Qlik
 
-### Resident Platform Engineer (Contractor)
+# EXPERIENCE
 
-Telstra October 2024 - Present,Perth, WA
-Optimised data pipelines ingesting over 1TB/hr of log data to Clickhouse and Opensearch, including separating IO-bound and CPU-
-bound operations, parallelization of operations to utilise idle CPU cores, coupled with event-based scaling of Kubernetes resources, resulted
-in a savings of over 50% in compute cost (valued at over $600,000 per annum) without compromising latency and platform reliability.
+## Senior Data Engineer
 
-#### •
+### Western Power
 
-```
-Designed and built a suite of internal toolings and RESTful APIs to automate the provisioning and management of K8s applications,
-ensuring consistency and reducing the time taken to create data pipelines from days to hours.
-```
-#### •
+September 2025 - Present, Perth, WA
 
-```
-Ensured platform uptime exceeds SLA through rigorous change management, regular rolling updates, and leading incident response,
-maintaining high levels of customer satisfaction.
-```
-#### •
+- Engineered a large-scale data architecture to process massive volumes of network telemetry, demographic, and meteorological datasets. Designed and maintained over 1,000 interdependent dbt models to clean, transform, and feed data into time-domain machine learning models for 10-year network demand forecasting.
+- Championed an "everything-as-code" and CI/CD culture across the team. Replaced error-prone, manual UI development with Databricks Asset Bundles and dbt, enabling automated, seamless deployment of pipelines and scheduled jobs across multiple environments.
+- Built internal developer tooling and helper scripts to automate enterprise data governance. Authored a comprehensive Data Engineering Starter Guide that went beyond documentation, providing the codebase required to make the right engineering practices the easiest path for developers.
+- Led technical onboarding and team mentorship, successfully scaling the data engineering function from 1 to 3 engineers. Instilled a culture of pragmatic excellence, code quality, and end-to-end ownership.
 
-### Principal Data Engineer
+## Resident Platform Engineer (Contractor)
 
-Data Vanguards Pty Ltd. April 2024 - Present,Perth, WA
-Technical Lead: Architected and led the development of the world's first Warehouse agnostic (Bring your own warehouse like Redshift,
-Athena, Snowflake, etc.), agentic Data Platform. Empowering AI agents with comprehensive, governed access to pipeline metadata, status,
-and data models to establish data provenance and enable secure, context-aware analytical reports.
+### Telstra
 
-#### •
+October 2024 - August 2025, Perth, WA
 
-```
-Developed a fully automated end-to-end MLOPs pipeline to generate item recommendations for potential bidders to one of the biggest
-horse auctioneers in Australia.
-```
-#### •
+- Architected and operated an event-driven data ingestion platform (AWS MSK / Kafka) processing over 1TB/hour of critical security telemetry. Engineered near-real-time pipelines using Vector to denoise, transform, and extract essential information from high-volume logs before routing to Clickhouse and OpenSearch sinks, with minimal impact on source-to-sink latency.
+- Reduced compute costs by over 50% (saving >$600,000 annually) without impacting system reliability. Achieved this by decoupling I/O-bound and CPU-bound operations, optimising Kafka components, and implementing event-based scaling for Kubernetes resources.
+- Secured the end-to-end data architecture by enforcing strict VPC network isolation, mandatory TLS encryption, SASL/SCRAM client authentication, and securing all management APIs with OAuth2.
+- Built internal Python tooling and RESTful APIs to automate the provisioning and management of Kubernetes applications, reducing secure data pipeline creation time from days to hours.
+- Maintained platform uptime above SLA targets for mission-critical pipelines through rigorous change management and automated rolling updates. Led on-call incident response, conducted deep-dive root cause analysis, and authored Standard Operating Procedures (SOPs) to prevent data loss and recovery from incidents.
 
-```
-Developed a lightweight high-frequency ingestion pipeline to seamlessly ingest IoT data into the data warehouse, enabling near real-time
-analytical capabilities using native AWS APIs, Lambda, SQS, DynamoDB, Glue Catalogue and Redshift.
-```
-#### •
+## Principal Data Engineer
 
-```
-Designed and deployed a Data Ingestion Platform to standardise data ingestion and introduced Medallion layers following the modern
-data architecture. Reducing the time taken to onboard new data sources by 60% (as the pipeline between each layer is standardised and
-reused) while also reducing the maintenance effort.
-```
-#### •
+### Data Vanguards Pty Ltd.
 
-```
-Redesigned and developed an ingestion pipeline on AWS, significantly enhancing reliability and maintainability while reducing
-operational costs by 90%, resulting in annual savings of over $30K in cloud expenses.
-```
-#### •
+April 2024 - September 2025, Perth, WA
 
-### Founder | Instructor
+- Architected a warehouse-agnostic Data Platform (Redshift, Athena, Snowflake) as Technical Lead. Built OAuth2-secured APIs and integrated pipeline metadata to enable context-aware AI agents to securely query and generate analytical reports.
+- Developed a high-frequency, serverless data ingestion pipeline for IoT telemetry using AWS Lambda, SQS, DynamoDB, and Redshift. Enabled near real-time analytics while enforcing least-privilege IAM security and implementing structured logging for end-to-end traceability.
 
-Data Profession Academy August 2023 - Present,Perth, WA
-Designed and delivered a 12-week data analytics curriculum to 20+ aspiring professionals, with a majority securing their first industry
-role within 3 months of completion.
+- Standardised data ingestion by implementing a Medallion architecture. Built reusable, modular pipelines that reduced the time required to onboard new data sources by 60% while significantly lowering ongoing platform maintenance.
+- Redesigned a legacy AWS ingestion pipeline to resolve performance bottlenecks, reducing cloud compute costs by 90% (saving >$30,000 annually). Established an end-to-end observability stack using Prometheus, Grafana, and custom CloudWatch metrics to monitor system health and validate savings.
+- Engineered a fully automated, end-to-end MLOps pipeline to train, deploy, and operate machine learning models, delivering real-time item recommendations for a large-scale national auction platform.
 
-#### •
+## Founder | Instructor
 
-```
-Provided mentorship to 20+ students, both technical (Python, SQL, PowerBI) and non-technical skills (Problem Solving, Data Storytelling),
-empowering them to become well-rounded data analysts ready to deliver value from day one.
-```
-#### •
+**Data Profession Academy**
 
-### Senior Data Engineer
+August 2023 - Present, Perth, WA
 
+- Founded and instructed a 12-week data analytics bootcamp, teaching Python, advanced SQL, and data modeling to 20+ students. Mentored the cohort through complex technical projects, resulting in the majority securing first industry data roles within 3 months.
+- Presented at the Perth Data Engineering Meetup on "Building Reusable Pipelines," sharing technical frameworks for designing simple, maintainable data architectures that reduce engineering overhead and improve scalability.
+- Spoke at the Google Developer Group (GDG) Perth on practical AI integration, demonstrating how software engineers can embed AI tools into daily development workflows to solve complex technical challenges.
+- Organised and hosted online webinars and 1-day technical workshops, independently creating curriculum to teach foundational data engineering and analytics skills to the broader tech community.
 
-Water Corporation May 2022 - April 2024,Perth, WA
-Created an end-to-end MLOPs pipeline leveraging AWS native cloud stacks (SageMaker, Code Build, Step Functions, Lambda), significantly
-reducing the time to production from days to minutes with minimal manual intervention. The MLOPs pipeline enabled seamless cross-
-account deployment of ML models with a simple click of a button while also providing appropriate governance with manual validations and
-approval steps in between.
+## Senior Data Engineer
 
-#### •
+**Water Corporation**
 
-```
-Productionised ML model to predict Centrifuge Performance using real-time operational data, voted one of the top papers in the OzWater
-conference 2024.
-```
-#### •
+May 2022 - April 2024, Perth, WA
 
-```
-Designed and developed an end-to-end ingestion platform that ingests data from various sources into Apache Iceberg tables in S3,
-incorporating data quality reporting and dimensional modelling with SCD capabilities out of the box. This innovation cut pipeline build
-time from 2 days to 2 hours and reduced cloud costs by 50% with a config-driven approach.
-```
-#### •
+- Engineered an automated MLOps pipeline (AWS SageMaker, Step Functions, CodeBuild) to deploy and operate machine learning models for real-time data streams. Productionized a predictive model (awarded top paper at OzWater 2024), reducing deployment time from days to minutes while enforcing strict cross-account deployment governance.
+- Designed a config-driven data ingestion platform to load diverse data sources into Apache Iceberg on S3. Built automated dimensional modelling and Slowly Changing Dimensions (SCD), cutting pipeline creation time from 2 days to 2 hours and reducing cloud compute costs by 50%.
+- Automated data validation and quality assurance testing. Replaced manual validation workflows with automated test scripts, reducing QA execution time from days to hours and ensuring data accuracy and freshness in AWS Redshift.
+- Built large-scale PySpark ETL pipelines in AWS Glue to process high-volume telemetry and relational data (PI, GIS, SQL Server). Delivered a highly reliable data product used to execute objective risk assessments for $2.3 billion in physical assets.
+- Developed an automated, self-serve SQL reporting platform that eliminated production bottlenecks and reduced data model build times by 50% for downstream analytics teams.
 
-```
-Developed an automated reporting platform enabling self-serve analytics teams to build data models with SQL, reducing model build time
-by 50% and eliminating production delays with automated workflows.
-```
-#### •
+## Technology Consultant
 
-```
-Developed various large-scale data ingestion pipelines for sources (including PI, GIS, SQL servers), and implemented business logic using
-PySpark in AWS Glue ETL, resulting in a data product that facilitates the management of AUD 2.3 billion worth of assets through objective
-risk assessment.
-```
-#### •
+**Visagio**
 
-```
-Automated data validation and quality assurance with test scripts, reducing test times from days to hours, and ensuring the freshness and
-accuracy of data in AWS Redshift.
-```
-#### •
+August 2020 - May 2022, Perth, WA
 
-### Technology Consultant
-
-Visagio August 2020 - May 2022,Perth, WA
-Developed a time and attendance tool for a tier-one mining company, providing enhanced visibility into actual workforce consumption
-and future forecasts. This tool empowered supervisors to optimise daily plans, resulting in over $40 million in savings.
-
-#### •
-
-```
-Built a strategic workforce planning tool for the same company, enabling demographic projections over 5- and 10-year horizons. The tool
-accounts for current demographics and allows scenario modelling, generating realistic and actionable workforce forecasts.
-```
-#### •
-
-```
-Developed and redesigned multiple mission-critical dashboards using Power BI and Spotfire for internal and regulatory reporting.
-Restructuring multiple dashboards with best practices in data modelling and transformation significantly increased responsiveness and
-easier to maintain.
-```
-#### •
+- Engineered a data-driven time and attendance forecasting tool for a tier-one mining company. Processed historical consumption and real-time workforce data to generate operational forecasts, driving daily plan optimisations that provided savings of $40 million.
+- Built a strategic scenario-modelling engine to process complex demographic datasets and generate 5-year and 10-year workforce projections for long-term enterprise resource planning.
+- Refactored mission-critical regulatory reporting pipelines and visualisation layers (Power BI, Spotfire). Applied strict data modelling and transformation best practices to simplify the architecture, improving query responsiveness and long-term maintainability.
 
 ## EDUCATION
 
-### Master of Predictive Analytics
+**Master of Predictive Analytics**
 
-Minor inFinance and Investment•Curtin University•Bentley, Western Australia• 2020 • 8.0/10.
+Minor in Finance and Investment · Curtin University · Bentley, Western Australia · 2020 · 8.0/10.0
 
-### Bachelor of Electronics and Communications Engineering
+**Bachelor of Electronics and Communications Engineering**
 
-Tribhuvan University•Kathmandu, Nepal• 2017 • 8.0/10.
+Tribhuvan University · Kathmandu, Nepal · 2017 · 8.0/10.0
 
 ## INVOLVEMENT
 
-### Python Instructor
+**Python Instructor**
 
-Nepalese Engineers in WA•July 2021 - August 2021
-Conducted a 5-week-long Python programming masterclass with more than 20 participants. The masterclass covered the basics of Python
-programming and specific use cases for different engineering fields, including electrical, mechanical and other engineering.
+Nepalese Engineers in WA · July 2021 - August 2021
 
-#### •
+- Conducted a 5-week-long Python programming masterclass with more than 20 participants. The masterclass covered the basics of Python programming and specific use cases for different engineering fields, including electrical, mechanical and other engineering.
 
-### Student Volunteer
+**Student Volunteer**
 
-John Curtin Leadership Academy•January 2020 - December 2020
+John Curtin Leadership Academy · January 2020 - December 2020
 
 - Led a volunteer team to help the Curtin C3 project conduct various activities, including a “Design-A-Thon” conducted in May 2020.
-    Led a team to organise, advertise and coordinate an online event “WA's Sustainable Future” with speakers from Deloitte, Curtin University
-    and CleanState and 50+ participants.
-
-#### •
-
-
+- Led a team to organise, advertise and coordinate an online event “WA’s Sustainable Future” with speakers from Deloitte, Curtin University and CleanState and 50+ participants.

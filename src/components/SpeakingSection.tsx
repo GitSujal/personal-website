@@ -2,48 +2,16 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardHeader, CardBody, Image, Chip } from "@nextui-org/react";
 import { Mic, MapPin, Calendar, Users, Play, FileText } from 'lucide-react';
-import { speakingEngagements, type SpeakingEngagement } from '../data/speakingEngagements';
-
-const getEventTypeColor = (type: SpeakingEngagement['eventType']) => {
-  switch (type) {
-    case 'keynote':
-      return 'bg-purple-500/10 text-purple-500';
-    case 'conference':
-      return 'bg-blue-500/10 text-blue-500';
-    case 'panel':
-      return 'bg-green-500/10 text-green-500';
-    case 'workshop':
-      return 'bg-orange-500/10 text-orange-500';
-    case 'meetup':
-      return 'bg-teal-500/10 text-teal-500';
-    default:
-      return 'bg-gray-500/10 text-gray-500';
-  }
-};
-
-const getEventTypeIcon = (type: SpeakingEngagement['eventType']) => {
-  switch (type) {
-    case 'keynote':
-      return '🎤';
-    case 'conference':
-      return '🏛️';
-    case 'panel':
-      return '👥';
-    case 'workshop':
-      return '🛠️';
-    case 'meetup':
-      return '☕';
-    default:
-      return '📢';
-  }
-};
+import { speakingEngagements } from '../data/speakingEngagements';
+import { getSpeakingEventTypeColor, getSpeakingEventTypeIcon } from '../utils/colorMappings';
+import { THEME } from '../config/theme';
 
 export default function SpeakingSection() {
   return (
-    <section id="speaking" className="py-16 bg-gray-50 dark:bg-gray-900">
+    <section id="speaking" className={THEME.backgrounds.sectionAlt}>
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center gap-2 mb-8">
-          <Mic className="text-[#3ec1d3] dark:text-[#2a8591]" />
+          <Mic className={THEME.components.icon.primary} />
           <h2 className="text-3xl font-bold">Speaking Engagements & Public Presence</h2>
         </div>
         
@@ -72,13 +40,14 @@ export default function SpeakingSection() {
                       className="object-cover h-48 w-full"
                       src={event.image}
                       fallbackSrc="https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2940&auto=format&fit=crop"
+                      loading="lazy"
                     />
                     <div className="absolute top-3 left-3">
                       <Chip
                         size="sm"
-                        className={getEventTypeColor(event.eventType)}
+                        className={getSpeakingEventTypeColor(event.eventType)}
                         variant="flat"
-                        startContent={<span className="text-xs">{getEventTypeIcon(event.eventType)}</span>}
+                        startContent={<span className="text-xs">{getSpeakingEventTypeIcon(event.eventType)}</span>}
                       >
                         {event.eventType.charAt(0).toUpperCase() + event.eventType.slice(1)}
                       </Chip>
@@ -87,16 +56,16 @@ export default function SpeakingSection() {
                 </CardHeader>
                 <CardBody className="p-4 flex flex-col h-full">
                   <div className="flex items-center gap-2 mb-2">
-                    <Calendar className="text-[#3ec1d3] dark:text-[#2a8591]" size={16} />
+                    <Calendar className={THEME.components.icon.primary} size={16} />
                     <span className="text-sm text-gray-500 dark:text-gray-400">{event.date}</span>
                   </div>
-                  
+
                   <h4 className="font-bold text-lg mb-2 line-clamp-2">{event.talkTitle}</h4>
-                  
+
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="font-semibold text-[#3ec1d3] dark:text-[#2a8591]">{event.eventName}</span>
+                    <span className={`font-semibold ${THEME.colors.primary.lightClass} ${THEME.colors.primary.darkClass}`}>{event.eventName}</span>
                   </div>
-                  
+
                   <div className="flex items-center gap-2 mb-3">
                     <MapPin className="text-gray-400" size={14} />
                     <span className="text-sm text-gray-500 dark:text-gray-400">{event.location}</span>
@@ -119,7 +88,7 @@ export default function SpeakingSection() {
                         <Chip
                           key={techIndex}
                           size="sm"
-                          className="bg-[#3ec1d3]/10 text-[#3ec1d3] dark:bg-[#2a8591]/10 dark:text-[#2a8591]"
+                          className={`${THEME.colors.primary.lightBg}/10 ${THEME.colors.primary.darkBg}/10 ${THEME.colors.primary.lightClass} ${THEME.colors.primary.darkClass}`}
                           variant="flat"
                         >
                           {tech}
@@ -134,7 +103,7 @@ export default function SpeakingSection() {
                         href={event.videoUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-1 text-xs text-[#3ec1d3] dark:text-[#2a8591] hover:underline"
+                        className={`flex items-center gap-1 text-xs hover:underline ${THEME.colors.primary.lightClass} ${THEME.colors.primary.darkClass}`}
                       >
                         <Play size={12} />
                         Watch
@@ -145,7 +114,7 @@ export default function SpeakingSection() {
                         href={event.slidesUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-1 text-xs text-[#3ec1d3] dark:text-[#2a8591] hover:underline"
+                        className={`flex items-center gap-1 text-xs hover:underline ${THEME.colors.primary.lightClass} ${THEME.colors.primary.darkClass}`}
                       >
                         <FileText size={12} />
                         Slides
@@ -166,15 +135,15 @@ export default function SpeakingSection() {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="mt-12 text-center"
         >
-          <div className="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg">
+          <div className={`rounded-xl p-8 shadow-lg ${THEME.backgrounds.light.primary} ${THEME.backgrounds.dark.primary}`}>
             <h3 className="text-2xl font-bold mb-4">Interested in Having Me Speak?</h3>
             <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-2xl mx-auto">
-              I'm always excited to share knowledge and insights with the data community. 
+              I'm always excited to share knowledge and insights with the data community.
               Whether it's a conference, meetup, workshop, or corporate event, I'd love to contribute.
             </p>
             <a
               href="#contact"
-              className="inline-flex items-center gap-2 bg-[#3ec1d3] dark:bg-[#2a8591] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#2596be] dark:hover:bg-[#1a6b85] transition-colors"
+              className={`inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold transition-colors ${THEME.components.button.primary}`}
             >
               <Mic size={20} />
               Invite Me to Speak

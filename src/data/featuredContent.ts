@@ -13,11 +13,23 @@ export interface FeaturedTimelineEvent {
 
 export const featuredTimelineEvents: FeaturedTimelineEvent[] = [
   {
+    id: 'western-power-current',
+    period: 'Sep 2025 - Present',
+    title: 'Senior Data Engineer',
+    company: 'Western Power',
+    description: 'Designing large-scale data architecture with 1000+ dbt models for 10-year network demand forecasting and ML',
+    position: 'right',
+    colorScheme: {
+      primary: 'text-[#3ec1d3] dark:text-[#2a8591]',
+      background: 'bg-gray-50 dark:bg-gray-700'
+    }
+  },
+  {
     id: 'telstra-current',
-    period: 'Oct 2024 - Present',
+    period: 'Oct 2024 - Aug 2025',
     title: 'Resident Platform Engineer',
     company: 'Telstra',
-    description: 'Optimized 1TB/hr data pipelines, saved $600K+ annually through Kubernetes and ClickHouse optimization',
+    description: 'Architected event-driven platform processing 1TB/hr, saved $600K+ annually through optimization and automation',
     position: 'left',
     colorScheme: {
       primary: 'text-[#3ec1d3] dark:text-[#2a8591]',
@@ -26,10 +38,10 @@ export const featuredTimelineEvents: FeaturedTimelineEvent[] = [
   },
   {
     id: 'data-vanguards-current',
-    period: 'Apr 2024 - Present',
+    period: 'Apr 2024 - Sep 2025',
     title: 'Principal Data Engineer',
     company: 'Data Vanguards Pty Ltd',
-    description: 'Architected world\'s first warehouse-agnostic agentic data platform, reduced costs by 90%',
+    description: 'Technical lead on warehouse-agnostic data platform with AI agents, reduced legacy costs by 90%',
     position: 'right',
     colorScheme: {
       primary: 'text-[#3ec1d3] dark:text-[#2a8591]',
@@ -41,7 +53,7 @@ export const featuredTimelineEvents: FeaturedTimelineEvent[] = [
     period: 'Aug 2023 - Present',
     title: 'Founder | Instructor',
     company: 'Data Profession Academy',
-    description: 'Mentored 20+ students, majority secured roles within 3 months',
+    description: 'Mentored 20+ students through 12-week bootcamp, majority secured roles within 3 months',
     position: 'left',
     colorScheme: {
       primary: 'text-green-600 dark:text-green-400',

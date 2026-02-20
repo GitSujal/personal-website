@@ -1,22 +1,40 @@
 import { motion } from 'framer-motion';
 import { Button } from '@nextui-org/react';
 import { Calendar, ArrowRight } from 'lucide-react';
+import SEOHelmet from '../components/SEOHelmet';
 import PassionSection from '../components/PassionSection';
 import ProjectsSection from '../components/ProjectsSection';
 import BlogSection from '../components/BlogSection';
-import CarouselSection from '../components/CarouselSection';
 import ContactSection from '../components/ContactSection';
 import SkillsShowcase from '../components/SkillsShowcase';
+import AchievementCard from '../components/cards/AchievementCard';
 import { currentRoles } from '../data/currentRoles';
 import { keyAchievements } from '../data/keyAchievements';
 import { profileContent } from '../data/profileContent';
 import { featuredTimelineEvents, featuredSpeakingHighlights } from '../data/featuredContent';
+import { passions } from '../data/passions';
+import { skillCategories, getSkillsByCategory } from '../data/skills';
+import { THEME } from '../config/theme';
 
 export default function HomePage() {
   return (
-    <div className="pt-16">
+    <div>
+      <SEOHelmet
+        title="Sujal Dhungana - Data Engineer | DataOps & MLOps Expert"
+        description="Sujal Dhungana is a Data Engineer specializing in DataOps, MLOps, and building scalable data pipelines. Explore projects, ventures, and expertise in data engineering."
+        keywords="Data Engineer, DataOps Expert, MLOps Specialist, Scalable Pipelines, Analytics as a Service, Data Integration, Sujal Dhungana"
+        url="https://sujaldhungana.com/"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "Sujal Dhungana - Data Engineer",
+          "description": "Portfolio of Sujal Dhungana, a Data Engineer specializing in DataOps, MLOps, and scalable data pipelines.",
+          "url": "https://sujaldhungana.com/",
+          "isPartOf": { "@type": "WebSite", "url": "https://sujaldhungana.com" }
+        }}
+      />
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-b from-[#3ec1d3] to-[#2596be] dark:from-[#2a8591] dark:to-[#1a6b85]">
+      <section className={`py-20 ${THEME.gradients.hero}`}>
         <div className="max-w-7xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -36,29 +54,28 @@ export default function HomePage() {
             
             {/* Key Achievements */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 max-w-4xl mx-auto">
-              {keyAchievements.map((achievement) => {
-                const IconComponent = achievement.icon;
-                return (
-                  <motion.div
-                    key={achievement.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: achievement.delay }}
-                    className="bg-white/10 backdrop-blur-sm rounded-lg p-4"
-                  >
-                    <IconComponent className="mx-auto mb-2" size={32} />
-                    <div className="text-2xl font-bold">{achievement.value}</div>
-                    <div className="text-sm">{achievement.label}</div>
-                  </motion.div>
-                );
-              })}
+              {keyAchievements.map((achievement) => (
+                <motion.div
+                  key={achievement.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: achievement.delay }}
+                >
+                  <AchievementCard
+                    icon={achievement.icon}
+                    value={achievement.value}
+                    label={achievement.label}
+                  />
+                </motion.div>
+              ))}
             </div>
 
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Button
                 as="a"
                 href={profileContent.heroButtons.primary.href}
-                className="bg-white text-[#3ec1d3] dark:text-[#2a8591] px-8 py-3 rounded-full font-semibold hover:bg-opacity-90 transition-colors inline-flex items-center gap-2"
+                className="bg-white px-8 py-3 rounded-full font-semibold hover:bg-opacity-90 transition-colors inline-flex items-center gap-2"
+                style={{color: THEME.colors.primary.light}}
                 size="lg"
               >
                 {profileContent.heroButtons.primary.text}
@@ -67,7 +84,7 @@ export default function HomePage() {
               <Button
                 as="a"
                 href={profileContent.heroButtons.secondary.href}
-                className="border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-[#3ec1d3] dark:hover:text-[#2a8591] transition-colors inline-flex items-center gap-2"
+                className="border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white transition-colors inline-flex items-center gap-2"
                 size="lg"
               >
                 <Calendar size={20} />
@@ -79,7 +96,7 @@ export default function HomePage() {
       </section>
 
       {/* Current Role Highlight */}
-      <section className="py-16 bg-white dark:bg-gray-800">
+      <section className={THEME.backgrounds.section}>
         <div className="max-w-7xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -128,10 +145,10 @@ export default function HomePage() {
       </section>
 
       {/* Passions Section */}
-      <PassionSection />
+      <PassionSection passions={passions} />
 
       {/* Skills Overview */}
-      <section className="py-16 bg-gray-50 dark:bg-gray-900">
+      <section className={THEME.backgrounds.sectionAlt}>
         <div className="max-w-7xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -145,12 +162,12 @@ export default function HomePage() {
               {profileContent.sections.skills.description}
             </p>
           </motion.div>
-          <SkillsShowcase />
+          <SkillsShowcase skillCategories={skillCategories} getSkillsByCategory={getSkillsByCategory} />
           <div className="text-center mt-8">
             <Button
               as="a"
               href="/hire-me#skills"
-              className="bg-[#3ec1d3] dark:bg-[#2a8591] text-white hover:bg-[#2596be] dark:hover:bg-[#1a6b85] transition-colors"
+              className={THEME.components.button.primary}
             >
               View Complete Skill Set
             </Button>
@@ -159,7 +176,7 @@ export default function HomePage() {
       </section>
 
       {/* Career Highlights Timeline */}
-      <section className="py-16 bg-white dark:bg-gray-800">
+      <section className={THEME.backgrounds.section}>
         <div className="max-w-7xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -176,7 +193,7 @@ export default function HomePage() {
           
           {/* Show only recent/key experiences */}
           <div className="relative max-w-4xl mx-auto">
-            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-[#3ec1d3]/20"></div>
+            <div className={`absolute left-1/2 transform -translate-x-1/2 h-full w-1 ${THEME.opacity.primary}`}></div>
             <div className="space-y-12">
               {featuredTimelineEvents.map((event, index) => (
                 <motion.div
@@ -198,7 +215,7 @@ export default function HomePage() {
                     </div>
                   </div>
                   <div className="relative flex items-center justify-center w-12 h-12 z-10">
-                    <div className={`absolute w-6 h-6 ${event.id === 'data-academy' ? 'bg-green-500' : 'bg-[#3ec1d3] dark:bg-[#2a8591]'} rounded-full border-4 border-white dark:border-gray-800 shadow-lg`}></div>
+                    <div className={`absolute w-6 h-6 ${event.id === 'data-academy' ? 'bg-green-500' : `${THEME.colors.primary.lightBg} ${THEME.colors.primary.darkBg}`} rounded-full border-4 border-white dark:border-gray-800 shadow-lg`}></div>
                   </div>
                   <div className="w-1/2"></div>
                 </motion.div>
@@ -210,7 +227,7 @@ export default function HomePage() {
             <Button
               as="a"
               href="/hire-me#timeline"
-              className="bg-[#3ec1d3] dark:bg-[#2a8591] text-white hover:bg-[#2596be] dark:hover:bg-[#1a6b85] transition-colors"
+              className={THEME.components.button.primary}
             >
               {profileContent.sections.timeline.viewAllText}
             </Button>
@@ -219,7 +236,7 @@ export default function HomePage() {
       </section>
 
       {/* Speaking & Thought Leadership */}
-      <section className="py-16 bg-gray-50 dark:bg-gray-900">
+      <section className={THEME.backgrounds.sectionAlt}>
         <div className="max-w-7xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -260,7 +277,7 @@ export default function HomePage() {
             <Button
               as="a"
               href="/hire-me#speaking"
-              className="bg-[#3ec1d3] dark:bg-[#2a8591] text-white hover:bg-[#2596be] dark:hover:bg-[#1a6b85] transition-colors"
+              className={THEME.components.button.primary}
             >
               {profileContent.sections.speaking.viewAllText}
             </Button>

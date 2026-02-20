@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Input, Textarea, Button } from "@nextui-org/react";
 import { Mail, Phone, Linkedin, MapPin } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { submitContactForm } from '../services/mailchimp';
+import { THEME } from '../config/theme';
 
 export default function ContactSection() {
   const [formStatus, setFormStatus] = useState<{
@@ -21,43 +23,24 @@ export default function ContactSection() {
     const lastName = formData.get('lastName') as string;
     const message = formData.get('message') as string;
 
-    const data = {
-      members: [{
-        email_address: email,
-        status: 'subscribed',
-        merge_fields: {
-          FNAME: firstName,
-          LNAME: lastName,
-          MESSAGE: message
-        }
-      }]
-    };
-
     try {
-      const response = await fetch('https://us21.api.mailchimp.com/3.0/lists/44677aa4c7/members/', {
-        method: 'POST',
-        headers: {
-          'Authorization': 'Basic ' + btoa('anystring:f3deda56e933668eb24b10dd6c4877d4-us21'),
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
+      const successMessage = await submitContactForm({
+        email,
+        firstName,
+        lastName,
+        message,
       });
 
-      if (response.ok) {
-        setFormStatus({
-          type: 'success',
-          message: 'Thank you for your message! I will get back to you soon.'
-        });
-        (e.target as HTMLFormElement).reset();
-      } else {
-        const errorData = await response.json();
-        throw new Error(errorData.detail || 'Failed to submit form');
-      }
+      setFormStatus({
+        type: 'success',
+        message: successMessage,
+      });
+      (e.target as HTMLFormElement).reset();
     } catch (error) {
       console.error('Contact form submission error:', error);
       setFormStatus({
         type: 'error',
-        message: 'There was an error submitting your message. Please try again later.'
+        message: 'There was an error submitting your message. Please try again later.',
       });
     } finally {
       setIsSubmitting(false);
@@ -65,10 +48,10 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-16 bg-white dark:bg-gray-800">
+    <section id="contact" className={THEME.backgrounds.section}>
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center gap-2 mb-12">
-          <Mail className="text-[#3ec1d3]" />
+          <Mail className={THEME.components.icon.primary} />
           <h2 className="text-3xl font-bold">Get in Touch</h2>
         </div>
 
@@ -83,30 +66,30 @@ export default function ContactSection() {
             <h3 className="text-xl font-semibold mb-6">Contact Information</h3>
             <div className="space-y-4">
               <div className="flex items-center gap-3">
-                <Mail className="text-[#3ec1d3]" />
-                <a href="mailto:sujal@dataprofessionacademy.com" className="hover:text-[#3ec1d3] transition-colors">
+                <Mail className={THEME.components.icon.primary} />
+                <a href="mailto:sujal@dataprofessionacademy.com" className={THEME.components.link}>
                   sujal@dataprofessionacademy.com
                 </a>
               </div>
               <div className="flex items-center gap-3">
-                <Phone className="text-[#3ec1d3]" />
-                <a href="tel:0410677503" className="hover:text-[#3ec1d3] transition-colors">
+                <Phone className={THEME.components.icon.primary} />
+                <a href="tel:0410677503" className={THEME.components.link}>
                   0410 677 503
                 </a>
               </div>
               <div className="flex items-center gap-3">
-                <Linkedin className="text-[#3ec1d3]" />
-                <a 
+                <Linkedin className={THEME.components.icon.primary} />
+                <a
                   href="https://www.linkedin.com/in/dhunganasujal/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-[#3ec1d3] transition-colors"
+                  className={THEME.components.link}
                 >
                   linkedin.com/in/dhunganasujal
                 </a>
               </div>
               <div className="flex items-center gap-3">
-                <MapPin className="text-[#3ec1d3]" />
+                <MapPin className={THEME.components.icon.primary} />
                 <span>Perth, Western Australia</span>
               </div>
             </div>
@@ -158,8 +141,8 @@ export default function ContactSection() {
                 <div
                   className={`p-4 rounded-lg ${
                     formStatus.type === 'success'
-                      ? 'bg-green-100 text-green-700 dark:bg-green-800/30 dark:text-green-400'
-                      : 'bg-red-100 text-red-700 dark:bg-red-800/30 dark:text-red-400'
+                      ? `${THEME.colors.success.lightBg} ${THEME.colors.success.lightText} ${THEME.colors.success.darkBg} ${THEME.colors.success.darkText}`
+                      : `${THEME.colors.error.lightBg} ${THEME.colors.error.lightText} ${THEME.colors.error.darkBg} ${THEME.colors.error.darkText}`
                   }`}
                 >
                   {formStatus.message}
@@ -167,7 +150,7 @@ export default function ContactSection() {
               )}
               <Button
                 type="submit"
-                className="bg-[#3ec1d3] text-white w-full hover:bg-[#2596be] transition-colors"
+                className={THEME.components.button.primary}
                 isLoading={isSubmitting}
               >
                 {isSubmitting ? 'Sending...' : 'Send Message'}

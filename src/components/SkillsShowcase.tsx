@@ -1,17 +1,32 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardBody } from '@nextui-org/react';
-import { skillCategories, getSkillsByCategory } from '../data/skills';
+import { SkillCategory } from '../data/skills';
 
-export default function SkillsShowcase() {
+interface SkillsShowcaseProps {
+  skillCategories: SkillCategory[];
+  getSkillsByCategory: (categoryId: string) => string[];
+  className?: string;
+}
+
+/**
+ * Skills Showcase Component
+ * Displays skills grouped by category
+ * Accepts skill data and retrieval function via props - fully data-agnostic
+ */
+export default function SkillsShowcase({
+  skillCategories,
+  getSkillsByCategory,
+  className = '',
+}: SkillsShowcaseProps) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className={`grid grid-cols-1 md:grid-cols-2 gap-6 ${className}`}>
       {skillCategories.map((category, index) => {
         const IconComponent = category.icon;
         const categorySkills = getSkillsByCategory(category.id);
         return (
           <motion.div
-            key={index}
+            key={category.id}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}

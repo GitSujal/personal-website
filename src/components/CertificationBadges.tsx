@@ -1,16 +1,30 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardBody, Chip } from '@nextui-org/react';
-import { certifications } from '../data/certifications';
+import { Certification } from '../data/certifications';
+import { THEME } from '../config/theme';
 
-export default function CertificationBadges() {
+interface CertificationBadgesProps {
+  certifications: Certification[];
+  className?: string;
+}
+
+/**
+ * Certification Badges Component
+ * Displays certifications in a grid layout
+ * Accepts certification data via props - data-agnostic presentation component
+ */
+export default function CertificationBadges({
+  certifications: certList,
+  className = '',
+}: CertificationBadgesProps) {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-      {certifications.map((cert, index) => {
+    <div className={`grid grid-cols-1 lg:grid-cols-2 gap-8 ${className}`}>
+      {certList.map((cert, index) => {
         const IconComponent = cert.icon;
         return (
           <motion.div
-            key={index}
+            key={cert.title}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -28,9 +42,7 @@ export default function CertificationBadges() {
                       <span className="text-sm text-gray-500 dark:text-gray-400">{cert.date}</span>
                     </div>
                     <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">{cert.issuer}</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
-                      {cert.description}
-                    </p>
+                    <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">{cert.description}</p>
                     <div className="flex flex-wrap gap-2">
                       {cert.skills.map((skill, skillIndex) => (
                         <Chip
@@ -47,7 +59,7 @@ export default function CertificationBadges() {
                       href={cert.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[#3ec1d3] hover:underline text-sm mt-4 inline-block"
+                      className={`${THEME.components.linkUnderline} text-sm mt-4 inline-block`}
                     >
                       View Certificate →
                     </a>

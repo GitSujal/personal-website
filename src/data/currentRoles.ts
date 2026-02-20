@@ -18,16 +18,37 @@ export interface CurrentRole {
 
 export const currentRoles: CurrentRole[] = [
   {
+    id: 'western-power-senior-engineer',
+    title: 'Senior Data Engineer',
+    company: 'Western Power',
+    description: 'Designing large-scale data architecture for 1000+ interdependent dbt models, forecasting with ML for 10-year network demand',
+    highlights: [
+      'Large-scale dbt transformation architecture',
+      'Everything-as-Code and CI/CD culture',
+      'Data governance automation and tooling'
+    ],
+    startDate: 'Sep 2025',
+    type: 'engineering',
+    colorScheme: {
+      primary: 'text-[#3ec1d3] dark:text-[#2a8591]',
+      primaryDark: 'text-[#2a8591]',
+      background: 'bg-gradient-to-r from-[#3ec1d3]/10 to-[#2596be]/10 dark:from-[#2a8591]/10 dark:to-[#1a6b85]/10',
+      backgroundDark: 'dark:from-[#2a8591]/10 dark:to-[#1a6b85]/10',
+      accent: 'bg-[#3ec1d3]'
+    }
+  },
+  {
     id: 'telstra-platform-engineer',
     title: 'Resident Platform Engineer',
     company: 'Telstra',
-    description: 'Optimising data pipelines processing 1TB/hr, reducing cost by 50% with estimated savings of $600K/yr',
+    description: 'Optimised event-driven data platform processing 1TB/hr, reducing cost by 50% with savings of $600K/yr',
     highlights: [
-      'Kubernetes & ClickHouse optimization',
-      'Event-based scaling implementation',
-      'RESTful APIs for K8s automation'
+      'Kafka/AWS MSK architecture & optimization',
+      'Clickhouse & OpenSearch pipeline engineering',
+      'Event-based Kubernetes scaling'
     ],
     startDate: 'Oct 2024',
+    endDate: 'Aug 2025',
     type: 'engineering',
     colorScheme: {
       primary: 'text-[#3ec1d3] dark:text-[#2a8591]',
@@ -41,13 +62,14 @@ export const currentRoles: CurrentRole[] = [
     id: 'data-vanguards-principal',
     title: 'Principal Data Engineer',
     company: 'Data Vanguards',
-    description: 'Building Agent-first data platform - world\'s first warehouse-agnostic agentic solution',
+    description: 'Architect of warehouse-agnostic data platform with AI agents, OAuth2 APIs, and IoT ingestion pipelines',
     highlights: [
-      'Warehouse-agnostic architecture',
-      'AI agent integration',
-      '90% operational cost reduction'
+      'Warehouse-agnostic agentic data platform',
+      'Real-time IoT pipeline architecture',
+      '90% cost reduction on legacy systems'
     ],
     startDate: 'Apr 2024',
+    endDate: 'Sep 2025',
     type: 'consulting',
     colorScheme: {
       primary: 'text-purple-600 dark:text-purple-400',

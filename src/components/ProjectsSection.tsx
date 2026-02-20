@@ -3,13 +3,14 @@ import { Card, CardHeader, CardBody, Image } from "@nextui-org/react";
 import { motion } from 'framer-motion';
 import { FolderGit2 } from 'lucide-react';
 import { projects } from '../data/projects';
+import { THEME } from '../config/theme';
 
 function ProjectsSection() {
   return (
-    <section id="projects" className="py-16 bg-gray-50 dark:bg-gray-900">
+    <section id="projects" className={THEME.backgrounds.sectionAlt}>
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center gap-2 mb-8">
-          <FolderGit2 className="text-[#3ec1d3]" />
+          <FolderGit2 className={THEME.components.icon.primary} />
           <h2 className="text-3xl font-bold">Featured Projects</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -27,16 +28,17 @@ function ProjectsSection() {
                     alt={project.title}
                     className="object-cover h-48 w-full"
                     src={project.image}
+                    loading="lazy"
                   />
                 </CardHeader>
                 <CardBody className="p-4">
                   <p className="text-tiny text-default-500">{project.date}</p>
                   <h4 className="font-bold text-large">{project.title}</h4>
                   <p className="text-sm text-default-500 mb-2">{project.description}</p>
-                  <p className="text-xs text-[#3ec1d3] font-semibold">{project.tech}</p>
-                  <a 
+                  <p className={`text-xs font-semibold ${THEME.colors.primary.lightClass} ${THEME.colors.primary.darkClass}`}>{project.tech}</p>
+                  <a
                     href={project.link}
-                    className="text-[#3ec1d3] hover:underline mt-2 inline-block"
+                    className={THEME.components.link}
                   >
                     View Project →
                   </a>
