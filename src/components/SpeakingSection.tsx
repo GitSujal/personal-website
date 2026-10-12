@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Card, CardHeader, CardBody, Image, Chip } from "@nextui-org/react";
+import { Card, CardHeader, CardBody, Image, Chip } from "@heroui/react";
 import { Mic, MapPin, Calendar, Users, Play, FileText } from 'lucide-react';
 import { speakingEngagements, type SpeakingEngagement } from '../data/speakingEngagements';
 

@@ -18,23 +18,23 @@ export interface CurrentRole {
 
 export const currentRoles: CurrentRole[] = [
   {
-    id: 'telstra-platform-engineer',
-    title: 'Resident Platform Engineer',
-    company: 'Telstra',
-    description: 'Optimising data pipelines processing 1TB/hr, reducing cost by 50% with estimated savings of $600K/yr',
+    id: 'western-power-senior-data-engineer',
+    title: 'Senior Data Engineer',
+    company: 'Western Power',
+    description: 'Optimising end-to-end pipelines for network forecast models using Databricks, DBT, and Snowflake',
     highlights: [
-      'Kubernetes & ClickHouse optimization',
-      'Event-based scaling implementation',
-      'RESTful APIs for K8s automation'
+      'Migrated infrastructure to IaC using Databricks Asset Bundle',
+      'Established enterprise standards for dbt and data modelling',
+      'Optimising end-to-end pipeline for the network forecast model'
     ],
-    startDate: 'Oct 2024',
+    startDate: 'Jan 2026',
     type: 'engineering',
     colorScheme: {
-      primary: 'text-[#3ec1d3] dark:text-[#2a8591]',
-      primaryDark: 'text-[#2a8591]',
-      background: 'bg-gradient-to-r from-[#3ec1d3]/10 to-[#2596be]/10 dark:from-[#2a8591]/10 dark:to-[#1a6b85]/10',
-      backgroundDark: 'dark:from-[#2a8591]/10 dark:to-[#1a6b85]/10',
-      accent: 'bg-[#3ec1d3]'
+      primary: 'text-[#f6ae2d] dark:text-[#d99720]',
+      primaryDark: 'text-[#d99720]',
+      background: 'bg-gradient-to-r from-[#f6ae2d]/10 to-[#f26419]/10 dark:from-[#d99720]/10 dark:to-[#c45114]/10',
+      backgroundDark: 'dark:from-[#d99720]/10 dark:to-[#c45114]/10',
+      accent: 'bg-[#f6ae2d]'
     }
   },
   {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardHeader, CardBody, Image } from "@nextui-org/react";
+import { Card, CardHeader, CardBody, Image } from "@heroui/react";
 import { motion } from 'framer-motion';
 import { FolderGit2 } from 'lucide-react';
 import { projects } from '../data/projects';

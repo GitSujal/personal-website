@@ -37,9 +37,9 @@ export interface ProfileContent {
 
 export const profileContent: ProfileContent = {
   name: "Sujal Dhungana",
-  highlight: "Principal Data Engineer | Platform Engineering | Data Instructor",
-  summaryShort: "Seasoned Data Engineer with a passion for building robust, scalable data platforms that stand the test of time. Specializing in the crucial balance between developer velocity and enterprise-grade reliability.",
-  summaryLong: "Seasoned Data Engineer with a passion for building robust, scalable data platforms that stand the test of time. Specialising in exploring the crucial balance between developer velocity and enterprise-grade reliability. Deeply committed to \"Everything as Code\" and DevOps principles to build self-service tooling, standardised pipelines, and efficient orchestration systems that empower teams while embedding critical data governance, security controls, and maintainability.",
+  highlight: "Senior Data Engineer | Principal Data Engineer | Data Instructor",
+  summaryShort: "Senior Data Engineer at Western Power specialising in Databricks, DBT, and Snowflake. Passionate about building robust, scalable data platforms and streamlining infrastructure with IaC.",
+  summaryLong: "Senior Data Engineer at Western Power with a passion for building robust, scalable data platforms that stand the test of time. Proven track record in migrating click-and-drag infrastructures to Infrastructure as Code (IaC) using Databricks Asset Bundles, enhancing developer productivity and ensuring consistency. Expert in implementing enterprise standards for dbt and data modelling, and currently focused on optimising end-to-end pipelines for critical network forecast models.",
   heroButtons: {
     primary: {
       text: "View Full Profile",
@@ -104,7 +104,7 @@ export interface HirePageContent {
 export const hirePageContent: HirePageContent = {
   hero: {
     title: "Let's Work Together",
-    description: "Seasoned Data Engineer with a passion for building robust, scalable data platforms that stand the test of time. Specialising in exploring the crucial balance between developer velocity and enterprise-grade reliability. Deeply committed to \"Everything as Code\" and DevOps principles to build self-service tooling, standardised pipelines, and efficient orchestration systems that empower teams while embedding critical data governance, security controls, and maintainability.",
+    description: "Senior Data Engineer at Western Power with a passion for building robust, scalable data platforms that stand the test of time. Expert in Databricks, DBT, and Snowflake, with a strong focus on Infrastructure as Code (IaC) and enterprise data modelling standards. Dedicated to building self-service tooling and standardised pipelines that empower teams while ensuring critical data governance and maintainability.",
     buttons: {
       download: {
         text: "Download Resume",

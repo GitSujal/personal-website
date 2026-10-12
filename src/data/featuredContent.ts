@@ -13,14 +13,14 @@ export interface FeaturedTimelineEvent {
 
 export const featuredTimelineEvents: FeaturedTimelineEvent[] = [
   {
-    id: 'telstra-current',
-    period: 'Oct 2024 - Present',
-    title: 'Resident Platform Engineer',
-    company: 'Telstra',
-    description: 'Optimized 1TB/hr data pipelines, saved $600K+ annually through Kubernetes and ClickHouse optimization',
+    id: 'western-power-current',
+    period: 'Jan 2026 - Present',
+    title: 'Senior Data Engineer',
+    company: 'Western Power',
+    description: 'Optimising network forecast model pipelines and migrating infrastructure to IaC with Databricks Asset Bundles',
     position: 'left',
     colorScheme: {
-      primary: 'text-[#3ec1d3] dark:text-[#2a8591]',
+      primary: 'text-[#f6ae2d] dark:text-[#d99720]',
       background: 'bg-gray-50 dark:bg-gray-700'
     }
   },

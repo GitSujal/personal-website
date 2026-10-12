@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Button } from '@nextui-org/react';
+import { Button } from '@heroui/react';
 import { Calendar, ArrowRight } from 'lucide-react';
 import PassionSection from '../components/PassionSection';
 import ProjectsSection from '../components/ProjectsSection';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { NextUIProvider } from '@nextui-org/react';
+import { HeroUIProvider } from '@heroui/react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import Navbar from './components/Navbar';
@@ -10,7 +10,7 @@ import VenturesPage from './pages/VenturesPage';
 function App() {
   return (
     <HelmetProvider>
-      <NextUIProvider>
+      <HeroUIProvider>
         <Router>
           <div className="min-h-screen bg-white dark:bg-gray-900">
             <Navbar />
@@ -21,7 +21,7 @@ function App() {
             </Routes>
           </div>
         </Router>
-      </NextUIProvider>
+      </HeroUIProvider>
     </HelmetProvider>
   );
 }

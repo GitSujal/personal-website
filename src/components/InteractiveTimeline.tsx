@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Card, CardBody, Chip } from '@nextui-org/react';
+import { Card, CardBody, Chip } from '@heroui/react';
 import { timelineEvents } from '../data/timelineEvents';
 
 export default function InteractiveTimeline() {

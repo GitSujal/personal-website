@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Input, Textarea, Button } from "@nextui-org/react";
+import { Input, Textarea, Button } from "@heroui/react";
 import { Mail, Phone, Linkedin, MapPin } from 'lucide-react';
 import { motion } from 'framer-motion';
 

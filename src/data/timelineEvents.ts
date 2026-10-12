@@ -13,7 +13,21 @@ export interface TimelineEvent {
 
 export const timelineEvents: TimelineEvent[] = [
   {
-    year: "Oct 2024 - Present",
+    year: "Jan 2026 - Present",
+    title: "Senior Data Engineer",
+    company: "Western Power",
+    location: "Perth, WA",
+    description: [
+      "Migrating click and drag infrastructures to infrastructure as code using Databricks Asset Bundle enhancing developer productivity and ensuring consistent infrastructure across environments",
+      "Wrote up documentations and built tools to implement proper enterprise standards for dbt and data modelling practices",
+      "Optimising the end to end pipeline for the network forecast model for Western Power"
+    ],
+    icon: Server,
+    type: "work",
+    tags: ["Databricks", "DBT", "Snowflake", "Infrastructure as Code", "Databricks Asset Bundle", "Data Modelling"]
+  },
+  {
+    year: "Oct 2024 - Jan 2026",
     title: "Resident Platform Engineer (Contractor)",
     company: "Telstra",
     location: "Perth, WA",

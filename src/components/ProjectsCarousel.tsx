@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image } from '@nextui-org/react';
+import { Image } from '@heroui/react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import { FolderGit2 } from 'lucide-react';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Target, ArrowUpRight, Calendar, Award } from 'lucide-react';
-import { Button, Card, CardBody, Chip } from '@nextui-org/react';
+import { Button, Card, CardBody, Chip } from '@heroui/react';
 import SEOHelmet from '../components/SEOHelmet';
 import { ventures, ventureStats } from '../data/ventures';
 

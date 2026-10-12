@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardHeader, CardBody, Image } from "@nextui-org/react";
+import { Card, CardHeader, CardBody, Image } from "@heroui/react";
 import { motion } from 'framer-motion';
 import { BookOpen, ArrowUpRight } from 'lucide-react';
 import { blogPosts } from '../data/blogPosts';

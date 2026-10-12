@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Award, Download, Calendar } from 'lucide-react';
-import { Button } from '@nextui-org/react';
+import { Button } from '@heroui/react';
 import ProjectsSection from '../components/ProjectsSection';
 import BlogSection from '../components/BlogSection';
 import ContactSection from '../components/ContactSection';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Card, CardBody } from '@nextui-org/react';
+import { Card, CardBody } from '@heroui/react';
 import { skillCategories, getSkillsByCategory } from '../data/skills';
 
 export default function SkillsShowcase() {

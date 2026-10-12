@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Card, CardBody, Chip } from '@nextui-org/react';
+import { Card, CardBody, Chip } from '@heroui/react';
 import { certifications } from '../data/certifications';
 
 export default function CertificationBadges() {
