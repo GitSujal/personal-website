@@ -1,0 +1,43 @@
+# verified: false entries are shown in `npm run dev` only, never in production.
+- id: ozwater-2024
+  date: '2024-05'
+  event: OzWater
+  location: Sydney
+  title: Predicting centrifuge performance from real-time operational data (voted a top paper)
+  format: conference
+  verified: true
+- id: clickhouse-perth-2024
+  date: '2024-09'
+  event: ClickHouse Perth User Group
+  location: Perth
+  title: 'Optimising real-time analytics with ClickHouse: lessons from production'
+  format: meetup
+  verified: false
+- id: aws-community-day-perth-2024
+  date: '2024-03'
+  event: AWS Community Day Perth
+  location: Perth
+  title: Building scalable data solutions on AWS (panel)
+  format: panel
+  verified: false
+- id: perth-data-meetup-2023
+  date: '2023-11'
+  event: Perth Data Science & Analytics Meetup
+  location: Perth
+  title: From data analyst to data engineer
+  format: meetup
+  verified: false
+- id: data-engineering-summit-2024
+  date: '2024-02'
+  event: Data Engineering Summit
+  location: Melbourne
+  title: 'Modern data pipeline architecture: balancing velocity and reliability'
+  format: keynote
+  verified: false
+- id: python-wa-workshop-2023
+  date: '2023-08'
+  event: Python WA Workshop Series
+  location: Perth
+  title: 'Data engineering with Python: building production-ready pipelines'
+  format: workshop
+  verified: false

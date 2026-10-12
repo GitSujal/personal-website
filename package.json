@@ -1,41 +1,42 @@
 {
   "name": "sujal-portfolio",
   "private": true,
-  "version": "0.0.0",
   "type": "module",
+  "version": "2.0.0",
+  "engines": {
+    "node": ">=24.0.0"
+  },
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro build --mode preview && wrangler dev",
+    "check": "astro check && tsc -p worker --noEmit",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "format": "prettier --write .",
+    "cf-typegen": "wrangler types worker/worker-configuration.d.ts",
+    "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
-    "@heroui/react": "^2.8.7",
-    "framer-motion": "^12.29.0",
-    "lucide-react": "^0.563.0",
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3",
-    "react-helmet-async": "^2.0.5",
-    "react-router-dom": "^7.13.0",
-    "swiper": "^12.0.3"
+    "@astrojs/sitemap": "3.7.4",
+    "@tailwindcss/vite": "4.3.3",
+    "astro": "7.3.8",
+    "tailwindcss": "4.3.3"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.2",
-    "@tailwindcss/postcss": "^4.0.0",
-    "@tailwindcss/vite": "^4.0.0",
-    "@types/eslint": "^9.6.1",
-    "@types/react": "^19.2.9",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^5.1.2",
-    "autoprefixer": "^10.4.23",
-    "eslint": "^9.39.2",
-    "eslint-plugin-react-hooks": "^7.0.1",
-    "eslint-plugin-react-refresh": "^0.4.26",
-    "globals": "^17.1.0",
-    "postcss": "^8.5.6",
-    "tailwindcss": "^4.0.0",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "^8.53.1",
-    "vite": "^7.3.1"
+    "@astrojs/check": "0.9.10",
+    "@eslint/js": "10.0.1",
+    "eslint": "10.12.0",
+    "eslint-plugin-astro": "3.2.1",
+    "eslint-plugin-jsx-a11y-x": "0.2.0",
+    "globals": "17.13.0",
+    "prettier": "3.9.10",
+    "prettier-plugin-astro": "1.1.1",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.71.1",
+    "wrangler": "4.149.0"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true,
+    "workerd@1.20261006.1": true
   }
 }

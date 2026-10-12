@@ -1,0 +1,124 @@
+---
+import { Font } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../data/site';
+
+interface Props {
+  /** Page title; the site name is appended. Omit on the home page. */
+  title?: string;
+  description?: string;
+  /** Footer page number, as in the brand guide's page furniture. */
+  page: string;
+  noindex?: boolean;
+}
+
+const { title, description = site.description, page, noindex = false } = Astro.props;
+const fullTitle = title ? `${title} · ${site.name}` : `${site.name} · Data engineer, Perth`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL('/og.png', Astro.site);
+
+const current = (await getCollection('roles', ({ data }) => data.current && !data.todo?.includes('current'))).map(
+  ({ data }) => data,
+);
+const personLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.name,
+  url: site.url,
+  jobTitle: current[0]?.title ?? 'Data Engineer',
+  worksFor: current.map((role) => ({ '@type': 'Organization', name: role.org })),
+  address: { '@type': 'PostalAddress', addressLocality: 'Perth', addressRegion: 'WA', addressCountry: 'AU' },
+  alumniOf: [
+    { '@type': 'CollegeOrUniversity', name: 'Curtin University' },
+    { '@type': 'CollegeOrUniversity', name: 'Tribhuvan University' },
+  ],
+  sameAs: [site.linkedin, 'https://dataprofessionacademy.com'],
+};
+---
+
+<!doctype html>
+<html lang="en-AU">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta name="theme-color" content="#3EC1D3" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="en_AU" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <Font cssVariable="--font-raleway" preload />
+    <Font cssVariable="--font-merriweather" preload={[{ weight: '300', style: 'normal' }]} />
+
+    <script is:inline>
+      // Apply a saved theme before first paint; otherwise follow the OS.
+      try {
+        const saved = localStorage.getItem('theme');
+        if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved;
+      } catch {
+        /* storage blocked: follow the OS theme */
+      }
+      document.documentElement.classList.add('js');
+    </script>
+    <script type="application/ld+json" set:html={JSON.stringify(personLd)} />
+  </head>
+  <body class="min-h-screen">
+    <a
+      href="#main"
+      class="btn btn-teal sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50"
+      >Skip to content</a
+    >
+    <div class="flex min-h-screen">
+      <div
+        aria-hidden="true"
+        class="hidden w-[52px] shrink-0 justify-center bg-black pt-56 md:flex dark-rail"
+      >
+        <span
+          class="sticky top-56 h-fit font-display text-[13px] tracking-[0.42em] text-white [writing-mode:vertical-rl]"
+          >{site.domain}</span
+        >
+      </div>
+      <div class="min-w-0 flex-1">
+        <Header />
+        <main id="main">
+          <slot />
+        </main>
+        <Footer page={page} />
+      </div>
+    </div>
+  </body>
+</html>
+
+<style is:global>
+  /* In dark mode the rail flips to teal, mirroring the guide's teal-on-black pages. */
+  :root[data-theme='dark'] .dark-rail {
+    background: #3ec1d3;
+  }
+  :root[data-theme='dark'] .dark-rail span {
+    color: #111111;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) .dark-rail {
+      background: #3ec1d3;
+    }
+    :root:not([data-theme='light']) .dark-rail span {
+      color: #111111;
+    }
+  }
+</style>

@@ -1,0 +1,4 @@
+# Copy to .dev.vars for `npm run preview` (wrangler dev). Cloudflare's always-pass Turnstile TEST secret;
+# test tokens report hostname "example.com".
+TURNSTILE_SECRET=1x0000000000000000000000000000000AA
+TURNSTILE_HOSTNAMES=example.com

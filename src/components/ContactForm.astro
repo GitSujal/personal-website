@@ -1,0 +1,162 @@
+---
+/**
+ * Contact form. A plain POST to the Worker at /api/contact; the script below upgrades it to an
+ * in-place submission with field errors.
+ *
+ * Turnstile site key is public by design. `npm run dev` uses Cloudflare's always-pass TEST key
+ * (the real widget only runs on sujal.datasparta.com); production builds use the real one.
+ * Override either with PUBLIC_TURNSTILE_SITE_KEY.
+ */
+const SITE_KEY = '0x4AAAAAAFUPBxdYrOw85S6c';
+const TEST_SITE_KEY = '1x00000000000000000000AA';
+const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || (import.meta.env.DEV ? TEST_SITE_KEY : SITE_KEY);
+
+const topics = [
+  { value: 'role', label: 'A role' },
+  { value: 'consulting', label: 'Consulting' },
+  { value: 'academy', label: 'The Academy' },
+  { value: 'talk', label: 'A talk' },
+];
+const field =
+  'min-h-[52px] w-full rounded-xl border border-[#3a4048] bg-[#1b1e22] px-4 font-body text-[17px] font-normal tracking-normal text-white normal-case placeholder:text-[#7d8790] aria-[invalid=true]:border-[#ff8a80]';
+const label = 'flex flex-col gap-2 font-display text-xs font-bold tracking-[0.14em] text-[#a7b0b8] uppercase';
+---
+
+<form method="post" action="/api/contact" class="flex min-w-0 flex-[999_1_480px] flex-col gap-5" data-contact-form novalidate>
+  <div class="flex flex-wrap gap-5">
+    <label class:list={[label, 'flex-[1_1_220px]']}>
+      Name
+      <input class={field} type="text" name="name" autocomplete="name" required maxlength="100" aria-describedby="err-name" />
+      <span id="err-name" class="text-[13px] font-semibold tracking-normal text-[#ff8a80] normal-case" data-error="name"></span>
+    </label>
+    <label class:list={[label, 'flex-[1_1_220px]']}>
+      Email
+      <input class={field} type="email" name="email" autocomplete="email" required maxlength="254" aria-describedby="err-email" />
+      <span id="err-email" class="text-[13px] font-semibold tracking-normal text-[#ff8a80] normal-case" data-error="email"></span>
+    </label>
+  </div>
+
+  <fieldset class="m-0 flex flex-wrap gap-2 border-0 p-0">
+    <legend class:list={[label, 'mb-2']}>This is about</legend>
+    {
+      topics.map(({ value, label: text }, index) => (
+        <label class="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-[#3a4048] px-4 font-display text-sm font-semibold text-white has-checked:border-teal has-checked:bg-teal has-checked:font-bold has-checked:text-black has-focus-visible:outline-3 has-focus-visible:outline-teal">
+          <input type="radio" name="topic" value={value} checked={index === 0} class="accent-black" />
+          {text}
+        </label>
+      ))
+    }
+  </fieldset>
+
+  <label class={label}>
+    Message
+    <textarea
+      class:list={[field, 'min-h-40 py-3.5 leading-relaxed']}
+      name="message"
+      rows="5"
+      required
+      minlength="10"
+      maxlength="5000"
+      aria-describedby="err-message"></textarea>
+    <span id="err-message" class="text-[13px] font-semibold tracking-normal text-[#ff8a80] normal-case" data-error="message"></span>
+  </label>
+
+  <!-- Honeypot: hidden from people and assistive tech; bots fill it in. -->
+  <div class="absolute -left-[9999px]" aria-hidden="true">
+    <label>Company <input type="text" name="company" tabindex="-1" autocomplete="off" /></label>
+  </div>
+
+  <div class="cf-turnstile" data-sitekey={siteKey} data-action="contact" data-theme="dark" data-size="flexible"></div>
+
+  <div class="flex flex-wrap items-center justify-between gap-4">
+    <p class="m-0 font-display text-[12.5px] font-medium text-[#a7b0b8]">
+      Protected by Cloudflare Turnstile · straight to my inbox
+    </p>
+    <button type="submit" class="btn btn-teal cursor-pointer border-0 disabled:cursor-wait disabled:opacity-70" data-submit>
+      Send message <span aria-hidden="true">→</span>
+    </button>
+  </div>
+  <p role="status" aria-live="polite" class="m-0 min-h-6 font-display text-[15px] font-semibold text-white" data-status></p>
+</form>
+
+<script>
+  type Result =
+    | { ok: true }
+    | { ok: false; code: string; message: string; fields?: Record<string, string> };
+
+  const MESSAGES: Record<string, string> = {
+    invalid: 'Please check the highlighted fields.',
+    turnstile_failed: "We couldn't confirm you're human. Please retry the check and send again.",
+    send_failed: "The message couldn't be delivered. Please email me directly instead.",
+    too_large: 'That message is too long.',
+  };
+
+  const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
+  if (form) {
+    // Turnstile is third-party JS: only fetch it when the form is about to be seen.
+    const loadTurnstile = () => {
+      if (document.querySelector('script[data-turnstile]')) return;
+      const script = document.createElement('script');
+      script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+      script.async = true;
+      script.dataset.turnstile = '';
+      document.head.append(script);
+    };
+    new IntersectionObserver(
+      (entries, observer) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          loadTurnstile();
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '800px 0px' },
+    ).observe(form);
+    form.addEventListener('focusin', loadTurnstile, { once: true });
+
+    const status = form.querySelector<HTMLElement>('[data-status]')!;
+    const submit = form.querySelector<HTMLButtonElement>('[data-submit]')!;
+
+    // No-JS fallback lands on /?contact=<code>#contact after a failed post.
+    const code = new URLSearchParams(location.search).get('contact');
+    if (code) status.textContent = MESSAGES[code] ?? 'Something went wrong. Please try again.';
+
+    const clearErrors = () => {
+      form.querySelectorAll<HTMLElement>('[data-error]').forEach((el) => (el.textContent = ''));
+      form.querySelectorAll('[aria-invalid]').forEach((el) => el.removeAttribute('aria-invalid'));
+    };
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      clearErrors();
+      submit.disabled = true;
+      status.textContent = 'Sending…';
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' },
+        });
+        const result = (await res.json()) as Result;
+
+        if (result.ok) {
+          form.reset();
+          status.textContent = "Thanks. Your message is on its way, and I'll reply from my own inbox.";
+          return;
+        }
+        for (const [name, message] of Object.entries(result.fields ?? {})) {
+          form.querySelector(`[name="${name}"]`)?.setAttribute('aria-invalid', 'true');
+          const slot = form.querySelector<HTMLElement>(`[data-error="${name}"]`);
+          if (slot) slot.textContent = message;
+        }
+        status.textContent = result.message;
+        form.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
+      } catch {
+        status.textContent = 'Network error. Please try again, or email me directly.';
+      } finally {
+        submit.disabled = false;
+        window.turnstile?.reset();
+      }
+    });
+  }
+</script>

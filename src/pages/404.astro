@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Not found" page="404" noindex>
+  <section aria-labelledby="nf-title" class="wrap pt-[clamp(48px,7vw,96px)] pb-28">
+    <p aria-hidden="true" class="m-0 font-display text-[clamp(96px,16vw,220px)] leading-[0.8] font-black text-accent">404</p>
+    <h1 id="nf-title" class="mt-8 mb-0 max-w-[14em] font-display text-[clamp(32px,4vw,56px)] leading-[1.05] font-black tracking-[-0.02em]">
+      This page has <span class="marker">no lineage.</span>
+    </h1>
+    <p class="mt-6 max-w-[34em] text-lg leading-[1.8] text-ink-soft">
+      Nothing upstream produced it. It may have moved when the site was rebuilt.
+    </p>
+    <div class="mt-6 flex flex-wrap gap-3">
+      <a href="/" class="btn btn-ink">Home</a>
+      <a href="/hire-me/" class="btn btn-line">Hire me</a>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,21 @@
+---
+interface Props {
+  page: string;
+}
+const { page } = Astro.props;
+const commit = __BUILD_COMMIT__;
+const date = __BUILD_DATE__;
+---
+
+<footer class="wrap pb-10">
+  <div
+    class="flex flex-wrap items-center gap-x-8 gap-y-4 border-t-2 border-ink pt-5 font-display text-[13px] leading-relaxed font-medium text-muted"
+  >
+    <p class="m-0 min-w-0 flex-[1_1_360px]">
+      Set in Raleway and Merriweather. Built with Astro, served from Cloudflare's edge. No trackers.
+      <a href="/colophon/" class="text-muted">Colophon</a> · build
+      <span class="tabular-nums">{commit}</span> · {date}
+    </p>
+    <p class="m-0 text-[15px] font-extrabold text-ink">© {new Date().getFullYear()} · {page}</p>
+  </div>
+</footer>

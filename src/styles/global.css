@@ -1,0 +1,291 @@
+@import 'tailwindcss';
+
+/*
+ * Brand: Data Profession Academy / Data Sparta guidelines.
+ *   Primary  teal #3EC1D3 · Secondary ink #111111 · Alternative navy #072F51
+ *   Primary type Raleway · Secondary type Merriweather
+ * Rule: teal is never text on a light ground (2.15:1). It is a fill, highlighter or rule;
+ * on ink or navy it may be text (8.8:1 / 6.4:1).
+ */
+
+:root {
+  color-scheme: light;
+  --paper: #ffffff;
+  --ink: #111111;
+  --ink-soft: #2a3037;
+  --muted: #4b5560;
+  --rule: #dce3e6;
+  --mist: #f2fafb;
+  --accent-text: #072f51; /* links, numerals: navy 13.7:1 on white */
+  --panel: #111111; /* contact panel */
+  --panel-text: #ffffff;
+  --field: #1b1e22;
+  --field-rule: #3a4048;
+  --todo-bg: #fbe9b7;
+  --todo-text: #5c3b00;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --paper: #111111;
+  --ink: #ffffff;
+  --ink-soft: #d5dbe0;
+  --muted: #a7b0b8;
+  --rule: #2a2f35;
+  --mist: #1a1f24;
+  --accent-text: #3ec1d3; /* teal on ink 8.8:1 */
+  --panel: #1a1f24;
+  --panel-text: #ffffff;
+  --field: #111111;
+  --field-rule: #3a4048;
+  --todo-bg: #4a3a12;
+  --todo-text: #fbe9b7;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --paper: #111111;
+    --ink: #ffffff;
+    --ink-soft: #d5dbe0;
+    --muted: #a7b0b8;
+    --rule: #2a2f35;
+    --mist: #1a1f24;
+    --accent-text: #3ec1d3;
+    --panel: #1a1f24;
+    --panel-text: #ffffff;
+    --field: #111111;
+    --field-rule: #3a4048;
+    --todo-bg: #4a3a12;
+    --todo-text: #fbe9b7;
+  }
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-muted: var(--muted);
+  --color-rule: var(--rule);
+  --color-mist: var(--mist);
+  --color-accent: var(--accent-text);
+  --color-panel: var(--panel);
+  --color-panel-text: var(--panel-text);
+  --color-teal: #3ec1d3;
+  --color-navy: #072f51;
+  --color-black: #111111;
+
+  --font-display: var(--font-raleway);
+  --font-body: var(--font-merriweather);
+}
+
+@view-transition {
+  navigation: auto;
+}
+
+@layer base {
+  html {
+    background: var(--paper);
+    scroll-padding-top: 1.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-weight: 300;
+    /* Raleway defaults to old-style figures; data reads better lining. Big section numerals opt back in. */
+    font-variant-numeric: lining-nums;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+  a {
+    color: var(--accent-text);
+    text-decoration-line: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+    text-decoration-color: #3ec1d3;
+  }
+  a:hover {
+    color: var(--ink);
+  }
+  :focus-visible {
+    outline: 3px solid #3ec1d3;
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  ::selection {
+    background: #3ec1d3;
+    color: #111111;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+    @view-transition {
+      navigation: none;
+    }
+  }
+}
+
+@layer components {
+  .wrap {
+    max-width: 1240px;
+    margin-inline: auto;
+    padding-inline: clamp(20px, 4vw, 56px);
+  }
+
+  /* Tracked uppercase label, as on the guideline's section pages. */
+  .label {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* Teal highlighter under a key phrase. Ink text on teal: 8.8:1. */
+  .marker {
+    background: linear-gradient(to top, #3ec1d3 0 36%, transparent 36%);
+    padding-inline: 0.12em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  /* On a dark ground, white text over teal fails contrast: the phrase itself turns teal instead. */
+  :root[data-theme='dark'] .marker {
+    background: none;
+    color: #3ec1d3;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) .marker {
+      background: none;
+      color: #3ec1d3;
+    }
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    min-height: 52px;
+    padding-inline: 1.5rem;
+    border-radius: 12px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.9375rem;
+    text-decoration: none;
+    transition:
+      transform 160ms ease,
+      background-color 160ms ease;
+  }
+  .btn:hover {
+    transform: translateY(-1px);
+  }
+  .btn-teal {
+    background: #3ec1d3;
+    color: #111111;
+    font-weight: 800;
+  }
+  .btn-teal:hover {
+    color: #111111;
+    background: #5fcddb;
+  }
+  .btn-ink {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .btn-ink:hover {
+    color: var(--paper);
+  }
+  .btn-line {
+    border: 2px solid var(--ink);
+    color: var(--ink);
+  }
+
+  /* Lineage note: every claim cites its source. */
+  .lineage {
+    background: var(--mist);
+    border-left: 3px solid #3ec1d3;
+    border-radius: 0 12px 12px 0;
+    padding: 0.875rem 1.125rem;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 0.8125rem;
+    line-height: 1.9;
+    color: var(--muted);
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+
+  .todo {
+    background: var(--todo-bg);
+    color: var(--todo-text);
+    padding: 0.05em 0.4em;
+    border-radius: 4px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-style: normal;
+  }
+
+  .prose-body {
+    font-size: 1.03rem;
+    line-height: 1.8;
+    color: var(--ink-soft);
+  }
+  .prose-body > * + * {
+    margin-top: 1rem;
+  }
+  .prose-body ul {
+    list-style: none;
+    padding: 0;
+  }
+  .prose-body li {
+    position: relative;
+    padding-left: 1.25rem;
+  }
+  .prose-body li + li {
+    margin-top: 0.6rem;
+  }
+  .prose-body li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.7em;
+    width: 7px;
+    height: 7px;
+    background: #3ec1d3;
+  }
+
+  /* Gentle reveal on scroll, progressive: content is visible without JS or with reduced motion. */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .reveal {
+        animation: reveal linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 40%;
+      }
+    }
+  }
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

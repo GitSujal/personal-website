@@ -1,0 +1,12 @@
+---
+/**
+ * A visible placeholder for content Sujal still has to supply or confirm.
+ * Deliberately loud so nothing half-finished ships unnoticed. Find them all with: grep -rn "\[" src/content
+ */
+interface Props {
+  text: string;
+}
+const { text } = Astro.props;
+---
+
+<span class="todo">{text}</span>

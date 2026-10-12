@@ -1,7 +1,7 @@
 # Sujal Dhungana
 
 ```
-Perth,Australia sujal@dataprofessionacademy.com 0410677503 in/dhunganasujal sujal-dhungana.netlify.app/hire-me
+Perth,Australia sujal@datasparta.com 0410677503 in/dhunganasujal sujal.datasparta.com/hire-me
 ```
 ## SUMMARY
 

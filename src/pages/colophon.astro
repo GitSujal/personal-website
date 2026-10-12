@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+import SectionHead from '../components/SectionHead.astro';
+
+const rows = [
+  { label: 'Type', value: 'Raleway (headings, labels) and Merriweather (body), self-hosted via Astro Fonts.' },
+  { label: 'Colour', value: 'Teal #3EC1D3, ink #111111 and navy #072F51, from the Data Profession Academy brand guidelines.' },
+  { label: 'Framework', value: 'Astro, rendered to static HTML. Almost no JavaScript ships to your browser.' },
+  { label: 'Hosting', value: 'Cloudflare Workers with static assets. The contact form is a small Worker with Turnstile.' },
+  { label: 'Privacy', value: 'No analytics, no trackers, no cookies. Form messages go straight to email and are not stored.' },
+  { label: 'Build', value: `${__BUILD_COMMIT__} · ${__BUILD_DATE__}` },
+];
+---
+
+<Base title="Colophon" page="04" description="How sujal.datasparta.com is made: type, colour, stack and privacy.">
+  <section aria-labelledby="c-title" class="wrap pt-[clamp(48px,7vw,96px)] pb-28">
+    <SectionHead num="04" title="Colophon" id="c-title" />
+    <p class="mt-0 mb-10 max-w-[34em] text-lg leading-[1.8] text-ink-soft">
+      A data engineer's site should be able to say where everything came from. This is the lineage of this one.
+    </p>
+    <dl class="m-0 max-w-[60rem]">
+      {
+        rows.map((row) => (
+          <div class="flex flex-wrap gap-x-6 gap-y-1 border-t border-rule py-4">
+            <dt class="label flex-[0_0_200px] pt-1">{row.label}</dt>
+            <dd class="m-0 flex-[1_1_300px] text-[16.5px] leading-relaxed font-normal">{row.value}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </section>
+</Base>

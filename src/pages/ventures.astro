@@ -1,0 +1,68 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Todo from '../components/Todo.astro';
+import { byOrder } from '../lib/format';
+
+const ventures = await Promise.all(
+  (await getCollection('ventures')).sort(byOrder).map(async (entry) => ({ entry, ...(await render(entry)) })),
+);
+---
+
+<Base
+  title="Ventures"
+  page="03"
+  description="Data Profession Academy, Data Vanguards and Data Sparta: what Sujal Dhungana is building outside the day job."
+>
+  <section aria-labelledby="v-title" class="wrap pt-[clamp(48px,7vw,96px)] pb-6">
+    <p class="label m-0 mb-6 text-accent!">The other half of the week</p>
+    <h1 id="v-title" class="m-0 max-w-[13em] font-display text-[clamp(42px,6vw,88px)] leading-none font-black tracking-[-0.03em] text-balance">
+      Things I'm building <span class="marker">outside</span> the day job.
+    </h1>
+  </section>
+
+  {
+    ventures.map(({ entry: { data }, Content }, index) => (
+      <article aria-labelledby={`v-${index}`} class="wrap reveal pt-20">
+        <div class="flex flex-wrap gap-x-14 gap-y-8 border-t-2 border-ink pt-8">
+          <p aria-hidden="true" class="m-0 flex-[0_0_140px] font-display text-[120px] leading-[0.8] font-black text-accent">
+            {String(index + 1).padStart(2, '0')}
+          </p>
+          <div class="min-w-0 flex-[999_1_560px]">
+            <p class="label m-0">
+              {data.meta} {data.todo && <Todo text={data.todo} />}
+            </p>
+            <h2 id={`v-${index}`} class="mt-3 mb-0 font-display text-[clamp(38px,4.4vw,60px)] leading-[1.02] font-black tracking-[-0.025em]">
+              {data.name}
+            </h2>
+            <p class="mt-3.5 mb-0 text-[21px] leading-normal text-ink-soft italic">{data.tagline}</p>
+            <div class="mt-7 flex flex-wrap gap-x-14 gap-y-8">
+              <div class="prose-body min-w-0 flex-[999_1_400px]">
+                <Content />
+                {data.url && (
+                  <p>
+                    <a href={data.url} class="font-display font-bold" rel="noopener">
+                      {new URL(data.url).hostname.replace(/^www\./, '')} ↗
+                    </a>
+                  </p>
+                )}
+              </div>
+              <aside aria-label={`${data.name} at a glance`} class="flex-[1_1_280px] self-start rounded-[20px] bg-teal p-6 font-display text-black">
+                <p class="m-0 mb-1 text-xs font-black tracking-[0.18em]">FACT BOX</p>
+                <dl class="m-0 text-sm leading-[2.1] font-semibold [font-variant-numeric:lining-nums]">
+                  {data.facts.map((fact) => (
+                    <div class="flex justify-between gap-3 border-t border-black/20">
+                      <dt>{fact.label}</dt>
+                      <dd class="m-0 text-right font-extrabold">{fact.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </aside>
+            </div>
+          </div>
+        </div>
+      </article>
+    ))
+  }
+  <div class="h-24"></div>
+</Base>

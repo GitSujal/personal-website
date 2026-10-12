@@ -1,28 +1,30 @@
 import js from '@eslint/js';
 import globals from 'globals';
-import reactHooks from 'eslint-plugin-react-hooks';
-import reactRefresh from 'eslint-plugin-react-refresh';
 import tseslint from 'typescript-eslint';
+import astro from 'eslint-plugin-astro';
 
 export default tseslint.config(
-  { ignores: ['dist'] },
+  { ignores: ['dist', '.astro', '.wrangler', 'worker/worker-configuration.d.ts'] },
+  js.configs.recommended,
+  ...tseslint.configs.recommended,
+  ...astro.configs.recommended,
+  ...astro.configs['jsx-a11y-strict'],
   {
-    extends: [js.configs.recommended, ...tseslint.configs.recommended],
-    files: ['**/*.{ts,tsx}'],
     languageOptions: {
-      ecmaVersion: 2020,
-      globals: globals.browser,
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+        // Injected by vite.define in astro.config.mjs.
+        __BUILD_COMMIT__: 'readonly',
+        __BUILD_DATE__: 'readonly',
+      },
     },
-    plugins: {
-      'react-hooks': reactHooks,
-      'react-refresh': reactRefresh,
+  },
+  {
+    files: ['worker/**/*.ts'],
+    languageOptions: {
+      parserOptions: { project: './worker/tsconfig.json', tsconfigRootDir: import.meta.dirname },
     },
-    rules: {
-      ...reactHooks.configs.recommended.rules,
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
-      ],
-    },
-  }
+    rules: { '@typescript-eslint/no-floating-promises': 'error' },
+  },
 );

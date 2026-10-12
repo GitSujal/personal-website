@@ -1,0 +1,46 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "sujal-portfolio",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-10-11",
+  "compatibility_flags": ["nodejs_compat"],
+
+  // Astro's static build. Only /api/* reaches the Worker; everything else is served straight from assets.
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"],
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash",
+  },
+
+  // Contact form → email. The sender domain must be onboarded to Cloudflare Email Service,
+  // and CONTACT_TO (sujal@datasparta.com) must be a verified destination address on the account.
+  "send_email": [
+    {
+      "name": "EMAIL",
+      "allowed_destination_addresses": ["sujal@datasparta.com"],
+      "allowed_sender_addresses": ["website@datasparta.com"],
+    },
+  ],
+
+  "vars": {
+    "CONTACT_TO": "sujal@datasparta.com",
+    "CONTACT_FROM": "website@datasparta.com",
+    "SITE_HOST": "sujal.datasparta.com",
+    // Hostnames a Turnstile token may come from (comma-separated). Never add localhost here;
+    // local dev overrides this in .dev.vars.
+    "TURNSTILE_HOSTNAMES": "sujal.datasparta.com",
+  },
+  // Secret (not in this file): TURNSTILE_SECRET. Set with `npx wrangler secret put TURNSTILE_SECRET`.
+
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1,
+  },
+
+  // Uncomment at cutover, once the workers.dev deployment is verified:
+  // "routes": [
+  //   { "pattern": "sujal.datasparta.com", "custom_domain": true },
+  // ],
+}

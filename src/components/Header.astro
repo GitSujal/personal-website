@@ -1,0 +1,125 @@
+---
+import { site } from '../data/site';
+
+const links = [
+  { href: '/#work', label: 'Work' },
+  { href: '/#experience', label: 'Experience' },
+  { href: '/#teaching', label: 'Teaching' },
+  { href: '/#writing', label: 'Talks & writing' },
+  { href: '/ventures/', label: 'Ventures' },
+];
+const path = Astro.url.pathname;
+---
+
+<header class="wrap">
+  <div
+    class="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-b border-rule py-2.5 font-display text-[11.5px] font-semibold tracking-[0.16em] text-muted uppercase"
+  >
+    <span>{site.location}</span>
+    <span class="hidden sm:inline">{site.roles}</span>
+    <button
+      type="button"
+      data-theme-toggle
+      class="hidden min-h-9 cursor-pointer items-center gap-1 rounded-full border border-rule px-3 font-display text-[11px] font-bold tracking-[0.14em] text-ink uppercase [.js_&]:inline-flex"
+    >
+      <span class="sr-only">Colour theme:</span>
+      <span data-theme-label>Auto</span>
+    </button>
+  </div>
+
+  <nav
+    aria-label="Primary"
+    class="flex flex-wrap items-center justify-between gap-x-8 gap-y-3 border-b-2 border-ink py-4"
+  >
+    <a href="/" class="inline-flex items-center gap-3 font-display text-2xl font-extrabold text-ink no-underline">
+      <span aria-hidden="true" class="size-3.5 bg-teal"></span>{site.name}
+    </a>
+
+    <button
+      type="button"
+      data-menu-toggle
+      aria-expanded="false"
+      aria-controls="primary-links"
+      class="hidden min-h-11 cursor-pointer rounded-[10px] border-2 border-ink px-4 font-display text-sm font-bold text-ink max-md:[.js_&]:inline-flex max-md:[.js_&]:items-center"
+    >
+      Menu
+    </button>
+
+    <ul
+      id="primary-links"
+      class="m-0 flex w-full list-none flex-col gap-1 p-0 font-display text-sm font-semibold md:w-auto md:flex-row md:flex-wrap md:items-center md:gap-x-7 max-md:[.js_&]:hidden max-md:[.js_&.open]:flex"
+    >
+      {
+        links.map(({ href, label }) => (
+          <li>
+            <a
+              href={href}
+              aria-current={path === href ? 'page' : undefined}
+              class="block py-3 text-ink no-underline hover:underline aria-[current=page]:text-accent aria-[current=page]:underline"
+            >
+              {label}
+            </a>
+          </li>
+        ))
+      }
+      <li>
+        <a
+          href="/hire-me/"
+          aria-current={path === '/hire-me/' ? 'page' : undefined}
+          class="mt-2 inline-flex min-h-11 items-center rounded-[10px] bg-teal px-[18px] font-bold text-black no-underline md:mt-0 aria-[current=page]:bg-ink aria-[current=page]:text-paper"
+        >
+          Hire me
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<script>
+  const root = document.documentElement;
+  const media = window.matchMedia('(prefers-color-scheme: dark)');
+  const order = ['auto', 'light', 'dark'] as const;
+  type Mode = (typeof order)[number];
+
+  function current(): Mode {
+    const value = root.dataset.theme;
+    return value === 'light' || value === 'dark' ? value : 'auto';
+  }
+
+  function render() {
+    const mode = current();
+    const label = mode === 'auto' ? `Auto (${media.matches ? 'dark' : 'light'})` : mode;
+    document.querySelectorAll('[data-theme-label]').forEach((el) => (el.textContent = label));
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]').forEach((button) =>
+    button.addEventListener('click', () => {
+      const next = order[(order.indexOf(current()) + 1) % order.length]!;
+      try {
+        if (next === 'auto') localStorage.removeItem('theme');
+        else localStorage.setItem('theme', next);
+      } catch {
+        /* storage unavailable: theme still applies for this page */
+      }
+      if (next === 'auto') delete root.dataset.theme;
+      else root.dataset.theme = next;
+      render();
+    }),
+  );
+  media.addEventListener('change', render);
+  render();
+
+  const menuButton = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const menu = document.getElementById('primary-links');
+  menuButton?.addEventListener('click', () => {
+    const open = menuButton.getAttribute('aria-expanded') !== 'true';
+    menuButton.setAttribute('aria-expanded', String(open));
+    menu?.classList.toggle('open', open);
+  });
+  menu?.addEventListener('click', (event) => {
+    if ((event.target as HTMLElement).closest('a')) {
+      menuButton?.setAttribute('aria-expanded', 'false');
+      menu.classList.remove('open');
+    }
+  });
+</script>
