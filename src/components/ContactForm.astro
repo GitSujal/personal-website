@@ -1,88 +1,102 @@
 ---
 /**
- * Contact form. A plain POST to the Worker at /api/contact; the script below upgrades it to an
+ * Contact form. A plain POST to the Astro API route at /api/contact (runs on the Worker); the script below upgrades it to an
  * in-place submission with field errors.
  *
  * Turnstile site key is public by design. `npm run dev` uses Cloudflare's always-pass TEST key
  * (the real widget only runs on sujal.datasparta.com); production builds use the real one.
  * Override either with PUBLIC_TURNSTILE_SITE_KEY.
  */
+import { TOPICS } from '../lib/contact';
+
 const SITE_KEY = '0x4AAAAAAFUPBxdYrOw85S6c';
 const TEST_SITE_KEY = '1x00000000000000000000AA';
 const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || (import.meta.env.DEV ? TEST_SITE_KEY : SITE_KEY);
 
-const topics = [
-  { value: 'role', label: 'A role' },
-  { value: 'consulting', label: 'Consulting' },
-  { value: 'academy', label: 'The Academy' },
-  { value: 'talk', label: 'A talk' },
-];
-const field =
-  'min-h-[52px] w-full rounded-xl border border-[#3a4048] bg-[#1b1e22] px-4 font-body text-[17px] font-normal tracking-normal text-white normal-case placeholder:text-[#7d8790] aria-[invalid=true]:border-[#ff8a80]';
-const label = 'flex flex-col gap-2 font-display text-xs font-bold tracking-[0.14em] text-[#a7b0b8] uppercase';
+const topics = Object.entries(TOPICS).map(([value, label]) => ({ value, label }));
+const label = 'block font-display text-base font-extrabold';
 ---
 
-<form method="post" action="/api/contact" class="flex min-w-0 flex-[999_1_480px] flex-col gap-5" data-contact-form novalidate>
-  <div class="flex flex-wrap gap-5">
-    <label class:list={[label, 'flex-[1_1_220px]']}>
+<form method="post" action="/api/contact" class="grid gap-5" data-contact-form novalidate>
+  <div class="grid gap-5 sm:grid-cols-2">
+    <label class={label}>
       Name
-      <input class={field} type="text" name="name" autocomplete="name" required maxlength="100" aria-describedby="err-name" />
-      <span id="err-name" class="text-[13px] font-semibold tracking-normal text-[#ff8a80] normal-case" data-error="name"></span>
+      <input
+        class="field"
+        type="text"
+        name="name"
+        autocomplete="name"
+        required
+        maxlength="100"
+        aria-describedby="err-name"
+      />
+      <span id="err-name" class="field-error" data-error="name"></span>
     </label>
-    <label class:list={[label, 'flex-[1_1_220px]']}>
+    <label class={label}>
       Email
-      <input class={field} type="email" name="email" autocomplete="email" required maxlength="254" aria-describedby="err-email" />
-      <span id="err-email" class="text-[13px] font-semibold tracking-normal text-[#ff8a80] normal-case" data-error="email"></span>
+      <input
+        class="field"
+        type="email"
+        name="email"
+        autocomplete="email"
+        required
+        maxlength="254"
+        aria-describedby="err-email"
+      />
+      <span id="err-email" class="field-error" data-error="email"></span>
     </label>
   </div>
 
-  <fieldset class="m-0 flex flex-wrap gap-2 border-0 p-0">
-    <legend class:list={[label, 'mb-2']}>This is about</legend>
-    {
-      topics.map(({ value, label: text }, index) => (
-        <label class="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-[#3a4048] px-4 font-display text-sm font-semibold text-white has-checked:border-teal has-checked:bg-teal has-checked:font-bold has-checked:text-black has-focus-visible:outline-3 has-focus-visible:outline-teal">
-          <input type="radio" name="topic" value={value} checked={index === 0} class="accent-black" />
+  <fieldset class="m-0 border-0 p-0">
+    <legend class:list={[label, 'mb-3']}>This is about</legend>
+    <div class="flex flex-wrap gap-2">
+      {topics.map(({ value, label: text }, index) => (
+        <label class="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border-2 border-[color:var(--line)] bg-[color:var(--card)] px-4 font-display text-sm font-bold has-checked:bg-primary has-checked:text-[#111] has-checked:shadow-[3px_3px_0_var(--shadow)] has-focus-visible:outline-3 has-focus-visible:outline-[color:var(--cyan-deep)]">
+          <input type="radio" name="topic" value={value} checked={index === 0} class="accent-[#111]" />
           {text}
         </label>
-      ))
-    }
+      ))}
+    </div>
   </fieldset>
 
   <label class={label}>
     Message
     <textarea
-      class:list={[field, 'min-h-40 py-3.5 leading-relaxed']}
+      class="field min-h-40 leading-relaxed"
       name="message"
       rows="5"
       required
       minlength="10"
       maxlength="5000"
-      aria-describedby="err-message"></textarea>
-    <span id="err-message" class="text-[13px] font-semibold tracking-normal text-[#ff8a80] normal-case" data-error="message"></span>
+      aria-describedby="err-message"
+      placeholder="What are you building, or what's breaking?"
+    ></textarea>
+    <span id="err-message" class="field-error" data-error="message"></span>
   </label>
 
   <!-- Honeypot: hidden from people and assistive tech; bots fill it in. -->
   <div class="absolute -left-[9999px]" aria-hidden="true">
-    <label>Company <input type="text" name="company" tabindex="-1" autocomplete="off" /></label>
+    <label>
+      Company <input type="text" name="company" tabindex="-1" autocomplete="off" />
+    </label>
   </div>
 
-  <div class="cf-turnstile" data-sitekey={siteKey} data-action="contact" data-theme="dark" data-size="flexible"></div>
+  <div class="cf-turnstile" data-sitekey={siteKey} data-action="contact" data-size="flexible"></div>
 
   <div class="flex flex-wrap items-center justify-between gap-4">
-    <p class="m-0 font-display text-[12.5px] font-medium text-[#a7b0b8]">
-      Protected by Cloudflare Turnstile · straight to my inbox
-    </p>
-    <button type="submit" class="btn btn-teal cursor-pointer border-0 disabled:cursor-wait disabled:opacity-70" data-submit>
-      Send message <span aria-hidden="true">→</span>
+    <p class="hand text-xl muted">straight to my inbox, no CRM</p>
+    <button type="submit" class="btn disabled:cursor-wait disabled:opacity-70" data-submit>
+      Send message{' '}
+      <span class="arrow" aria-hidden="true">
+        →
+      </span>
     </button>
   </div>
-  <p role="status" aria-live="polite" class="m-0 min-h-6 font-display text-[15px] font-semibold text-white" data-status></p>
+  <p role="status" aria-live="polite" class="min-h-6 font-display font-bold" data-status></p>
 </form>
 
 <script>
-  type Result =
-    | { ok: true }
-    | { ok: false; code: string; message: string; fields?: Record<string, string> };
+  type Result = { ok: true } | { ok: false; code: string; message: string; fields?: Record<string, string> };
 
   const MESSAGES: Record<string, string> = {
     invalid: 'Please check the highlighted fields.',

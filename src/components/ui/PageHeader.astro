@@ -1,0 +1,52 @@
+---
+import Badge from './Badge.astro';
+import { plain, words } from '../../lib/rich';
+
+interface Props {
+  title: string;
+  description?: string;
+  eyebrow?: string;
+}
+const { title, description, eyebrow } = Astro.props;
+const titleWords = words(title);
+---
+
+<section class="dots relative overflow-hidden pt-14 pb-16 sm:pt-20 sm:pb-24">
+  <div class="wrap grid items-center gap-12 lg:grid-cols-[1.35fr_0.65fr]">
+    <div>
+      {eyebrow && (
+        <p class="eyebrow mb-4" data-reveal>
+          {eyebrow}
+        </p>
+      )}
+      <h1 class="display-lg words" aria-label={plain(title)}>
+        {titleWords.map(({ word: w, cls }, i) => (
+          <>
+            <span aria-hidden="true">
+              <span style={`--i:${i}`} class={cls}>
+                {w}
+              </span>
+            </span>{' '}
+          </>
+        ))}
+      </h1>
+      {description && (
+        <p class="lede mt-7" data-reveal style="--d:4">
+          {description}
+        </p>
+      )}
+      {Astro.slots.has('default') && (
+        <div class="mt-9 flex flex-wrap items-center gap-4" data-reveal style="--d:5">
+          <slot />
+        </div>
+      )}
+    </div>
+    <div class="relative mx-auto w-full max-w-sm lg:max-w-none">
+      {Astro.slots.has('aside') ? (
+        <slot name="aside" />
+      ) : (
+        <Badge class="mx-auto h-52 w-52 text-[color:var(--ink)] sm:h-64 sm:w-64" />
+      )}
+    </div>
+  </div>
+</section>

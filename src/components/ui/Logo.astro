@@ -1,0 +1,13 @@
+---
+import { site } from '../../data/site';
+---
+
+<a href="/" class="group flex items-center gap-2.5" aria-label={`${site.name}, home`}>
+  <span
+    aria-hidden="true"
+    class="grid h-10 w-10 place-items-center rounded-[50%_40%_55%_45%] border-2 border-[#111] bg-primary font-display text-base font-extrabold text-[#111] transition-transform duration-500 group-hover:scale-110 group-hover:rotate-[-12deg]"
+  >
+    SD
+  </span>
+  <span class="font-display text-[1.5rem] leading-none font-extrabold tracking-tight">{site.name}</span>
+</a>

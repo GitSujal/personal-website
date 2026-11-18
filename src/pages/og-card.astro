@@ -2,35 +2,34 @@
 /**
  * Source for public/og.png (the social share image). Not linked or indexed.
  * Regenerate: npm run build && npx wrangler dev, then
- *   chrome --headless --hide-scrollbars --window-size=1200,630 --screenshot=public/og.png http://127.0.0.1:8787/og-card/
+ *   chrome --headless --hide-scrollbars --force-prefers-reduced-motion --window-size=1200,800 --screenshot=og.png http://127.0.0.1:8787/og-card/
+ *   then crop to 1200x630 (headless viewports are shorter than the window) and save as public/og.png.
  */
-import { Font } from 'astro:assets';
+import '@fontsource-variable/bricolage-grotesque';
+import '@fontsource-variable/figtree';
+import '@fontsource/caveat/700.css';
 import '../styles/global.css';
+import Badge from '../components/ui/Badge.astro';
 ---
 
 <!doctype html>
-<html lang="en-AU" data-theme="light">
+<html lang="en-AU">
   <head>
     <meta charset="utf-8" />
     <meta name="robots" content="noindex" />
     <title>OG card</title>
-    <Font cssVariable="--font-raleway" preload />
-    <Font cssVariable="--font-merriweather" />
   </head>
   <body class="m-0">
-    <div class="flex h-[630px] w-[1200px] overflow-hidden bg-white">
-      <div class="flex w-[64px] shrink-0 justify-center bg-black pt-24">
-        <span class="font-display text-[15px] tracking-[0.42em] text-white [writing-mode:vertical-rl]">sujal.datasparta.com</span>
-      </div>
-      <div class="flex flex-1 flex-col justify-between p-[72px] pb-16">
-        <p class="label m-0 text-navy!">Sujal Dhungana · Data engineer · Perth</p>
-        <h1 class="m-0 max-w-[16em] font-display text-[92px] leading-[0.98] font-black tracking-[-0.03em] text-black">
-          Data platforms that stand the <span class="marker">test of time.</span>
-        </h1>
-        <div class="flex items-end justify-between border-t-2 border-black pt-5 font-display">
-          <p class="m-0 text-[22px] font-semibold text-[#4b5560]">$600K+/yr saved · 1 TB/hr · Days → minutes MLOps</p>
-          <span class="size-12 bg-teal"></span>
-        </div>
+    <div class="dots relative flex h-[630px] w-[1200px] flex-col justify-between overflow-hidden p-[72px]">
+      <span class="sticker marker self-start text-base" style="--r:-3deg">
+        Sujal Dhungana · Data · Platform · Forward deployed
+      </span>
+      <h1 class="max-w-[13em] text-[96px] leading-[0.92] tracking-[-0.04em]">
+        <span class="hl cyan now">AI-ready</span> data platforms, built to last.
+      </h1>
+      <p class="hand text-[40px]">1 TB/hr streaming · $600K+/yr saved · secure data for AI agents</p>
+      <div class="absolute top-14 right-16">
+        <Badge class="h-60 w-60 text-[color:var(--ink)]" />
       </div>
     </div>
   </body>

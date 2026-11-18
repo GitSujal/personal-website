@@ -2,15 +2,25 @@
 import Base from '../layouts/Base.astro';
 ---
 
-<Base title="Message sent" page="—" noindex>
-  <section aria-labelledby="t-title" class="wrap pt-[clamp(48px,7vw,96px)] pb-28">
-    <p class="label m-0 mb-6 text-accent!">Message sent</p>
-    <h1 id="t-title" class="m-0 max-w-[14em] font-display text-[clamp(40px,5.5vw,76px)] leading-none font-black tracking-[-0.03em]">
-      Thanks. It's in my <span class="marker">inbox.</span>
-    </h1>
-    <p class="mt-8 max-w-[34em] text-lg leading-[1.8] text-ink-soft">
-      I read every message myself and reply from my own address, usually within a couple of working days (Perth time).
-    </p>
-    <a href="/" class="btn btn-ink mt-6">Back to the site</a>
+<Base title="Message sent" noindex>
+  <section class="dots band">
+    <div class="wrap">
+      <span class="sticker cyan" style="--r:-3deg">
+        message sent
+      </span>
+      <h1 class="display-lg mt-8 max-w-3xl">
+        Thanks. It's in my <span class="hl cyan now">inbox.</span>
+      </h1>
+      <p class="lede mt-6">
+        I read every message myself and reply from my own address, usually within a couple of working days
+        (Perth time).
+      </p>
+      <a href="/" class="btn btn-ink mt-9">
+        Back to the site{' '}
+        <span class="arrow" aria-hidden="true">
+          →
+        </span>
+      </a>
+    </div>
   </section>
 </Base>

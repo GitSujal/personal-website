@@ -1,0 +1,25 @@
+---
+/** The rotating seal from datasparta.com, with Sujal's initials in the middle instead of the company mark. */
+interface Props {
+  text?: string;
+  class?: string;
+}
+const { text = 'SUJAL DHUNGANA • DATA ENGINEER • PERTH WA •', class: className } = Astro.props;
+const uid = `b${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<div class:list={['relative grid place-items-center', className]} aria-hidden="true">
+  <svg viewBox="0 0 200 200" class="spin-slow absolute inset-0 h-full w-full">
+    <defs>
+      <path id={uid} d="M100,100 m-76,0 a76,76 0 1,1 152,0 a76,76 0 1,1 -152,0"></path>
+    </defs>
+    <text font-family="var(--font-display)" font-weight="800" font-size="15" fill="currentColor">
+      <textPath href={`#${uid}`} textLength="468" lengthAdjust="spacing">
+        {text}
+      </textPath>
+    </text>
+  </svg>
+  <div class="grid h-[46%] w-[46%] place-items-center rounded-full border-2 border-[#111] bg-primary font-display text-[clamp(1.4rem,3vw,2.4rem)] font-extrabold tracking-tight text-[#111]">
+    SD
+  </div>
+</div>

@@ -4,7 +4,7 @@ import tseslint from 'typescript-eslint';
 import astro from 'eslint-plugin-astro';
 
 export default tseslint.config(
-  { ignores: ['dist', '.astro', '.wrangler', 'worker/worker-configuration.d.ts'] },
+  { ignores: ['dist', '.astro', '.wrangler', 'worker-configuration.d.ts'] },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   ...astro.configs.recommended,
@@ -19,12 +19,5 @@ export default tseslint.config(
         __BUILD_DATE__: 'readonly',
       },
     },
-  },
-  {
-    files: ['worker/**/*.ts'],
-    languageOptions: {
-      parserOptions: { project: './worker/tsconfig.json', tsconfigRootDir: import.meta.dirname },
-    },
-    rules: { '@typescript-eslint/no-floating-promises': 'error' },
   },
 );

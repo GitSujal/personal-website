@@ -1,0 +1,306 @@
+---
+import Badge from '../ui/Badge.astro';
+import { home } from '../../data/copy';
+import { plain, words } from '../../lib/rich';
+
+const notes = [
+  { label: 'model_FINAL_v7.ipynb', y: -92, r: -10, fill: '#fff7c2' },
+  { label: 'click-ops console', y: -30, r: 7, fill: '#ffe0d6' },
+  { label: 'cron.sh (who?)', y: 34, r: -5, fill: '#dff6fa' },
+  { label: '1 TB/hr of logs', y: 92, r: 9, fill: '#fff7c2' },
+  { label: 'manual deploy 😬', y: -60, r: -3, fill: '#e6f9d9' },
+  { label: 'idle CPU $$$', y: 62, r: 6, fill: '#ffe0d6' },
+];
+const teeth = Array.from({ length: 8 }, (_, i) => i * 45);
+const headline = words(home.hero.headline);
+---
+
+<section class="dots relative overflow-hidden pt-10 pb-14 sm:pt-16">
+  <div class="wrap grid items-center gap-10 lg:grid-cols-[1.05fr_1fr]">
+    <div class="relative z-10">
+      <span class="sticker marker" style="--r:-4deg" data-reveal="pop">
+        <span class="inline-block h-2 w-2 animate-pulse rounded-full bg-[#111]"></span> Data · Platform ·
+        Forward deployed engineer
+      </span>
+      <h1 class="display-xl mt-6 !text-[clamp(3rem,7.2vw,7rem)]" aria-label={plain(home.hero.headline)}>
+        {headline.map(({ word: w, cls }, k) => (
+          <>
+            <span class="words" aria-hidden="true">
+              <span style="padding-inline:0.12em;margin-inline:-0.12em">
+                <span style={`--i:${k}`} class={cls}>
+                  {w}
+                </span>
+              </span>
+            </span>{' '}
+          </>
+        ))}
+      </h1>
+      <p class="lede mt-8" data-reveal style="--d:4">
+        {home.hero.lede}
+      </p>
+      <div class="mt-9 flex flex-wrap items-center gap-4" data-reveal style="--d:5">
+        <a href="/hire-me/" class="btn">
+          Hire me{' '}
+          <span class="arrow" aria-hidden="true">
+            →
+          </span>
+        </a>
+        <a href="#work" class="btn btn-ghost">
+          See the work
+        </a>
+      </div>
+    </div>
+
+    <div class="relative" data-reveal="pop" style="--d:2">
+      <svg
+        viewBox="0 0 640 440"
+        class="scene relative z-10 block w-full"
+        role="img"
+        aria-label="Animation: notebooks, console clicks and hand-run scripts roll into a machine labelled Everything as code and come out as a tidy, cheaper platform stamped AI ready."
+      >
+        <path
+          d="M30 270 H250"
+          fill="none"
+          stroke="#111"
+          stroke-width="22"
+          stroke-linecap="round"
+          class="[stroke:var(--ink)]"
+        ></path>
+        <path d="M30 270 H250" fill="none" stroke="#3ec1d3" stroke-width="12" stroke-linecap="round"></path>
+        <path
+          d="M30 270 H250"
+          fill="none"
+          stroke="#fff"
+          stroke-width="3"
+          stroke-linecap="round"
+          class="pipe-flow"
+        ></path>
+        <path
+          d="M400 270 H440"
+          fill="none"
+          stroke="#111"
+          stroke-width="22"
+          stroke-linecap="round"
+          class="[stroke:var(--ink)]"
+        ></path>
+        <path d="M400 270 H440" fill="none" stroke="#3ec1d3" stroke-width="12" stroke-linecap="round"></path>
+        <path
+          d="M400 270 H440"
+          fill="none"
+          stroke="#fff"
+          stroke-width="3"
+          stroke-linecap="round"
+          class="pipe-flow"
+        ></path>
+
+        <g class="machine">
+          <rect
+            x="230"
+            y="150"
+            width="190"
+            height="230"
+            rx="18"
+            fill="#3ec1d3"
+            stroke="#111"
+            stroke-width="5"
+          ></rect>
+          <rect x="262" y="96" width="30" height="56" rx="6" fill="#111"></rect>
+          <rect x="350" y="116" width="30" height="36" rx="6" fill="#111"></rect>
+          <circle
+            class="puff"
+            style="--p:0"
+            cx="277"
+            cy="90"
+            r="14"
+            fill="#fff"
+            stroke="#111"
+            stroke-width="3"
+          ></circle>
+          <circle
+            class="puff"
+            style="--p:1.1"
+            cx="277"
+            cy="90"
+            r="14"
+            fill="#fff"
+            stroke="#111"
+            stroke-width="3"
+          ></circle>
+          <circle
+            class="puff"
+            style="--p:2.1"
+            cx="277"
+            cy="90"
+            r="14"
+            fill="#fff"
+            stroke="#111"
+            stroke-width="3"
+          ></circle>
+          <rect
+            x="252"
+            y="176"
+            width="146"
+            height="76"
+            rx="10"
+            fill="#fff"
+            stroke="#111"
+            stroke-width="4"
+          ></rect>
+          <text x="325" y="207" text-anchor="middle" font-size="17" font-weight="800" fill="#111">
+            EVERYTHING
+          </text>
+          <text x="325" y="236" text-anchor="middle" font-size="24" font-weight="800" fill="#111">
+            AS CODE
+          </text>
+          <g class="gear">
+            <g transform="translate(290 316)">
+              <circle r="24" fill="#111"></circle>
+              {teeth.map((a) => (
+                <rect x="-5" y="-33" width="10" height="14" rx="2" fill="#111" transform={`rotate(${a})`} />
+              ))}
+              <circle r="9" fill="#fff"></circle>
+            </g>
+          </g>
+          <g class="gear rev">
+            <g transform="translate(358 330)">
+              <circle r="16" fill="#fff" stroke="#111" stroke-width="4"></circle>
+              {teeth.map((a) => (
+                <rect x="-4" y="-24" width="8" height="10" rx="2" fill="#111" transform={`rotate(${a})`} />
+              ))}
+              <circle r="5" fill="#111"></circle>
+            </g>
+          </g>
+        </g>
+
+        {notes.map((n, i) => (
+          <g class="note" style={`--n:${i};--y0:${n.y}px;--r0:${n.r}deg`}>
+            <rect
+              x="10"
+              y="250"
+              width="148"
+              height="40"
+              rx="5"
+              fill={n.fill}
+              stroke="#111"
+              stroke-width="3"
+            />
+            <text x="84" y="276" text-anchor="middle" font-size="14" font-weight="700" fill="#111">
+              {n.label}
+            </text>
+          </g>
+        ))}
+
+        <!-- the tidy platform: a pipeline that's green and a cost line that's gone down -->
+        <g transform="rotate(3 530 270)">
+          <rect
+            x="440"
+            y="168"
+            width="190"
+            height="210"
+            rx="12"
+            fill="#fffdf6"
+            stroke="#111"
+            stroke-width="5"
+          ></rect>
+          <rect x="440" y="168" width="190" height="34" rx="12" fill="#111"></rect>
+          <circle cx="458" cy="185" r="5" fill="#3ec1d3"></circle>
+          <circle cx="475" cy="185" r="5" fill="#ffd23f"></circle>
+          <circle cx="492" cy="185" r="5" fill="#ff6b4a"></circle>
+          <text x="610" y="190" text-anchor="end" font-size="12" font-weight="800" fill="#fff">
+            AI-ready ✓
+          </text>
+          <rect
+            class="bar"
+            style="--b:0"
+            x="462"
+            y="222"
+            width="26"
+            height="130"
+            rx="3"
+            fill="#ff6b4a"
+            stroke="#111"
+            stroke-width="3"
+          ></rect>
+          <rect
+            class="bar"
+            style="--b:1"
+            x="500"
+            y="262"
+            width="26"
+            height="90"
+            rx="3"
+            fill="#ffd23f"
+            stroke="#111"
+            stroke-width="3"
+          ></rect>
+          <rect
+            class="bar"
+            style="--b:2"
+            x="538"
+            y="290"
+            width="26"
+            height="62"
+            rx="3"
+            fill="#3ec1d3"
+            stroke="#111"
+            stroke-width="3"
+          ></rect>
+          <rect
+            class="bar"
+            style="--b:3"
+            x="576"
+            y="306"
+            width="26"
+            height="46"
+            rx="3"
+            fill="#3ec1d3"
+            stroke="#111"
+            stroke-width="3"
+          ></rect>
+          <line
+            x1="456"
+            y1="352"
+            x2="614"
+            y2="352"
+            stroke="#111"
+            stroke-width="4"
+            stroke-linecap="round"
+          ></line>
+          <text x="535" y="370" text-anchor="middle" font-size="12" font-weight="800" fill="#111">
+            compute cost / month
+          </text>
+          <g class="tidy">
+            <rect
+              x="498"
+              y="390"
+              width="130"
+              height="44"
+              rx="8"
+              fill="none"
+              stroke="#f2553b"
+              stroke-width="5"
+            ></rect>
+            <text
+              x="563"
+              y="422"
+              text-anchor="middle"
+              font-size="26"
+              font-weight="800"
+              fill="#f2553b"
+              letter-spacing="1"
+            >
+              AI READY
+            </text>
+          </g>
+        </g>
+      </svg>
+
+      <div class="bob absolute top-[80%] left-0 hidden sm:block" style="--bd:.6s">
+        <span class="hand block rotate-[-6deg] text-2xl">{home.hero.note}</span>
+      </div>
+      <div class="absolute -top-2 -right-3 z-20 hidden sm:block">
+        <Badge class="h-28 w-28 text-[color:var(--ink)]" />
+      </div>
+    </div>
+  </div>
+</section>

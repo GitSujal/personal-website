@@ -13,11 +13,22 @@ export const site = {
   linkedinLabel: 'linkedin.com/in/dhunganasujal',
   location: 'Perth, Western Australia',
   timezone: 'AWST (UTC+8)',
-  roles: 'Data engineer · Founder · Teacher',
+  roles: 'Data engineer · Platform engineer · Forward deployed engineer',
   description:
-    'Sujal Dhungana is a data engineer in Perth building data platforms that stand the test of time: infrastructure as code, MLOps, and cost engineering. Founder of Data Profession Academy.',
+    'Sujal Dhungana is a data, platform and forward deployed engineer in Perth building AI-ready data platforms: streaming at a terabyte an hour, serverless lakehouses, MLOps and secure data access for AI agents, all defined as code. Founder of Data Sparta.',
+  dataSparta: 'https://datasparta.com',
+  academy: 'https://dataprofessionacademy.com',
+  /** Years in industry, counted from the first full-time role (Visagio, Aug 2020). */
+  careerStart: '2020-08',
   resume: '/Sujal_Dhungana_Resume.pdf',
 } as const;
+
+export const navigation = [
+  { name: 'Work', href: '/#work' },
+  { name: 'Experience', href: '/#experience' },
+  { name: 'Ventures', href: '/ventures/' },
+  { name: 'Lab', href: '/lab/' },
+] as const;
 
 export interface Stat {
   value: string;
@@ -26,57 +37,86 @@ export interface Stat {
 }
 
 export const stats: Stat[] = [
-  { value: '$600K+', label: 'compute saved per year', source: 'Telstra · −50% cost' },
-  { value: '1 TB/hr', label: 'log data, ingested reliably', source: 'Telstra · ClickHouse' },
-  { value: 'Days→min', label: 'ML model time-to-production', source: 'Water Corporation' },
+  { value: '$600K+', label: 'compute saved per year', source: 'Hypersec at Telstra · −50% compute' },
+  { value: '1 TB/hr', label: 'security telemetry streamed through Kafka', source: 'Hypersec at Telstra' },
+  {
+    value: 'Hours→min',
+    label: 'backtest run time on a multi-TB lakehouse',
+    source: 'Life Trading · DuckLake',
+  },
   { value: '20+', label: 'analysts trained, most hired within 3 months', source: 'Data Profession Academy' },
 ];
 
-export const services = [
-  {
-    title: 'Platform engineering & infrastructure as code',
-    body: 'Moving click-ops estates into code. Databricks Asset Bundles, Terraform, CDK, Kubernetes with ArgoCD and Helm, so every environment is the same environment.',
-    evidence: ['Western Power: click-ops → Asset Bundles', 'Telstra: K8s provisioning APIs, days → hours'],
-  },
-  {
-    title: 'Pipelines & data modelling',
-    body: 'Ingestion platforms with medallion layers, Iceberg tables, dbt standards and dimensional models that analysts can trust and extend.',
-    evidence: ['Data Vanguards: onboarding −60%', 'Water Corp: build time 2 days → 2 hrs'],
-  },
-  {
-    title: 'MLOps',
-    body: 'Taking models from notebook to production with governance, approvals and cross-account deployment, then keeping them there.',
-    evidence: ['Water Corp: time-to-prod days → minutes', 'OzWater 2024: voted a top paper'],
-  },
-  {
-    title: 'Cost engineering',
-    body: 'Finding the idle cores, the over-provisioned clusters and the pipelines that run because nobody turned them off.',
-    evidence: ['Telstra: −50% compute, $600K+/yr', 'Data Vanguards: ops cost −90%'],
-  },
-];
+export interface DashboardStat extends Stat {
+  /** Clean rows the lab's pipeline must deliver before this tile unlocks. */
+  unlockAt: number;
+}
 
-export const principles = [
+const mlops: Stat = {
+  value: 'Days→min',
+  label: 'ML model deployment time',
+  source: 'Water Corporation · MLOps',
+};
+const dbt: Stat = {
+  value: '1,000+',
+  label: 'dbt models behind 10-year demand forecasts',
+  source: 'Western Power · Snowflake',
+};
+const onboarding: Stat = {
+  value: '−60%',
+  label: 'new-source onboarding time',
+  source: 'Hypersec · medallion ingestion',
+};
+
+/** The six "receipts" on the homepage. Every figure is quoted from src/content/roles, nothing new. */
+export const receipts: Stat[] = [stats[0]!, stats[1]!, stats[2]!, mlops, dbt, onboarding];
+
+/** Tiles for the lab's "data sea" dashboard, in unlock order. Same sources as above. */
+export const dashboardStats: DashboardStat[] = [
+  { ...stats[0]!, unlockAt: 50 },
+  { ...onboarding, unlockAt: 120 },
+  { ...mlops, unlockAt: 200 },
+  { ...stats[1]!, unlockAt: 300 },
+  { ...dbt, unlockAt: 420 },
+  { ...stats[2]!, unlockAt: 560 },
   {
-    title: 'Everything as code',
-    body: "Infrastructure, pipelines, standards, permissions. If it isn't in version control, it doesn't exist.",
+    value: 'Days→hrs',
+    label: 'secure pipeline creation',
+    source: 'Hypersec · Python tooling & REST APIs',
+    unlockAt: 720,
   },
-  {
-    title: 'Velocity and reliability, together',
-    body: "Self-service tooling so teams ship fast, with the guardrails built in so they don't have to think about them.",
-  },
-  {
-    title: 'Leave it teachable',
-    body: "Documentation and standards that the next engineer can pick up. That's the teacher in me.",
-  },
+  { ...stats[3]!, unlockAt: 900 },
 ];
 
 export const toolbox = [
-  { label: 'Languages', value: 'Python, SQL, PySpark, R, Bash, JavaScript' },
-  { label: 'Data platforms', value: 'Databricks, Snowflake, dbt, ClickHouse, Apache Iceberg, Redshift, Glue' },
-  { label: 'Cloud & runtime', value: 'AWS (EKS, ECS, Lambda, Step Functions, SageMaker), Azure, Kubernetes' },
-  { label: 'As code', value: 'Terraform, CDK, CloudFormation, Databricks Asset Bundles, ArgoCD, Helm' },
-  { label: 'Observe & report', value: 'Prometheus, Grafana, Power BI, QuickSight' },
+  {
+    label: 'Key skills',
+    value:
+      'AI-ready data platforms, distributed systems, event-driven architecture, data engineering, DataOps, data infrastructure, data modelling, data warehousing',
+  },
+  { label: 'Languages', value: 'Python, SQL, PySpark, Bash, JavaScript' },
+  {
+    label: 'Platforms & orchestration',
+    value: 'AWS (Lambda, Step Functions, EKS, ECS, SageMaker), Kubernetes, Databricks, ArgoCD, Helm',
+  },
+  {
+    label: 'Processing & warehousing',
+    value:
+      'Kafka (AWS MSK), dbt, Snowflake, DuckDB, DuckLake, ClickHouse, Apache Iceberg, AWS Glue, OpenSearch, DynamoDB, RDS',
+  },
+  {
+    label: 'GitOps & IaC',
+    value: 'Terraform, CDK, CloudFormation, Databricks Asset Bundles, CI/CD, GitLab, Azure DevOps',
+  },
+  { label: 'Observability', value: 'Prometheus, Grafana' },
 ];
+
+/** Community involvement, from the résumé. Shown on the CV and beside the talks. */
+export const involvement = {
+  title: 'Speaker & Workshop Host',
+  org: 'Perth Data Engineering Meetup · Google Developer Group (GDG) Perth',
+  body: 'Spoke at the Perth Data Engineering Meetup on building reusable pipelines and at GDG Perth on embedding AI tools into everyday engineering workflows. Ran webinars and one-day workshops teaching data engineering and analytics fundamentals to the wider tech community.',
+};
 
 export const certifications = [
   { title: 'AWS Solutions Architect', issuer: 'Amazon Web Services', year: '2024' },

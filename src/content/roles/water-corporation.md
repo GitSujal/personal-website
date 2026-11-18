@@ -5,10 +5,8 @@ location: Perth, WA
 start: '2022-05'
 end: '2024-04'
 kind: work
-tags: [MLOps, AWS, Apache Iceberg, PySpark, Data Quality]
+tags: [MLOps, SageMaker, Step Functions, PySpark, AWS Glue, Data Quality]
 ---
 
-- Built an AWS-native MLOps pipeline (SageMaker, CodeBuild, Step Functions, Lambda) with cross-account deployment, governance and approvals, taking time-to-production from days to minutes.
-- Productionised a model predicting centrifuge performance from real-time operational data; the paper was voted one of the top papers at OzWater 2024.
-- Designed an ingestion platform on Apache Iceberg with data-quality reporting and SCD dimensional modelling; a config-driven approach cut pipeline build time from 2 days to 2 hours and cloud cost by 50%.
-- Built ingestion from PI, GIS and SQL Server sources with PySpark on AWS Glue, supporting objective risk assessment across AUD 2.3 billion of assets.
+- **Took an award-winning predictive model (OzWater 2024 top paper) from prototype to live operations,** using real-time SCADA data from treatment-plant centrifuges (rotational speed, intake flow, temperature and other process variables) to predict the moisture content of the separated output. Built the automated MLOps pipeline (SageMaker, Step Functions, CodeBuild), cutting deployment time from days to minutes under strict cross-account governance.
+- **Delivered the data product behind objective risk assessments of $2.3B in physical assets,** building large-scale PySpark pipelines in AWS Glue that combined high-volume PI telemetry, GIS and SQL Server data, with data quality checks that validated every reading against the asset's physical operating limits. Replaced manual validation with automated tests, cutting QA from days to hours.

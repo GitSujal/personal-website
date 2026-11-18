@@ -1,0 +1,13 @@
+# Sujal Dhungana
+
+> Data engineer, platform engineer and forward deployed engineer in Perth, Western Australia. Builds AI-ready data platforms as code: streaming (1 TB/hr on Kafka), serverless lakehouses (DuckDB/DuckLake), MLOps and secure data access for AI agents. Founder of Data Sparta (datasparta.com), whose training arm is Data Profession Academy.
+
+- Now: Data Infrastructure Engineer at Life Trading Pty Ltd (since June 2026); Founder, Data Sparta Pty Ltd (since Aug 2023).
+- Previously: Senior Data Engineer, Western Power (2025–2026); Resident Platform Engineer, Hypersec deployed at Telstra (2024–2025); Senior Data Engineer, Water Corporation (2022–2024); Technology Consultant, Visagio (2020–2022).
+- Contact: sujal@datasparta.com
+
+## Pages
+- [Home: work, experience, contact](https://sujal.datasparta.com/)
+- [Hire me](https://sujal.datasparta.com/hire-me/)
+- [Ventures](https://sujal.datasparta.com/ventures/)
+- [Résumé (PDF)](https://sujal.datasparta.com/Sujal_Dhungana_Resume.pdf)

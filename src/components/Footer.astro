@@ -1,21 +1,85 @@
 ---
-interface Props {
-  page: string;
-}
-const { page } = Astro.props;
-const commit = __BUILD_COMMIT__;
-const date = __BUILD_DATE__;
+import Icon from './ui/Icon.astro';
+import Logo from './ui/Logo.astro';
+import { navigation, site } from '../data/site';
+
+const link = 'font-semibold hover:text-[color:var(--cyan)]';
+const pages = [
+  { name: 'Home', href: '/' },
+  ...navigation,
+  { name: 'Hire me', href: '/hire-me/' },
+  { name: 'Colophon', href: '/colophon/' },
+];
 ---
 
-<footer class="wrap pb-10">
-  <div
-    class="flex flex-wrap items-center gap-x-8 gap-y-4 border-t-2 border-ink pt-5 font-display text-[13px] leading-relaxed font-medium text-muted"
-  >
-    <p class="m-0 min-w-0 flex-[1_1_360px]">
-      Set in Raleway and Merriweather. Built with Astro, served from Cloudflare's edge. No trackers.
-      <a href="/colophon/" class="text-muted">Colophon</a> · build
-      <span class="tabular-nums">{commit}</span> · {date}
-    </p>
-    <p class="m-0 text-[15px] font-extrabold text-ink">© {new Date().getFullYear()} · {page}</p>
+<footer class="band-ink zig-t relative mt-16 pt-20 pb-10" aria-labelledby="footer-heading">
+  <h2 id="footer-heading" class="sr-only">
+    Footer
+  </h2>
+  <div class="wrap">
+    <div class="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr]">
+      <div>
+        <p class="hand text-[2.6rem] leading-[0.95] sm:text-[3.6rem]">
+          Building something that
+          <br />
+          has to last? <span class="text-[color:var(--cyan)]">Let's talk.</span>
+        </p>
+        <a href="/#contact" class="btn mt-8">
+          Send me a message{' '}
+          <span class="arrow" aria-hidden="true">
+            →
+          </span>
+        </a>
+      </div>
+      <div>
+        <h3 class="hand text-2xl text-[color:var(--cyan)]">Pages</h3>
+        <ul class="mt-4 grid gap-2">
+          {pages.map((l) => (
+            <li>
+              <a href={l.href} class={link}>
+                {l.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h3 class="hand text-2xl text-[color:var(--cyan)]">Find me</h3>
+        <ul class="mt-4 grid gap-3">
+          <li>
+            <a href={`mailto:${site.email}`} class:list={[link, 'flex items-center gap-2']}>
+              <Icon name="mail" class="h-4 w-4" />
+              {site.email}
+            </a>
+          </li>
+          <li>
+            <a href={site.linkedin} rel="me noopener" class:list={[link, 'flex items-center gap-2']}>
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"></path>
+              </svg>
+              LinkedIn
+            </a>
+          </li>
+          <li>
+            <a href={site.dataSparta} rel="noopener" class:list={[link, 'flex items-center gap-2']}>
+              <Icon name="external" class="h-4 w-4" />
+              datasparta.com
+            </a>
+          </li>
+          <li class="flex items-center gap-2">
+            <Icon name="pin" class="h-4 w-4" />
+            Perth, WA · {site.timezone}
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="mt-16 flex flex-wrap items-end justify-between gap-6 border-t-2 border-dashed border-white/20 pt-8">
+      <Logo />
+      <p class="text-sm opacity-70 sm:text-right">
+        Astro on Cloudflare Workers · no trackers · build <span class="tabular-nums">{__BUILD_COMMIT__}</span>
+        <br />
+        &copy; {new Date().getFullYear()} {site.name}. Perth, Western Australia.
+      </p>
+    </div>
   </div>
 </footer>

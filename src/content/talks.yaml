@@ -1,4 +1,23 @@
 # verified: false entries are shown in `npm run dev` only, never in production.
+# Undated entries are confirmed on the latest résumé; add a date (YYYY-MM) when you have it.
+- id: perth-data-engineering-meetup
+  event: Perth Data Engineering Meetup
+  location: Perth
+  title: Building reusable pipelines
+  format: meetup
+  verified: true
+- id: gdg-perth
+  event: Google Developer Group (GDG) Perth
+  location: Perth
+  title: Embedding AI tools into everyday engineering workflows
+  format: meetup
+  verified: true
+- id: community-workshops
+  event: Webinars & one-day workshops
+  location: Perth
+  title: Data engineering and analytics fundamentals for the wider tech community
+  format: workshop
+  verified: true
 - id: ozwater-2024
   date: '2024-05'
   event: OzWater

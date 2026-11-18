@@ -54,7 +54,8 @@ const ventures = defineCollection({
 const talks = defineCollection({
   loader: file('src/content/talks.yaml'),
   schema: z.object({
-    date: yearMonth,
+    /** Optional: some talks are confirmed on the r�sum� without a date. */
+    date: yearMonth.optional(),
     event: z.string(),
     location: z.string(),
     title: z.string(),

@@ -22,8 +22,9 @@ export function byStartDesc(a: CollectionEntry<'roles'>, b: CollectionEntry<'rol
   return sortKey(b.data.start).localeCompare(sortKey(a.data.start));
 }
 
-export function byDateDesc<T extends { data: { date: string } }>(a: T, b: T): number {
-  return sortKey(b.data.date).localeCompare(sortKey(a.data.date));
+/** Newest first; undated entries go first (they're the recent, r�sum�-confirmed ones). */
+export function byDateDesc<T extends { data: { date?: string } }>(a: T, b: T): number {
+  return sortKey(b.data.date ?? '9999').localeCompare(sortKey(a.data.date ?? '9999'));
 }
 
 export function byOrder<T extends { data: { order: number } }>(a: T, b: T): number {

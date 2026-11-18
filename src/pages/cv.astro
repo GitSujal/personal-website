@@ -1,0 +1,319 @@
+---
+/**
+ * The résumé, rendered from the same content collections as the site, laid out for A4.
+ * Source for public/Sujal_Dhungana_Resume.pdf: `npm run resume` (builds, serves and prints this page).
+ * Not linked or indexed.
+ */
+import '@fontsource-variable/bricolage-grotesque';
+import '@fontsource-variable/figtree';
+import '@fontsource/caveat/700.css';
+import { getCollection, render } from 'astro:content';
+import { involvement, site, toolbox } from '../data/site';
+import { cvTagline, summary } from '../data/copy';
+import { byStartDesc, formatYearMonth } from '../lib/format';
+
+const roles = (await getCollection('roles')).sort(byStartDesc);
+const experience = await Promise.all(
+  roles
+    .filter((r) => ['work', 'contract', 'venture'].includes(r.data.kind))
+    .map(async (role) => ({ role, ...(await render(role)) })),
+);
+const education = roles.filter((r) => r.data.kind === 'education');
+
+const MONTHS = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
+const long = (v: string) => {
+  const [y, m] = v.split('-');
+  return m ? `${MONTHS[Number(m) - 1]} ${y}` : y;
+};
+const span = (start: string, end?: string) =>
+  end === start ? long(start) : `${long(start)} – ${end ? long(end) : 'Present'}`;
+const kindNote = { work: '', contract: ' (Contract)', venture: '', education: '', volunteer: '' };
+---
+
+<!doctype html>
+<html lang="en-AU">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Sujal Dhungana — Résumé</title>
+  </head>
+  <body>
+    <main class="cv">
+      <header class="top">
+        <div>
+          <h1>Sujal Dhungana</h1>
+          <p class="role">{cvTagline}</p>
+        </div>
+        <ul class="contact">
+          <li>{site.location}</li>
+          <li>
+            <a href={`mailto:${site.email}`}>{site.email}</a>
+          </li>
+          <li>
+            <a href={site.linkedin}>{site.linkedinLabel}</a>
+          </li>
+          <li>
+            <a href={site.url}>{site.domain}</a>
+          </li>
+        </ul>
+      </header>
+
+      <section>
+        <h2>Summary</h2>
+        <p>{summary}</p>
+      </section>
+
+      <section>
+        <h2>Skills</h2>
+        <dl class="skills">
+          {toolbox.map((row) => (
+            <div>
+              <dt>{row.label}</dt>
+              <dd>{row.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <section>
+        <h2>Experience</h2>
+        {experience.map(({ role: { data }, Content }) => (
+          <article class="job">
+            <div class="job-head">
+              <h3>
+                {data.title}
+                {kindNote[data.kind]} <span class="org">· {data.org}</span>
+              </h3>
+              <p class="when">
+                {span(data.start, data.end)} · {data.location}
+              </p>
+            </div>
+            <div class="bullets">
+              <Content />
+            </div>
+          </article>
+        ))}
+      </section>
+
+      <div class="cols">
+        <section>
+          <h2>Education</h2>
+          {education.map(({ data, body }) => (
+            <article class="job">
+              <h3>{data.title}</h3>
+              <p class="when">
+                {data.org} · {data.location} · {formatYearMonth(data.start)}
+              </p>
+              <p class="small">{body?.replace(/^-\s*/, '')}</p>
+            </article>
+          ))}
+        </section>
+        <section>
+          <h2>Involvement</h2>
+          <article class="job">
+            <h3>{involvement.title}</h3>
+            <p class="when wrap">{involvement.org}</p>
+            <p class="small">{involvement.body}</p>
+          </article>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>
+
+<style is:global>
+  @page {
+    size: A4;
+    margin: 13mm 14mm;
+  }
+  :root {
+    --ink: #14181a;
+    --soft: #3a4448;
+    --cyan: #3ec1d3;
+    --deep: #0b5560;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  html {
+    background: #e9e4d8;
+  }
+  body {
+    margin: 0;
+    font-family: 'Figtree Variable', system-ui, sans-serif;
+    font-size: 9.6pt;
+    line-height: 1.42;
+    color: var(--ink);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .cv {
+    max-width: 210mm;
+    margin: 0 auto;
+    padding: 14mm;
+    background: #fffdf8;
+  }
+  @media print {
+    html,
+    .cv {
+      background: #fff;
+    }
+    .cv {
+      padding: 0;
+      max-width: none;
+    }
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: 'Bricolage Grotesque Variable', sans-serif;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: -0.015em;
+  }
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 1rem;
+    padding-bottom: 3mm;
+    border-bottom: 2px solid var(--ink);
+  }
+  h1 {
+    font-size: 25pt;
+    line-height: 1;
+    letter-spacing: -0.035em;
+  }
+  .role {
+    margin: 1.5mm 0 0;
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 14pt;
+    color: var(--deep);
+  }
+  .contact {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: right;
+    font-size: 8.8pt;
+    line-height: 1.5;
+  }
+  section {
+    margin-top: 4mm;
+  }
+  h2 {
+    display: inline-block;
+    font-size: 11pt;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 1.5mm;
+    background: linear-gradient(to top, var(--cyan) 0 42%, transparent 42%);
+    padding: 0 1mm;
+  }
+  h2.mt {
+    margin-top: 3mm;
+  }
+  p {
+    margin: 0;
+  }
+  .skills {
+    margin: 0;
+    display: grid;
+    gap: 0.6mm;
+  }
+  .skills div {
+    display: grid;
+    grid-template-columns: 34mm 1fr;
+  }
+  .skills dt {
+    font-weight: 700;
+  }
+  .skills dd {
+    margin: 0;
+  }
+  .job {
+    margin-top: 2.6mm;
+    break-inside: avoid;
+  }
+  .job-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+  }
+  h3 {
+    font-size: 10.5pt;
+  }
+  .org {
+    color: var(--deep);
+  }
+  .when.wrap {
+    white-space: normal;
+  }
+  .when {
+    font-size: 8.6pt;
+    color: var(--soft);
+    white-space: nowrap;
+  }
+  .bullets ul {
+    margin: 0.8mm 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .bullets li {
+    position: relative;
+    padding-left: 4mm;
+    margin-top: 0.5mm;
+  }
+  .bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0.5mm;
+    top: 0.55em;
+    width: 1.8mm;
+    height: 1.8mm;
+    border-radius: 50%;
+    background: var(--cyan);
+    border: 1px solid var(--ink);
+  }
+  .bullets p {
+    margin-top: 0.8mm;
+  }
+  .small {
+    font-size: 8.8pt;
+  }
+  .cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 7mm;
+    break-inside: avoid;
+  }
+  .certs {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 8.8pt;
+  }
+  .certs li + li {
+    margin-top: 0.6mm;
+  }
+</style>

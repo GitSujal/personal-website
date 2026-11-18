@@ -5,9 +5,8 @@ location: Perth, WA
 start: '2020-08'
 end: '2022-05'
 kind: work
-tags: [Consulting, Power BI, Spotfire, Workforce Analytics]
+tags: [Consulting, Workforce Analytics, Scenario Modelling]
 ---
 
-- Built a time-and-attendance tool for a tier-one miner that let supervisors optimise daily plans, contributing to more than $40 million in savings.
-- Built a strategic workforce-planning tool projecting demographics over 5–10 year horizons with scenario modelling.
-- Redesigned mission-critical Power BI and Spotfire dashboards with sound data modelling, making them faster and easier to maintain.
+- **Identified and resolved absenteeism worth $40M annually for BHP,** combining time and attendance data analysis with site visits to understand how workers actually accessed site. Built a tool that matched access patterns against rosters and leave records, flagging absences so supervisors could reconcile them as leave.
+- **Built a strategic scenario-modelling engine** generating 5- and 10-year workforce projections from complex demographic data to support long-term resource planning.

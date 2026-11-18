@@ -1,6 +1,7 @@
 // @ts-check
 import { execSync } from 'node:child_process';
-import { defineConfig, fontProviders } from 'astro/config';
+import { defineConfig } from 'astro/config';
+import cloudflare from '@astrojs/cloudflare';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
@@ -15,27 +16,18 @@ function buildCommit() {
   }
 }
 
+// Same stack as datasparta.com: Astro on Cloudflare Workers via the adapter.
+// Every page is prerendered to static HTML; only /api/contact runs on the Worker.
 export default defineConfig({
   site: 'https://sujal.datasparta.com',
-  integrations: [sitemap({ filter: (page) => !/\/(thanks|og-card)\/$/.test(page) })],
-  fonts: [
-    {
-      name: 'Raleway',
-      cssVariable: '--font-raleway',
-      provider: fontProviders.fontsource(),
-      weights: ['400 900'],
-      styles: ['normal'],
-      fallbacks: ['ui-sans-serif', 'system-ui', 'sans-serif'],
-    },
-    {
-      name: 'Merriweather',
-      cssVariable: '--font-merriweather',
-      provider: fontProviders.fontsource(),
-      weights: [300, 400, 700],
-      styles: ['normal', 'italic'],
-      fallbacks: ['Georgia', 'serif'],
-    },
-  ],
+  // Images are optimised at build time and there are no sessions, so the Worker needs
+  // no IMAGES binding and no SESSION KV namespace.
+  adapter: cloudflare({ imageService: 'compile' }),
+  session: false,
+  integrations: [sitemap({ filter: (page) => !/\/(thanks|og-card|cv)\/$/.test(page) })],
+  redirects: {
+    '/classic': '/',
+  },
   vite: {
     plugins: [tailwindcss()],
     define: {

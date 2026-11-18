@@ -1,0 +1,1234 @@
+---
+/**
+ * The lab (/lab/): a full-screen 3D lesson in loading data (see ./controller.ts, ./scene.ts, ./pipeline.ts).
+ * Three sources rain rows in different patterns; you pick how each is loaded and watch what it costs,
+ * what it loses, and what reaches the dashboard silos. Every control and number here is ordinary HTML,
+ * so without JS, WebGL or motion the page still explains the lesson and shows the full dashboard.
+ * Profile, work and contact live on the homepage and /hire-me/.
+ */
+import { dashboardStats as stats, site } from '../../data/site';
+import CostChart from './CostChart.astro';
+import { METHODS, PULLEY_EVERY, SOURCES } from './sources';
+
+const goal = Math.max(...stats.map((stat) => stat.unlockAt));
+const icons: Record<string, string> = {
+  bucket: 'M5 9h14l-1.6 10.2a2 2 0 0 1-2 1.8H8.6a2 2 0 0 1-2-1.8zM5 9a7 6 0 0 1 14 0',
+  pulley: 'M3 2.5h18M12 2.5v3M12 10.5v3M8 13.5h8l-1.2 7h-5.6zM14.5 8a2.5 2.5 0 1 1-5 0a2.5 2.5 0 0 1 5 0',
+  conveyor: 'M5.5 13h13a3 3 0 0 1 0 6h-13a3 3 0 0 1 0-6zM5.5 7.5h3v3h-3zM10.5 7.5h3v3h-3zM15.5 7.5h3v3h-3z',
+  none: 'M6 6l12 12M18 6L6 18',
+};
+---
+
+<div class="sea" data-sea>
+  <div class="scene" aria-hidden="true">
+    <canvas data-sea-canvas></canvas>
+    <div class="labels" data-sea-labels></div>
+    <div class="chips" data-sea-chips>
+      {stats.map((stat, i) => (
+        <span class="chip is-locked" data-silo-chip={i}>
+          <span class="chip-lock">{stat.unlockAt} rows</span>
+          <span class="chip-value">{stat.value}</span>
+          <span class="chip-label">{stat.label}</span>
+        </span>
+      ))}
+    </div>
+  </div>
+  <p class="loading" aria-hidden="true">
+    Filling the data sea…
+  </p>
+
+  <header class="bar">
+    <a href="/" class="brand">
+      <span class="mark" aria-hidden="true"></span>
+      {site.name}
+    </a>
+    <nav aria-label="Site" class="links">
+      <a href="/">Work &amp; profile</a>
+      <a href="/hire-me/" class="hire">
+        Hire me
+      </a>
+    </nav>
+  </header>
+
+  <div class="intro">
+    <p class="kicker">A lesson in loading data</p>
+    <h1>
+      Every source needs the <span>right pipeline.</span>
+    </h1>
+    <p class="lede">
+      Three sources, three ways to load them. Pick a method for each cloud, then watch what it costs, what it
+      loses to the sea, and what reaches the dashboard.
+    </p>
+  </div>
+
+  <div class="toolbar" role="toolbar" aria-label="Simulation">
+    <a
+      href="#dashboard"
+      class="icon"
+      data-open-dashboard
+      aria-controls="dashboard"
+      aria-expanded="false"
+      aria-label="Read the dashboard"
+      title="Read the dashboard"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M3 20h18M6 17V9M10 17V5M14 17v-6M18 17V8"></path>
+      </svg>
+    </a>
+    <button
+      type="button"
+      class="icon"
+      data-sea-recenter
+      aria-label="Back to the whole pipeline"
+      title="Back to the whole pipeline"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="7"></circle>
+        <circle cx="12" cy="12" r="2"></circle>
+        <path d="M12 2v3M12 19v3M2 12h3M19 12h3"></path>
+      </svg>
+    </button>
+    <button type="button" class="icon" data-sea-pause aria-pressed="false" aria-label="Pause" title="Pause">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M8 5v14M16 5v14"></path>
+      </svg>
+    </button>
+    <button
+      type="button"
+      class="icon"
+      data-sea-reset
+      aria-label="Start over: clear costs and the dashboard"
+      title="Start over"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 12a8 8 0 1 0 2.4-5.7"></path>
+        <path d="M4 4v4h4"></path>
+      </svg>
+    </button>
+    <button
+      type="button"
+      class="icon"
+      data-sea-skip
+      aria-label="Skip: fill the dashboard now"
+      title="Skip to a full dashboard"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 6l7 6-7 6zM13 6l7 6-7 6z"></path>
+      </svg>
+    </button>
+  </div>
+  <p class="note" data-sea-note></p>
+
+  <!-- One card per source: its pattern, how it's loaded, and what that is costing. Pinned over its cloud in 3D. -->
+  <div class="stations" data-sea-stations>
+    {SOURCES.map((source, i) => (
+      <section
+        class="station"
+        data-station={i}
+        style={`--c: ${source.color}`}
+        aria-labelledby={`station-${i}`}
+      >
+        <h2 id={`station-${i}`} class="station-name">
+          <span class="dot" aria-hidden="true" />
+          {source.letter} · {source.name}
+        </h2>
+        <p class="pattern">{source.pattern}</p>
+        <div class="methods" role="group" aria-label={`Load ${source.name} with`}>
+          {METHODS.map((method) => (
+            <button
+              type="button"
+              class="method"
+              data-method={method.id}
+              aria-pressed={method.id === source.start ? 'true' : 'false'}
+              title={`${method.name}: ${method.cost}${method.id === source.best ? ' · best fit' : ''}`}
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d={icons[method.id]} />
+              </svg>
+              <span>{method.name}</span>
+              {method.id === source.best && (
+                <span class="best">
+                  <span aria-hidden="true">★</span>
+                  <span class="sr-only">(best fit)</span>
+                </span>
+              )}
+            </button>
+          ))}
+        </div>
+        <div class="extra">
+          <button type="button" class="run" data-run>
+            Send bucket · $1
+          </button>
+          <span class="every" role="group" aria-label="Pulley schedule">
+            {PULLEY_EVERY.map((seconds) => (
+              <button type="button" data-every={seconds} aria-pressed={seconds === 6 ? 'true' : 'false'}>
+                every {seconds} s
+              </button>
+            ))}
+          </span>
+          <span class="rate">Belt runs non-stop · $0.10/s</span>
+        </div>
+        <p class="status" data-status />
+        <p class="figures">
+          <span>
+            <b data-spent>$0.00</b> spent
+          </span>
+          <span>
+            <b data-clean>0</b> clean
+          </span>
+          <span>
+            <b data-lost>0</b> lost
+          </span>
+        </p>
+      </section>
+    ))}
+  </div>
+
+  <!-- The incurred-cost graph: one line per source against time, with the totals that matter. -->
+  <aside class="hud" aria-label="Incurred cost">
+    <div class="hud-head">
+      <span class="kicker">Incurred cost</span>
+      <span class="hud-total">
+        Total <b data-cost-total>$0.00</b>
+      </span>
+    </div>
+    <CostChart />
+  </aside>
+
+  <p class="hint" aria-hidden="true">
+    <span class="hint-mouse">
+      Click a bucket to send it · drag to look around · scroll to zoom · click a silo to read it
+    </span>
+    <span class="hint-touch">Tap a bucket to send it · drag to look around · pinch to zoom</span>
+  </p>
+
+  <!-- The dashboard as HTML: what the silos say, in a side panel in 3D, and simply the page without it. -->
+  <aside class="panel" id="dashboard" data-sea-panel aria-labelledby="dashboard-title">
+    <button type="button" class="close" data-sea-close aria-label="Close the dashboard">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M6 6l12 12M18 6L6 18"></path>
+      </svg>
+    </button>
+    <div class="panel-body">
+      <p class="kicker">The silos</p>
+      <h2 id="dashboard-title" tabindex="-1">
+        The dashboard
+      </h2>
+      <p class="panel-lede scene-only">
+        Clean rows fill the silos one at a time. A full silo lights up with a number from my work.
+      </p>
+      <p class="counts scene-only">
+        <span class="good">✓</span> Clean rows <span data-sea-delivered>0</span>/{goal}
+        <span class="bad">✕</span> Rejected <span data-sea-rejected>0</span>
+        <span class="lost">↓</span> Lost <span data-sea-lost>0</span>
+      </p>
+      <dl class="tiles">
+        {stats.map((stat) => (
+          <div
+            class="tile"
+            data-sea-tile
+            data-unlock={stat.unlockAt}
+            data-title={`${stat.value} ${stat.label}`}
+            data-text={stat.value}
+          >
+            <dt class="tile-value" data-sea-value>
+              {stat.value}
+            </dt>
+            <dd class="tile-label">{stat.label}</dd>
+            <dd class="tile-src">↳ {stat.source}</dd>
+            <dd class="tile-lock">
+              <span>Locked · needs {stat.unlockAt} clean rows</span>
+              <span class="track">
+                <span class="fill" data-sea-bar />
+              </span>
+            </dd>
+          </div>
+        ))}
+      </dl>
+
+      <h3 class="sub scene-only">Incurred cost</h3>
+      <div class="cost scene-only">
+        <p class="counts">
+          Total <b data-cost-total>$0.00</b>
+        </p>
+        <CostChart />
+      </div>
+
+      <h3 class="sub scene-only">What each choice cost</h3>
+      <table class="ledger scene-only">
+        <thead>
+          <tr>
+            <th scope="col">Source</th>
+            <th scope="col">Loaded by</th>
+            <th scope="col">Spent</th>
+            <th scope="col">Clean</th>
+            <th scope="col">Lost</th>
+            <th scope="col">$ per 100 clean</th>
+          </tr>
+        </thead>
+        <tbody>
+          {SOURCES.map((s, i) => (
+            <tr data-ledger={i}>
+              <th scope="row" style={`color: ${s.color}`}>
+                {s.letter} · {s.name}
+              </th>
+              <td data-ledger-method>—</td>
+              <td data-spent>$0.00</td>
+              <td data-clean>0</td>
+              <td data-lost>0</td>
+              <td data-unit>—</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <h3 class="sub">The lesson</h3>
+      <ul class="lesson">
+        <li>
+          <b>On-demand</b> sources fit a manual bucket: you pay only when you ask.
+        </li>
+        <li>
+          <b>Batch</b> sources fit a scheduled pulley. Run it more often than the batch lands (twice is safe)
+          or a late pickup overflows the tray.
+        </li>
+        <li>
+          <b>Streams</b> need a conveyor. It costs every second, but a bucket or pulley fills up, wanders off,
+          and the rain keeps falling.
+        </li>
+      </ul>
+      <p class="more">
+        The stories behind these numbers: <a href="/#work">selected work</a>,
+        <a href="/#experience">experience</a> and <a href="/hire-me/">hiring me</a>.
+      </p>
+    </div>
+  </aside>
+
+  <p class="sr-only" aria-live="polite" data-sea-live></p>
+</div>
+
+<script>
+  import { initDataSea } from './controller';
+
+  document.querySelectorAll<HTMLElement>('[data-sea]').forEach((root) => initDataSea(root));
+</script>
+
+<style>
+  /* ---- palette: always night, whatever the site theme ---------------------------------------------------- */
+  .sea {
+    --paper: #061e33;
+    --ink: #ffffff;
+    --muted: #9fb3c2;
+    --rule: rgba(255, 255, 255, 0.14);
+    --accent-text: #3ec1d3;
+    color-scheme: dark;
+    position: relative;
+    min-height: 100vh;
+    background:
+      radial-gradient(90% 60% at 70% 0%, rgba(62, 193, 211, 0.18), transparent 60%),
+      linear-gradient(180deg, #072f51 0%, #041b2f 70%);
+    color: #ffffff;
+    font-family: var(--font-display);
+  }
+  :global(html.sea-mode),
+  :global(html.sea-mode body) {
+    height: 100%;
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+  .sea.has-scene {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    background: #041b2f;
+  }
+  .scene-only {
+    display: none !important;
+  }
+  .sea.has-scene .scene-only {
+    display: revert !important;
+  }
+
+  /* ---- the canvas, its labels and the silo chips ----------------------------------------------------------- */
+  .scene {
+    display: none;
+  }
+  .has-scene .scene {
+    position: absolute;
+    inset: 0;
+    display: block;
+  }
+  .has-scene .scene::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(50% 55% at 0% 0%, rgba(4, 27, 47, 0.85), transparent 72%),
+      linear-gradient(0deg, rgba(4, 27, 47, 0.55), transparent 16%);
+  }
+  .scene canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    touch-action: none;
+  }
+  .labels,
+  .chips {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .labels :global(.sea-label),
+  .chip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(var(--x, -999px), var(--y, -999px)) translate(-50%, -50%);
+  }
+  .labels :global(.sea-label) {
+    white-space: nowrap;
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(214, 238, 243, 0.85);
+    text-shadow: 0 1px 6px rgba(4, 27, 47, 0.9);
+  }
+  .labels :global(.sea-label.is-source) {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+  }
+  .labels :global(.is-off),
+  .chip:global(.is-off) {
+    visibility: hidden;
+  }
+  /* A silo's chip: its threshold while it fills, its number once it's full. */
+  .chip {
+    display: grid;
+    justify-items: center;
+    max-width: 150px;
+    padding: 6px 10px;
+    border: 1px solid rgba(62, 193, 211, 0.55);
+    border-radius: 12px;
+    background: rgba(4, 27, 47, 0.82);
+    text-align: center;
+    transform: translate(var(--x, -999px), var(--y, -999px)) translate(-50%, -100%);
+  }
+  .chip-value {
+    font-size: 17px;
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .chip-label {
+    margin-top: 2px;
+    font-family: var(--font-body);
+    font-size: 10.5px;
+    line-height: 1.3;
+    color: #c9d8e1;
+  }
+  .chip-lock {
+    display: none;
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: #9fb3c2;
+  }
+  .chip.is-locked {
+    border-color: rgba(255, 255, 255, 0.18);
+    padding: 3px 8px;
+  }
+  .chip.is-locked .chip-lock {
+    display: block;
+  }
+  .chip.is-locked .chip-value,
+  .chip.is-locked .chip-label {
+    display: none;
+  }
+  @media (max-width: 899px) {
+    .chip-label {
+      display: none;
+    }
+    .chip-value {
+      font-size: 13px;
+    }
+    .labels :global(.sea-label) {
+      display: none;
+    }
+  }
+
+  .loading {
+    display: none;
+  }
+  :global(html.js) .sea:not(.has-scene):not(.is-static) .loading {
+    position: fixed;
+    inset: 0;
+    z-index: 5;
+    display: grid;
+    place-items: center;
+    margin: 0;
+    background: #041b2f;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #3ec1d3;
+  }
+
+  /* ---- chrome --------------------------------------------------------------------------------------------- */
+  .bar {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 24px;
+    padding: 18px clamp(16px, 3vw, 32px);
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 19px;
+    font-weight: 900;
+    white-space: nowrap;
+    color: #ffffff;
+    text-decoration: none;
+  }
+  .mark {
+    width: 12px;
+    height: 12px;
+    background: #3ec1d3;
+  }
+  .links {
+    display: flex;
+    align-items: center;
+    gap: 8px 18px;
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .links a {
+    color: #ffffff;
+  }
+  .links a:hover {
+    color: #3ec1d3;
+  }
+  .links .hire {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0 16px;
+    border-radius: 10px;
+    background: #3ec1d3;
+    color: #072f51;
+    text-decoration: none;
+  }
+  .links .hire:hover {
+    background: #ffffff;
+  }
+
+  .intro {
+    max-width: 980px;
+    padding: clamp(24px, 6vw, 72px) clamp(16px, 3vw, 32px) 16px;
+  }
+  .kicker {
+    margin: 0 0 10px;
+    font-size: 11.5px;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #3ec1d3;
+  }
+  h1 {
+    margin: 0;
+    font-size: clamp(40px, 6vw, 84px);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+  h1 span {
+    color: #3ec1d3;
+  }
+  .lede {
+    max-width: 32em;
+    margin: 14px 0 0;
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.7;
+    color: #c9d8e1;
+  }
+
+  .toolbar {
+    display: none;
+    gap: 8px;
+  }
+  .icon {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 1.5px solid rgba(255, 255, 255, 0.28);
+    border-radius: 13px;
+    background: rgba(4, 27, 47, 0.6);
+    backdrop-filter: blur(8px);
+    color: #ffffff;
+    cursor: pointer;
+    transition:
+      background-color 160ms ease,
+      border-color 160ms ease;
+  }
+  .icon svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .icon:hover {
+    border-color: #3ec1d3;
+    color: #ffffff;
+  }
+  .icon[aria-pressed='true'],
+  .icon[aria-expanded='true'] {
+    border-color: #3ec1d3;
+    background: #3ec1d3;
+    color: #072f51;
+  }
+  .note {
+    margin: 0;
+    padding: 0 clamp(16px, 3vw, 32px);
+    font-size: 13px;
+    font-weight: 600;
+    color: #c9d8e1;
+  }
+  .note:empty {
+    display: none;
+  }
+
+  /* ---- station cards ---------------------------------------------------------------------------------------- */
+  .stations {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+    padding: 8px clamp(16px, 3vw, 32px) 24px;
+  }
+  .station {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid color-mix(in srgb, var(--c) 55%, transparent);
+    border-top: 3px solid var(--c);
+    border-radius: 14px;
+    background: rgba(4, 27, 47, 0.86);
+    backdrop-filter: blur(10px);
+  }
+  .station-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 0.02em;
+  }
+  .dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--c);
+  }
+  .pattern {
+    margin: 4px 0 8px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    line-height: 1.5;
+    color: #c9d8e1;
+  }
+  .methods {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+  }
+  .method {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: 2px;
+    padding: 6px 2px 5px;
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    background: transparent;
+    font: inherit;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #ffffff;
+    cursor: pointer;
+  }
+  .method svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .method:hover {
+    border-color: var(--c);
+  }
+  .method[aria-pressed='true'] {
+    border-color: var(--c);
+    background: var(--c);
+    color: #061626;
+  }
+  .best {
+    position: absolute;
+    top: -7px;
+    right: -4px;
+    font-size: 11px;
+    color: var(--c);
+    text-shadow: 0 0 4px #041b2f;
+  }
+  .method[aria-pressed='true'] .best {
+    color: #ffffff;
+  }
+  .method:disabled {
+    cursor: default;
+    opacity: 0.6;
+  }
+  .extra {
+    display: none;
+    margin-top: 8px;
+    font-size: 11.5px;
+    font-weight: 700;
+  }
+  .has-scene .extra {
+    display: block;
+  }
+  .run,
+  .every,
+  .rate {
+    display: none;
+  }
+  .station[data-method='bucket'] .run,
+  .station[data-method='pulley'] .every,
+  .station[data-method='conveyor'] .rate {
+    display: inline-flex;
+  }
+  .run,
+  .every button {
+    min-height: 30px;
+    padding: 0 10px;
+    border: 1.5px solid var(--c);
+    border-radius: 8px;
+    background: transparent;
+    font: inherit;
+    color: #ffffff;
+    cursor: pointer;
+  }
+  .run:hover {
+    background: var(--c);
+    color: #061626;
+  }
+  .every {
+    gap: 4px;
+  }
+  .every button[aria-pressed='true'] {
+    background: var(--c);
+    color: #061626;
+  }
+  .rate {
+    color: #c9d8e1;
+  }
+  .status {
+    min-height: 1.4em;
+    margin: 8px 0 0;
+    font-size: 11.5px;
+    font-weight: 700;
+    line-height: 1.4;
+    color: var(--c);
+  }
+  .status:empty {
+    display: none;
+  }
+  .figures {
+    display: none;
+    gap: 12px;
+    margin: 6px 0 0;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: #9fb3c2;
+    font-variant-numeric: tabular-nums;
+  }
+  .has-scene .figures {
+    display: flex;
+  }
+  .figures b {
+    font-weight: 900;
+    color: #ffffff;
+  }
+
+  /* ---- the cost graph ------------------------------------------------------------------------------------ */
+  .hud {
+    display: none;
+  }
+  .hud-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+  .hud-head .kicker {
+    margin: 0;
+  }
+  .hud-total {
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .hud-total b {
+    font-size: 17px;
+    font-weight: 900;
+  }
+  .hint {
+    display: none;
+    margin: 0;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: rgba(214, 238, 243, 0.75);
+  }
+  .hint-touch {
+    display: none;
+  }
+  @media (pointer: coarse) {
+    .hint-mouse {
+      display: none;
+    }
+    .hint-touch {
+      display: inline;
+    }
+  }
+
+  /* ---- in 3D: everything floats over the scene ---------------------------------------------------------- */
+  .has-scene .bar,
+  .has-scene .intro,
+  .has-scene .toolbar,
+  .has-scene .note,
+  .has-scene .hud,
+  .has-scene .hint {
+    position: absolute;
+    z-index: 2;
+  }
+  .has-scene .bar {
+    inset: 0 0 auto 0;
+    pointer-events: none;
+  }
+  .has-scene .bar > * {
+    pointer-events: auto;
+  }
+  .has-scene .intro {
+    top: 66px;
+    left: 0;
+    max-width: 440px;
+    padding-top: 6px;
+    pointer-events: none;
+    transition: opacity 300ms ease;
+  }
+  .has-scene h1 {
+    font-size: clamp(28px, 3vw, 44px);
+  }
+  .has-scene.is-settled .lede,
+  .has-scene.is-exploring .lede,
+  .has-scene.has-panel .intro {
+    opacity: 0;
+  }
+  .has-scene .toolbar {
+    top: 72px;
+    right: clamp(16px, 3vw, 32px);
+    display: flex;
+  }
+  .has-scene .note {
+    top: 126px;
+    right: 0;
+  }
+  .has-scene .hud {
+    right: 16px;
+    bottom: 16px;
+    display: block;
+    width: min(380px, 30vw);
+    padding: 12px 14px 8px;
+    border: 1px solid rgba(62, 193, 211, 0.3);
+    border-radius: 16px;
+    background: rgba(4, 27, 47, 0.82);
+    backdrop-filter: blur(10px);
+  }
+  .has-scene .hint {
+    top: 30px;
+    left: 50%;
+    display: block;
+    width: max-content;
+    max-width: calc(100% - 32px);
+    transform: translateX(-50%);
+    text-align: center;
+    pointer-events: none;
+    transition: opacity 400ms ease;
+  }
+  .has-scene.has-panel .hint,
+  .has-scene.has-panel .hud {
+    opacity: 0;
+    pointer-events: none;
+  }
+  /* The sources' cards: a console along the bottom, colour-coded to their clouds. */
+  .has-scene .stations {
+    position: absolute;
+    z-index: 2;
+    left: 16px;
+    bottom: 16px;
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    padding: 0;
+  }
+  .has-scene .station {
+    width: clamp(196px, 15vw, 236px);
+    padding: 10px 12px;
+  }
+  .has-scene .pattern {
+    display: none;
+  }
+  .has-scene .station:hover .pattern,
+  .has-scene .station:focus-within .pattern {
+    display: block;
+  }
+
+  /* ---- the dashboard panel -------------------------------------------------------------------------------- */
+  .close {
+    display: none;
+  }
+  .sea:not(.has-scene) .panel-body {
+    max-width: 980px;
+    padding: 24px clamp(16px, 3vw, 32px) 80px;
+  }
+  :global(html.js) .sea:not(.has-scene):not(.is-static) :is(.panel, .stations) {
+    display: none;
+  }
+  .has-scene .panel {
+    position: absolute;
+    z-index: 4;
+    top: 70px;
+    right: 12px;
+    bottom: 12px;
+    width: min(480px, 42vw);
+    border: 1px solid rgba(62, 193, 211, 0.3);
+    border-radius: 22px;
+    background: rgba(5, 25, 43, 0.94);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+    transform: translateX(calc(100% + 24px));
+    visibility: hidden;
+    transition:
+      transform 420ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      visibility 0s 420ms;
+  }
+  .has-scene.has-panel .panel {
+    transform: none;
+    visibility: visible;
+    transition: transform 420ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .has-scene .close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1.5px solid rgba(255, 255, 255, 0.25);
+    border-radius: 12px;
+    background: rgba(4, 27, 47, 0.8);
+    color: #ffffff;
+    cursor: pointer;
+  }
+  .close:hover {
+    border-color: #3ec1d3;
+  }
+  .close svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+  }
+  .has-scene .panel-body {
+    height: 100%;
+    padding: 28px 26px 40px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(62, 193, 211, 0.5) transparent;
+  }
+  @media (min-width: 900px) {
+    .has-scene.has-panel .toolbar {
+      right: calc(min(480px, 42vw) + 36px);
+    }
+  }
+
+  /* Phones: cards sit in a strip along the bottom, the panel is a bottom sheet. */
+  @media (max-width: 899px) {
+    .bar {
+      gap: 12px;
+    }
+    .brand {
+      font-size: 15px;
+    }
+    .links {
+      gap: 12px;
+      font-size: 12.5px;
+    }
+    .links .hire {
+      min-height: 36px;
+      padding: 0 12px;
+    }
+    .has-scene .bar {
+      padding-block: 12px;
+    }
+    .has-scene .intro {
+      top: 54px;
+      max-width: 80vw;
+    }
+    .has-scene h1 {
+      font-size: clamp(22px, 6.4vw, 30px);
+    }
+    .has-scene .lede,
+    .has-scene .hud,
+    .has-scene .hint {
+      display: none;
+    }
+    .has-scene.is-exploring .intro {
+      opacity: 0;
+    }
+    .has-scene .toolbar {
+      top: auto;
+      bottom: 214px;
+      right: 12px;
+      flex-direction: column;
+    }
+    .has-scene .stations {
+      inset: auto 0 10px 0;
+      display: flex;
+      gap: 10px;
+      padding: 0 12px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      pointer-events: auto;
+    }
+    .has-scene .station {
+      position: static;
+      flex: 0 0 min(280px, 82vw);
+      scroll-snap-align: center;
+      transform: none;
+    }
+    .has-scene .station:global(.is-off) {
+      visibility: visible;
+    }
+    .has-scene .panel {
+      top: auto;
+      left: 8px;
+      right: 8px;
+      bottom: 8px;
+      width: auto;
+      height: min(72vh, 680px);
+      border-radius: 20px;
+      transform: translateY(calc(100% + 24px));
+    }
+    .has-scene .panel-body {
+      padding: 22px 16px 32px;
+    }
+    .has-scene.has-panel .stations,
+    .has-scene.has-panel .toolbar {
+      visibility: hidden;
+    }
+  }
+
+  /* ---- panel content ------------------------------------------------------------------------------------- */
+  h2 {
+    margin: 0 48px 12px 0;
+    font-size: clamp(28px, 3vw, 36px);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .station-name {
+    margin: 0;
+  }
+  h2:focus {
+    outline: none;
+  }
+  .panel-lede,
+  .more,
+  .lesson {
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: #d3dee6;
+  }
+  .panel-lede {
+    margin: 0 0 12px;
+  }
+  .more {
+    margin: 20px 0 0;
+  }
+  .lesson {
+    margin: 0;
+    padding-left: 18px;
+  }
+  .lesson li + li {
+    margin-top: 8px;
+  }
+  .lesson b {
+    font-family: var(--font-display);
+    color: #ffffff;
+  }
+  .sub {
+    margin: 26px 0 10px;
+    padding-top: 12px;
+    border-top: 2px solid rgba(255, 255, 255, 0.85);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #9fb3c2;
+  }
+  .good {
+    color: #3ccf7a;
+  }
+  .bad {
+    color: #ff6b6f;
+  }
+  .lost {
+    color: #9fb3c2;
+  }
+  .counts {
+    margin: 0 0 6px;
+    font-size: 13.5px;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+  }
+  .counts .bad,
+  .counts .lost {
+    margin-left: 10px;
+  }
+  .ledger {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+  }
+  .ledger th,
+  .ledger td {
+    padding: 7px 4px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    text-align: right;
+  }
+  .ledger th:first-child,
+  .ledger td:nth-child(2) {
+    text-align: left;
+  }
+  .ledger thead th {
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #9fb3c2;
+  }
+  .ledger tbody th {
+    font-weight: 800;
+    white-space: nowrap;
+  }
+
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    margin: 12px 0 0;
+  }
+  .sea:not(.has-scene) .tiles {
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  }
+  .tile {
+    position: relative;
+    padding: 14px;
+    border-top: 4px solid #3ec1d3;
+    border-radius: 14px;
+    background: rgba(13, 42, 64, 0.85);
+  }
+  .tile-value {
+    font-size: 27px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+  .tile-label {
+    margin: 8px 0 0;
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.5;
+    color: #d3dee6;
+  }
+  .tile-src {
+    margin: 8px 0 0;
+    font-size: 11px;
+    font-weight: 700;
+    color: #3ec1d3;
+  }
+  .tile-lock {
+    display: none;
+  }
+  .tile.is-locked {
+    border-top-color: rgba(255, 255, 255, 0.14);
+    background: rgba(10, 33, 52, 0.7);
+  }
+  .tile.is-locked > :not(.tile-lock) {
+    visibility: hidden;
+  }
+  .tile.is-locked .tile-lock {
+    position: absolute;
+    inset: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    margin: 0;
+    font-size: 12px;
+    font-weight: 700;
+    color: #9fb3c2;
+  }
+  .track {
+    display: block;
+    height: 4px;
+    overflow: hidden;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.14);
+  }
+  .fill {
+    display: block;
+    height: 100%;
+    background: #3ec1d3;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 200ms ease;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .tile.is-new {
+      animation: tile-in 600ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+  }
+  @keyframes tile-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px) scale(0.98);
+    }
+  }
+</style>

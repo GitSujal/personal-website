@@ -1,0 +1,25 @@
+---
+import { rich } from '../../lib/rich';
+
+interface Props {
+  title: string;
+  body?: string;
+}
+const { title, body } = Astro.props;
+---
+
+<section class="band-cyan zig-t band relative overflow-hidden">
+  <div class="wrap grid items-center gap-10 lg:grid-cols-[1.4fr_1fr]">
+    <div>
+      <h2 class="display-lg" data-reveal set:html={rich(title)} />
+      {body && (
+        <p class="mt-5 max-w-xl text-xl text-[#1c2a2e]" data-reveal style="--d:1">
+          {body}
+        </p>
+      )}
+    </div>
+    <div class="flex flex-wrap gap-4 lg:justify-end" data-reveal style="--d:2">
+      <slot />
+    </div>
+  </div>
+</section>
